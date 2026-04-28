@@ -1,0 +1,11 @@
+{
+  "id": "Suguri46b",           
+  "name": "须玖莉(460亿年)",
+  "author": "数知智",
+  "description": "永恒的观测者",
+  "version": "1.0",
+  "has_pck": true,         
+  "has_dll": true,        
+  "dependencies": ["STS2-RitsuLib"],     
+  "affects_gameplay": true
+}
