@@ -1,0 +1,17 @@
+{
+  "TEST_CHARACTER_TEST_CHARACTER.aromaPrinciple": "[sine][blue]……等待……[/blue][/sine]",
+  "TEST_CHARACTER_TEST_CHARACTER.banter.alive.endTurnPing": "再歇息一会儿",
+  "TEST_CHARACTER_TEST_CHARACTER.banter.dead.endTurnPing": "……",
+  "TEST_CHARACTER_TEST_CHARACTER.cardsModifierDescription": "须玖莉（460亿年）的卡牌现在会出现在奖励和商店中。",
+  "TEST_CHARACTER_TEST_CHARACTER.cardsModifierTitle": "须玖莉（460亿年）卡牌",
+  "TEST_CHARACTER_TEST_CHARACTER.description": "一个在无尽等待中的存在。\n时间对[gold]须玖莉（460亿年）[/gold]而言，不过是另一种形式的永恒。",
+  "TEST_CHARACTER_TEST_CHARACTER.eventDeathPrevention": "我还得继续等下去……",
+  "TEST_CHARACTER_TEST_CHARACTER.goldMonologue": "[sine]这些金币……也许能派上用场……[/sine]",
+  "TEST_CHARACTER_TEST_CHARACTER.possessiveAdjective": "她的",
+  "TEST_CHARACTER_TEST_CHARACTER.pronounObject": "她",
+  "TEST_CHARACTER_TEST_CHARACTER.pronounPossessive": "她的",
+  "TEST_CHARACTER_TEST_CHARACTER.pronounSubject": "她",
+  "TEST_CHARACTER_TEST_CHARACTER.title": "须玖莉（460亿年）",
+  "TEST_CHARACTER_TEST_CHARACTER.titleObject": "须玖莉（460亿年）",
+  "TEST_CHARACTER_TEST_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。"
+}

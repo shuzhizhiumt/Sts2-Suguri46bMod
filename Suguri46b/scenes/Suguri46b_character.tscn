@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://6uvhn4e7ki2k"]
+
+[ext_resource type="Script" uid="uid://1es4p4034qv2" path="res://CustomCreatureVisuals.cs" id="1_ft3lo"]
+[ext_resource type="Texture2D" uid="uid://bltojfxuci0ey" path="res://Suguri46b/images/units/suguri46_00_00.png" id="2_vj6p5"]
+
+[node name="Suguri46bCharacter" type="Node2D"]
+script = ExtResource("1_ft3lo")
+
+[node name="Visuals" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-31, -129)
+texture = ExtResource("2_vj6p5")
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -34.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true

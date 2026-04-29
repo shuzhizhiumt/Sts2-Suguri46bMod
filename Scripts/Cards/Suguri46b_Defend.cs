@@ -14,13 +14,13 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
-public class  Observer_of_Eternity: ModCardTemplate
+[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 5)]
+public class  Suguri46b_Defend: ModCardTemplate
 {
     private const int energyCost = 1;
-    private const CardType type = CardType.Attack;
-    private const CardRarity rarity = CardRarity.Common;
-    private const TargetType targetType = TargetType.AnyEnemy;
+    private const CardType type = CardType.Skill;
+    private const CardRarity rarity = CardRarity.Basic;
+    private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
@@ -28,23 +28,20 @@ public class  Observer_of_Eternity: ModCardTemplate
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(12, ValueProp.Move)
+        new BlockVar(5, ValueProp.Move)
     ];
 
-    public Observer_of_Eternity() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Suguri46b_Defend() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target!)
-            .Execute(choiceContext);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars.Block.UpgradeValueBy(3);
     }
 }

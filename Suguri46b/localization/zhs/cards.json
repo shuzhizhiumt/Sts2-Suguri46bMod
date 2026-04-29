@@ -1,4 +1,10 @@
 {
     "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.title": "永恒的观测者",
-    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description": "造成{Damage:diff()}点伤害。"
+    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description": "造成{Damage:diff()}点伤害。",
+
+    "SUGURI46B_CARD_SUGURI46B_STRIKE.title":"打击",
+    "SUGURI46B_CARD_SUGURI46B_STRIKE.description": "造成{Damage:diff()}点伤害。",
+
+    "SUGURI46B_CARD_SUGURI46B_DEFEND.title":"防御",
+    "SUGURI46B_CARD_SUGURI46B_DEFEND.description": "获得{Block:diff()}点防御。"
 }
