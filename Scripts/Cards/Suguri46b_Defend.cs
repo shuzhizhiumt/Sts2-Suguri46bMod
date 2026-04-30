@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 5)]
+[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 4)]
 public class  Suguri46b_Defend: ModCardTemplate
 {
     private const int energyCost = 1;
