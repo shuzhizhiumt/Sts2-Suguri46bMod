@@ -1,5 +1,9 @@
 {
-    "TEST_RELIC_TEST_RELIC.title": "测试遗物",
-    "TEST_RELIC_TEST_RELIC.description": "每回合开始时，抽[blue]{Cards}[/blue]张牌。",
-    "TEST_RELIC_TEST_RELIC.flavor": "觉得很眼熟？"
+    "SUGURI46B_RELIC_NAVI.title": "娜比",
+    "SUGURI46B_RELIC_NAVI.description": "每场战斗第一次打出攻击牌时，获得{Energy:energyIcons()}。",
+    "SUGURI46B_RELIC_NAVI.flavor": "这到底是什么生物啦？",
+
+    "SUGURI46B_RELIC_SUMIKA.title": "栖海花",
+    "SUGURI46B_RELIC_SUMIKA.description": "每场战斗前三次打出攻击牌时，获得{Energy:energyIcons()}。",
+    "SUGURI46B_RELIC_SUMIKA.flavor": "须玖莉小姐和栖海花一起就是最长最强组合！"
 }

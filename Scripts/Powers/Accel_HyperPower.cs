@@ -28,6 +28,10 @@ public class Accel_HyperPower : ModPowerTemplate
 
 	public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
 	{
+		if (dealer == null)
+		{
+			return 1;
+		}
 		if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer))
 		{
 			return 1;

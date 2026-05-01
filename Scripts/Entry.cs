@@ -3,13 +3,13 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
+using Suguri46b.Scripts.Relics;
 
 namespace Suguri46b.Scripts;
 
 [ModInitializer(nameof(Init))]
 public class Entry
 {
-    // 你的modid
     public const string ModId = "Suguri46b";
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
 
@@ -17,7 +17,7 @@ public class Entry
     {
         var assembly = Assembly.GetExecutingAssembly();
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
-        // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<Navi,Sumika >();
     }
 }

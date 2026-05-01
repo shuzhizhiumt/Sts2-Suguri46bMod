@@ -1,26 +1,79 @@
-[gd_scene load_steps=3 format=3 uid="uid://6uvhn4e7ki2k"]
+[gd_scene load_steps=8 format=3 uid="uid://1sb3yjut1s62"]
 
-[ext_resource type="Script" uid="uid://1es4p4034qv2" path="res://CustomCreatureVisuals.cs" id="1_ft3lo"]
-[ext_resource type="Texture2D" uid="uid://bltojfxuci0ey" path="res://Suguri46b/images/units/suguri46_00_00.png" id="2_vj6p5"]
+[ext_resource type="Script" uid="uid://bjdtl7ikdu4g2" path="res://Suguri46b/scenes/CustomCreatureVisuals.cs" id="1_fopxw"]
+[ext_resource type="Texture2D" uid="uid://bltojfxuci0ey" path="res://Suguri46b/images/units/suguri46_00_00.png" id="1_jm6xw"]
+[ext_resource type="Texture2D" uid="uid://cwtsivq0yblsk" path="res://Suguri46b/images/units/suguri46_00_01.png" id="2_h1uba"]
+[ext_resource type="Texture2D" uid="uid://c1shafio0vf0y" path="res://Suguri46b/images/units/suguri46_00_05.png" id="3_uxtj5"]
+[ext_resource type="Texture2D" uid="uid://dhyvv8cts3g8c" path="res://Suguri46b/images/units/suguri46_00_02.png" id="4_6oe22"]
+[ext_resource type="Texture2D" uid="uid://blugpr531p2f1" path="res://Suguri46b/images/units/suguri46_00_04.png" id="4_uxtj5"]
 
-[node name="Suguri46bCharacter" type="Node2D"]
-script = ExtResource("1_ft3lo")
+[sub_resource type="SpriteFrames" id="SpriteFrames_xtrot"]
+animations = [{
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("2_h1uba")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("3_uxtj5")
+}],
+"loop": false,
+"name": &"cast",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("4_uxtj5")
+}],
+"loop": false,
+"name": &"die",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("4_6oe22")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jm6xw")
+}],
+"loop": true,
+"name": &"idle_loop",
+"speed": 1.0
+}]
 
-[node name="Visuals" type="Sprite2D" parent="."]
+[node name="Suguri46b" type="Node2D"]
+script = ExtResource("1_fopxw")
+
+[node name="Visuals" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-31, -129)
-texture = ExtResource("2_vj6p5")
+position = Vector2(9, -160.00006)
+scale = Vector2(1.546875, 1.546875)
+sprite_frames = SubResource("SpriteFrames_xtrot")
+animation = &"attack"
+autoplay = "idle_loop"
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -34.0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="IntentPos" type="Marker2D" parent="."]
-unique_name_in_owner = true
+offset_left = -121.0
+offset_top = -278.0
+offset_right = 121.0
+mouse_filter = 2
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(4, -168)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(30, -310)

@@ -16,9 +16,9 @@ public class Suguri46bCardPool : TypeListCardPoolModel
     public override string? BigEnergyIconPath => "res://Suguri46b/images/energy_Suguri46b_big.png";
 
     // 卡池的主题色。
-    public override Color DeckEntryCardColor => new(0.5f, 0.5f, 1f);
+    public override Color DeckEntryCardColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);
     // 能量表盘文字轮廓颜色
-    public override Color EnergyOutlineColor => new(0.5f, 0.5f, 1f);
+    public override Color EnergyOutlineColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);
     // 如果你想用原版卡框换色，加这两行
     private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateRgbShaderMaterial(0.5f, 0.5f, 1f);
     public override Material? PoolFrameMaterial => _poolFrameMaterial;

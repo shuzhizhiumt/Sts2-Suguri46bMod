@@ -17,10 +17,11 @@ using Suguri46b.Scripts;
 namespace Suguri46b.Scripts.Relics;
 
 [RegisterRelic(typeof(Suguri46bRelicPool))]
-[RegisterCharacterStarterRelic(typeof(Suguri46bCharacter))]
-public class Navi : ModRelicTemplate
+public class Sumika : ModRelicTemplate
 {
     private bool ActivatedThisCombat = false;
+    private int AttackCardsPlayedThisCombat = 3;
+
     // 稀有度
     public override RelicRarity Rarity => RelicRarity.Starter;
 
@@ -33,17 +34,17 @@ public class Navi : ModRelicTemplate
         IconOutlinePath: $"res://Suguri46b/images/relics/{GetType().Name}.png",
         BigIconPath: $"res://Suguri46b/images/relics/{GetType().Name}.png"
     );
-
+    public override bool ShowCounter => base.ShowCounter;
     public override Task AfterRoomEntered(AbstractRoom room)
-{
-    
-    if (room is CombatRoom)
     {
     
-        ActivatedThisCombat = false;
+        if (room is CombatRoom)
+        {
+            ActivatedThisCombat = false;
+            AttackCardsPlayedThisCombat = 3;
+        }
+        return Task.CompletedTask;
     }
-    return Task.CompletedTask;
-}
    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (
@@ -52,10 +53,14 @@ public class Navi : ModRelicTemplate
             && cardPlay.Card.Type == CardType.Attack    
             && !ActivatedThisCombat                    
         )
-    {
-        Flash();                                  
-        await PlayerCmd.GainEnergy(1,base.Owner);       
-        ActivatedThisCombat = true;               
-    }
+        {
+            Flash();                                  
+            await PlayerCmd.GainEnergy(1,base.Owner);
+            AttackCardsPlayedThisCombat--;
+            if (AttackCardsPlayedThisCombat <= 0)
+            {
+                ActivatedThisCombat = true;               
+            }               
+        }
     }
 }
