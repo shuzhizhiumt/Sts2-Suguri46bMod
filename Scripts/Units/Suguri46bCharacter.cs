@@ -9,7 +9,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 
-namespace Suguri46b.Scripts;
+namespace Suguri46b.Scripts.Units;
 
 [RegisterCharacter]
 public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri46bRelicPool, Suguri46bPotionPool>
@@ -86,14 +86,14 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             )));
 
     // 攻击和施法动画延迟，以对齐动画
-    public override float AttackAnimDelay => 0.1f;
-    public override float CastAnimDelay => 0.25f;
+    public override float AttackAnimDelay => 0f;
+    public override float CastAnimDelay => 0f;
 
     // 如果你的人物不需要时间线小故事，加上这句。
     public override bool RequiresEpochAndTimeline => false;
 
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
-    //protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
+    protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
 
     // 初始卡组，或者在卡牌类上用RegisterCharacterStarterCard就不用写这个
     // protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [

@@ -12,6 +12,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
@@ -32,6 +33,9 @@ public class  Observer_of_Eternity: ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2)
     ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Retain),
+    ];
 
     public Observer_of_Eternity() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
@@ -46,7 +50,6 @@ public class  Observer_of_Eternity: ModCardTemplate
                 base.Owner.RunState.CardMultiplayerConstraint))
             .Where(c => c.Type == CardType.Attack && c.Rarity == CardRarity.Common);
 
-        // 随机选取2张不重复卡牌
         List<CardModel> gainCards = [.. CardFactory.GetDistinctForCombat(
             base.Owner,
             AttackCards,

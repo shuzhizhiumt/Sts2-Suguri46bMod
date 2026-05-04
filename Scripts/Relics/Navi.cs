@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts;
+using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Relics;
 
@@ -20,42 +21,42 @@ namespace Suguri46b.Scripts.Relics;
 [RegisterCharacterStarterRelic(typeof(Suguri46bCharacter))]
 public class Navi : ModRelicTemplate
 {
-    private bool ActivatedThisCombat = false;
-    // 稀有度
-    public override RelicRarity Rarity => RelicRarity.Starter;
+	private bool ActivatedThisCombat = false;
+	// 稀有度
+	public override RelicRarity Rarity => RelicRarity.Starter;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1)
-    ];
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new EnergyVar(1)
+	];
 
-    public override RelicAssetProfile AssetProfile => new(
-        IconPath: $"res://Suguri46b/images/relics/{GetType().Name}.png",
-        IconOutlinePath: $"res://Suguri46b/images/relics/{GetType().Name}.png",
-        BigIconPath: $"res://Suguri46b/images/relics/{GetType().Name}.png"
-    );
+	public override RelicAssetProfile AssetProfile => new(
+		IconPath: $"res://Suguri46b/images/relics/{GetType().Name}.png",
+		IconOutlinePath: $"res://Suguri46b/images/relics/{GetType().Name}.png",
+		BigIconPath: $"res://Suguri46b/images/relics/{GetType().Name}.png"
+	);
 
-    public override Task AfterRoomEntered(AbstractRoom room)
+	public override Task AfterRoomEntered(AbstractRoom room)
 {
-    
-    if (room is CombatRoom)
-    {
-    
-        ActivatedThisCombat = false;
-    }
-    return Task.CompletedTask;
+	
+	if (room is CombatRoom)
+	{
+	
+		ActivatedThisCombat = false;
+	}
+	return Task.CompletedTask;
 }
    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (
-            CombatManager.Instance.IsInProgress        
-            && cardPlay.Card.Owner == base.Owner       
-            && cardPlay.Card.Type == CardType.Attack    
-            && !ActivatedThisCombat                    
-        )
-    {
-        Flash();                                  
-        await PlayerCmd.GainEnergy(1,base.Owner);       
-        ActivatedThisCombat = true;               
-    }
-    }
+	{
+		if (
+			CombatManager.Instance.IsInProgress        
+			&& cardPlay.Card.Owner == base.Owner       
+			&& cardPlay.Card.Type == CardType.Attack    
+			&& !ActivatedThisCombat                    
+		)
+	{
+		Flash();                                  
+		await PlayerCmd.GainEnergy(1,base.Owner);       
+		ActivatedThisCombat = true;               
+	}
+	}
 }

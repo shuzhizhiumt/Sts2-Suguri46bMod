@@ -1,13 +1,16 @@
 {
+    "SUGURI46B_CARD_SUGURI46B_STRIKE.title":"打击",
+    "SUGURI46B_CARD_SUGURI46B_STRIKE.description": "造成{Damage:diff()}点伤害。",
+    
+    "SUGURI46B_CARD_SUGURI46B_DEFEND.title":"防御",
+    "SUGURI46B_CARD_SUGURI46B_DEFEND.description": "获得{Block:diff()}点防御。",
+
     "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.title": "永恒的观测者",
-    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description":"将{Cards:diff()}张随机角色{IfUpgraded:show:[gold]升级过[/gold]}的普通攻击牌加入你的[gold]手牌[/gold]，并添加[gold]保留[/gold]。",
+    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description":"将{Cards:diff()}张随机角色{IfUpgraded:show:[gold]升级过[/gold]}的普通攻击牌加入你的[gold]手牌[/gold]，并为它们添加[gold]保留[/gold]。",
     
     "SUGURI46B_CARD_ACCEL_HYPER.title":"极速超能",
     "SUGURI46B_CARD_ACCEL_HYPER.description": "你本回合打出的下{doubleDamageAmount:diff()}张攻击牌，造成双倍伤害。",
 
-    "SUGURI46B_CARD_SUGURI46B_STRIKE.title":"打击",
-    "SUGURI46B_CARD_SUGURI46B_STRIKE.description": "造成{Damage:diff()}点伤害。",
-
-    "SUGURI46B_CARD_SUGURI46B_DEFEND.title":"防御",
-    "SUGURI46B_CARD_SUGURI46B_DEFEND.description": "获得{Block:diff()}点防御。"
+    "SUGURI46B_CARD_ACCELERATOR.title":"极速装置",
+    "SUGURI46B_CARD_ACCELERATOR.description": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。"
 }

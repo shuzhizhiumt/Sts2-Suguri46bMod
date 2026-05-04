@@ -10,6 +10,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
@@ -26,7 +27,7 @@ public class  Suguri46b_Defend: ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
     );
-
+   protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Defend };
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(5, ValueProp.Move)
     ];

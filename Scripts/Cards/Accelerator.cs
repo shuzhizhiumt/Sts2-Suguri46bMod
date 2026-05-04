@@ -16,12 +16,11 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
-public class  Accel_Hyper: ModCardTemplate
+public class  Accelerator: ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Basic;
+    private const CardRarity rarity = CardRarity.Ancient;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
@@ -30,21 +29,21 @@ public class  Accel_Hyper: ModCardTemplate
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("doubleDamageAmount", 1)
+        new DynamicVar("Power", 1)
     ];
 
-    public Accel_Hyper() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Accelerator() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
         
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<Accel_HyperPower>(choiceContext, base.Owner.Creature, base.DynamicVars["doubleDamageAmount"].BaseValue, base.Owner.Creature, this);
+        await PowerCmd.Apply<AcceleratorPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Power"].BaseValue, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-       base.DynamicVars["doubleDamageAmount"].UpgradeValueBy(1);
+       base.EnergyCost.UpgradeBy(-1);
     }
 }

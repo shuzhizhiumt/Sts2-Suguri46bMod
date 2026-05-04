@@ -1,8 +1,7 @@
 using Godot;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Utils;
-
-namespace Suguri46b.Scripts;
+namespace Suguri46b.Scripts.Units;
 
 public class Suguri46bCardPool : TypeListCardPoolModel
 {

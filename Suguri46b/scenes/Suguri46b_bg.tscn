@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cebklf2mbdx5p"]
 
-[ext_resource type="Texture2D" uid="uid://c7ogdi8683r3e" path="res://Suguri46b/images/units/suguri46bg.png" id="1_p3t1r"]
+[ext_resource type="Texture2D" uid="uid://drbhd5p5kblfl" path="res://Suguri46b/images/units/suguri46bg.png" id="1_p3t1r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4op7v"]
 
@@ -16,7 +16,7 @@ colors = PackedColorArray(0.427493, 0.427493, 0.427493, 1, 1, 1, 1, 1, 0.427451,
 offsets = PackedFloat32Array(0, 0.178337)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
-[node name="RandomBg" type="Control"]
+[node name="Suguri46bBg" type="Control"]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
