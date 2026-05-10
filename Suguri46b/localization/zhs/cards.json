@@ -12,5 +12,14 @@
     "SUGURI46B_CARD_ACCEL_HYPER.description": "你本回合打出的下{doubleDamageAmount:diff()}张攻击牌，造成双倍伤害。",
 
     "SUGURI46B_CARD_ACCELERATOR.title":"极速装置",
-    "SUGURI46B_CARD_ACCELERATOR.description": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。"
+    "SUGURI46B_CARD_ACCELERATOR.description": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。",
+
+    "SUGURI46B_CARD_LONG_DISTANCE_SHOT.title":"远距离射击",
+    "SUGURI46B_CARD_LONG_DISTANCE_SHOT.description": "造成{Damage:diff()}点伤害。",
+
+    "SUGURI46B_CARD_REPRODUCTION_OF_RECORDS.title":"记录重现",
+    "SUGURI46B_CARD_REPRODUCTION_OF_RECORDS.description": "将[gold]弃牌堆[/gold]顶的{Cards:diff()}张牌的复制加入你的[gold]手牌[/gold]，它们可以免费打出，且拥有[gold]消耗[/gold]。",
+
+    "SUGURI46B_CARD_INTELLIGENCE_OFFICER.title":"情报官",
+    "SUGURI46B_CARD_INTELLIGENCE_OFFICER.description": "根据你抽牌堆顶的卡牌类型，获得相应的增益效果。\n攻击牌：获得{Intelligence:diff()}点临时力量。\n技能牌：获得{Intelligence:diff()}点临时敏捷。\n能力牌：获得{Intelligence:diff()}点覆甲。"
 }

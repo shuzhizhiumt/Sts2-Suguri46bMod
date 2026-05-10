@@ -10,57 +10,56 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_xtrot"]
 animations = [{
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("2_h1uba")
 }],
 "loop": false,
 "name": &"attack",
-"speed": 2.0
+"speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("3_uxtj5")
 }],
 "loop": false,
 "name": &"cast",
-"speed": 2.0
+"speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("4_uxtj5")
 }],
 "loop": false,
 "name": &"die",
-"speed": 2.0
+"speed": 1.0
 }, {
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("4_6oe22")
 }],
 "loop": false,
-"name": &"hurt",
-"speed": 2.0
+"name": &"hit",
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_jm6xw")
 }],
 "loop": true,
-"name": &"idle_loop",
-"speed": 5.0
+"name": &"idle",
+"speed": 1.0
 }]
 
 [node name="Suguri46b" type="Node2D"]
 script = ExtResource("1_fopxw")
 
-[node name="Visuals" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0.99999475, -190.00006)
 scale = Vector2(1.4843749, 1.4843749)
 sprite_frames = SubResource("SpriteFrames_xtrot")
-animation = &"idle_loop"
-autoplay = "idle_loop"
-frame_progress = 0.12003749
+animation = &"hit"
+autoplay = "idle"
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true

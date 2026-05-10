@@ -10,34 +10,33 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 4)]
-public class  Suguri46b_Defend: ModCardTemplate
+public class  Long_Distance_Shot: ModCardTemplate
 {
     private const int energyCost = 1;
-    private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Basic;
-    private const TargetType targetType = TargetType.Self;
+    private const CardType type = CardType.Attack;
+    private const CardRarity rarity = CardRarity.Common;
+    private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
     );
-   protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Defend };
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5, ValueProp.Move)
+        new DamageVar(10, ValueProp.Move)
     ];
-
-    public Suguri46b_Defend() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Long_Distance_Shot() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(cardPlay.Target!)
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(3);
     }
 }
