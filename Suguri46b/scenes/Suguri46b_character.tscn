@@ -15,7 +15,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -23,7 +23,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"cast",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -39,7 +39,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -53,7 +53,7 @@ animations = [{
 [node name="Suguri46b" type="Node2D"]
 script = ExtResource("1_fopxw")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Visuals" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0.99999475, -190.00006)
 scale = Vector2(1.4843749, 1.4843749)

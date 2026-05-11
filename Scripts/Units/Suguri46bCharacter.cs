@@ -33,11 +33,11 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
                 // 人物模型tscn路径。
                 VisualsPath: "res://Suguri46b/scenes/suguri46b_character.tscn",
                 // 能量表盘tscn路径。
-                EnergyCounterPath: "res://Suguri46b/scenes/suguri46b_energy_counter.tscn"
+                EnergyCounterPath: "res://Suguri46b/scenes/suguri46b_energy_counter.tscn",
                 // 商店人物场景。
-                //MerchantAnimPath: "res://Suguri46b/scenes/suguri46b_character_merchant.tscn"
+                MerchantAnimPath: "res://Suguri46b/scenes/suguri46b_merchant.tscn",
                 // 篝火休息场景。
-                // RestSiteAnimPath: "res://Suguri46b/scenes/suguri46b_character_rest_site.tscn"
+                RestSiteAnimPath: "res://Suguri46b/scenes/suguri46b_rest_site.tscn"
             ),
             Ui: new(
                 // 人物头像路径。
@@ -54,7 +54,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
                 // 人物选择过渡动画。
                 // CharacterSelectTransitionPath: "res://materials/transitions/ironclad_transition_mat.tres",
                 // 地图上的角色标记图标、表情轮盘上的角色头像
-                MapMarkerPath: "res://Suguri46b/images/packed/character_select/char_select_suguri46b.png"
+                MapMarkerPath: "res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png"
             ),
             Vfx: new(
                 // 卡牌拖尾场景。
