@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ggcvnh2fc1hl"]
+
+[ext_resource type="Texture2D" uid="uid://n48qodx1cc45" path="res://Suguri46b/images/units/suguri46_00_03.png" id="1_pk4iq"]
+
+[node name="NatsumiMerchant" type="Node2D"]
+
+[node name="suguri46b" type="Sprite2D" parent="."]
+position = Vector2(-4, -242.99991)
+scale = Vector2(2.09375, 2.0898438)
+texture = ExtResource("1_pk4iq")

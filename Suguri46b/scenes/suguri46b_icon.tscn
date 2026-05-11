@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy0v43e6n1skt"]
+
+[ext_resource type="Texture2D" uid="uid://ejau5pct1u03" path="res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png" id="1_ea53o"]
+
+[node name="TextureRect" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.062000003
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 57.68
+offset_bottom = 56.823997
+texture = ExtResource("1_ea53o")
+expand_mode = 1
