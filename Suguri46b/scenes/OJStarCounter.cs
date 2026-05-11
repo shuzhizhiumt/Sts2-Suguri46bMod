@@ -29,5 +29,4 @@ public partial class OJStarCounter : Control
 		public override void _Process(double delta)
 	{
 	}
-
 }
