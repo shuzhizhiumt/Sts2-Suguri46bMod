@@ -30,27 +30,27 @@ public class Navi : ModRelicTemplate
 	);
 
 	public override Task AfterRoomEntered(AbstractRoom room)
-{
-	
-	if (room is CombatRoom)
 	{
-	
-		ActivatedThisCombat = false;
+
+		if (room is CombatRoom)
+		{
+
+			ActivatedThisCombat = false;
+		}
+		return Task.CompletedTask;
 	}
-	return Task.CompletedTask;
-}
-   public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		if (
-			CombatManager.Instance.IsInProgress        
-			&& cardPlay.Card.Owner == base.Owner       
-			&& cardPlay.Card.Type == CardType.Attack    
-			&& !ActivatedThisCombat                    
+			CombatManager.Instance.IsInProgress
+			&& cardPlay.Card.Owner == base.Owner
+			&& cardPlay.Card.Type == CardType.Attack
+			&& !ActivatedThisCombat
 		)
-	{
-		Flash();                                  
-		await PlayerCmd.GainEnergy(1,base.Owner);       
-		ActivatedThisCombat = true;               
-	}
+		{
+			Flash();
+			await PlayerCmd.GainEnergy(1, base.Owner);
+			ActivatedThisCombat = true;
+		}
 	}
 }

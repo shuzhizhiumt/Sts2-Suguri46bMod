@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 namespace Suguri46b.Scripts.Units;
 
 [RegisterCharacter]
-public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri46bRelicPool, Suguri46bPotionPool>,IModCreatureVisualsFactory,IModCreatureCombatAnimationStateMachineFactory
+public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri46bRelicPool, Suguri46bPotionPool>, IModCreatureVisualsFactory, IModCreatureCombatAnimationStateMachineFactory
 {
     // 角色名称颜色
     public override Color NameColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);
@@ -42,7 +42,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             Ui: new(
                 // 人物头像路径。
                 IconTexturePath: "res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png",
-                 // 人物头像-锁定状态路径。
+                // 人物头像-锁定状态路径。
                 // 人物头像2号。
                 IconPath: "res://Suguri46b/scenes/suguri46b_icon.tscn",
                 // 人物选择背景。
@@ -57,53 +57,52 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
                 MapMarkerPath: "res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png"
             ),
             Vfx: new(
-                // 卡牌拖尾场景。
-                // TrailPath: "res://scenes/vfx/card_trail_ironclad.tscn"
+            // 卡牌拖尾场景。
+            // TrailPath: "res://scenes/vfx/card_trail_ironclad.tscn"
             ),
             Audio: new(
-                // 攻击音效
-                // AttackSfx: null,
-                // 施法音效
-                // CastSfx: null,
-                // 死亡音效
-                // DeathSfx: null,
-                // 角色选择音效
-                // CharacterSelectSfx: null,
-                // 过渡音效
-                // CharacterTransitionSfx: "event:/sfx/ui/wipe_ironclad"
+            // 攻击音效
+            // AttackSfx: null,
+            // 施法音效
+            // CastSfx: null,
+            // 死亡音效
+            // DeathSfx: null,
+            // 角色选择音效
+            // CharacterSelectSfx: null,
+            // 过渡音效
+            // CharacterTransitionSfx: "event:/sfx/ui/wipe_ironclad"
             ),
             Multiplayer: new(
-                // 多人模式-手指。
-                // ArmPointingTexturePath: null,
-                // 多人模式剪刀石头布-石头。
-                // ArmRockTexturePath: null,
-                // 多人模式剪刀石头布-布。
-                // ArmPaperTexturePath: null,
-                // 多人模式剪刀石头布-剪刀。
-                // ArmScissorsTexturePath: null
+            // 多人模式-手指。
+            // ArmPointingTexturePath: null,
+            // 多人模式剪刀石头布-石头。
+            // ArmRockTexturePath: null,
+            // 多人模式剪刀石头布-布。
+            // ArmPaperTexturePath: null,
+            // 多人模式剪刀石头布-剪刀。
+            // ArmScissorsTexturePath: null
             )));
     // 攻击和施法动画延迟，以对齐动画
-    public override float AttackAnimDelay => 0.2f;
-    public override float CastAnimDelay => 0.2f;
+    public override float AttackAnimDelay => 0f;
+    public override float CastAnimDelay => 0f;
     public ModAnimStateMachine? TryCreateCombatAnimationStateMachine(Node visualsRoot)
-        {
-            var builder = ModAnimStateMachineBuilder.Create();
-            builder.AddState("idle", loop: true).AsInitial();
-            builder.AddState("attack", loop: false).WithNext("idle");
-            builder.AddState("hit", loop: false).WithNext("idle");
-            builder.AddState("cast", loop: false).WithNext("idle");
-            builder.AddState("die", loop: false);
-            builder
-                // 待机 ←→ 攻击
-                .AddBranch("idle", "Attack", "attack")
-                .AddBranch("idle", "Hit", "hit")
-                .AddBranch("idle", "Cast", "cast")
-                .AddAnyState("Dead", "die")
-                .AddAnyState("Idle", "idle");
+    {
+        var builder = ModAnimStateMachineBuilder.Create();
+        builder.AddState("idle", loop: true).AsInitial();
+        builder.AddState("attack", loop: false).WithNext("idle");
+        builder.AddState("hit", loop: false).WithNext("idle");
+        builder.AddState("cast", loop: false).WithNext("idle");
+        builder.AddState("die", loop: false);
+        builder
+            // 待机 ←→ 攻击
+            .AddBranch("idle", "Attack", "attack")
+            .AddBranch("idle", "Hit", "hit")
+            .AddBranch("idle", "Cast", "cast")
+            .AddAnyState("Dead", "die")
+            .AddAnyState("Idle", "idle");
 
-            return builder.BuildForVisualsRoot(visualsRoot);
-        }
-    // 如果你的人物不需要时间线小故事，加上这句。
+        return builder.BuildForVisualsRoot(visualsRoot);
+    }
     public override bool RequiresEpochAndTimeline => false;
 
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。

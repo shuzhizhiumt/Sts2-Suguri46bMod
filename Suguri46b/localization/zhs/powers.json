@@ -5,5 +5,9 @@
 
     "SUGURI46B_POWER_ACCELERATOR_POWER.title": "极速装置",
     "SUGURI46B_POWER_ACCELERATOR_POWER.description": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。",
-    "SUGURI46B_POWER_ACCELERATOR_POWER.smartDescription": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。"
+    "SUGURI46B_POWER_ACCELERATOR_POWER.smartDescription": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。",
+
+    "SUGURI46B_POWER_NORMA.title": "目标",
+    "SUGURI46B_POWER_NORMA.description": "根据层数获得加成，达到6层时胜利。",
+    "SUGURI46B_POWER_NORMA.smartDescription": "根据层数获得加成，达到6层时胜利。"
 }

@@ -8,7 +8,7 @@ using Suguri46b.Scripts.Cards;
 namespace Suguri46b.Scripts.Powers;
 
 [RegisterPower]
-public class DEF_UP : TemporaryDexterityPower,IModPowerAssetOverrides
+public class DEF_UP : TemporaryDexterityPower, IModPowerAssetOverrides
 {
     public override AbstractModel OriginModel => ModelDb.Card<Intelligence_Officer>();
     public PowerAssetProfile AssetProfile => PowerAssetProfile.Empty;

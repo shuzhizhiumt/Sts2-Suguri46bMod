@@ -10,7 +10,7 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class  Accelerator: ModCardTemplate
+public class Accelerator : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
@@ -28,7 +28,7 @@ public class  Accelerator: ModCardTemplate
 
     public Accelerator() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
-        
+
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -38,6 +38,6 @@ public class  Accelerator: ModCardTemplate
 
     protected override void OnUpgrade()
     {
-       base.EnergyCost.UpgradeBy(-1);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

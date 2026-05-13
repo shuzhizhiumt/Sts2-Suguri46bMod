@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
+using Suguri46b.Scripts.Cards;
 using Suguri46b.Scripts.Relics;
 
 namespace Suguri46b.Scripts;
@@ -21,6 +22,7 @@ public class Entry
         var assembly = Assembly.GetExecutingAssembly();
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
-        RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<Navi,Sumika >();
+        RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<Accel_Hyper, Accelerator>();
+        RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<Navi, Sumika>();
     }
 }

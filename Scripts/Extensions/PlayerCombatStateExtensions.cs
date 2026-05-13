@@ -14,23 +14,23 @@ static class PlayerCombatStateExtensions
     private static readonly ConditionalWeakTable<PlayerCombatState, ExtraOJStarData> _data = new ConditionalWeakTable<PlayerCombatState, ExtraOJStarData>();
     private static ExtraOJStarData GetData(PlayerCombatState pcs) => _data.GetOrCreateValue(pcs);
     public static int GetOJStarTotal(this PlayerCombatState pcs) => GetData(pcs).OJStarTotal;
-    public static void GainOJStar(this PlayerCombatState pcs, int amount,Player player)
+    public static void GainOJStar(this PlayerCombatState pcs, int amount, Player player)
     {
-        if(amount <0) throw new ArgumentException("Must not be negative", nameof(amount));
+        if (amount < 0) throw new ArgumentException("Must not be negative", nameof(amount));
         var data = GetData(pcs);
         data.OJStarTotal += amount;
-        data.History.Add(new OJStarModifiedEntry(pcs, amount, player.Creature.CombatState.RoundNumber,MegaCrit.Sts2.Core.Combat.CombatSide.Player));
+        data.History.Add(new OJStarModifiedEntry(pcs, amount, player.Creature.CombatState.RoundNumber, MegaCrit.Sts2.Core.Combat.CombatSide.Player));
         if (LocalContext.IsMe(player.Creature))
         {
             Suguri46bOJStarNodeInitPatch.GetOJStarCounterLabel().Text = $"[center]{data.OJStarTotal}[/center]";
         }
         Log.Info($">>>[Suguri46bMod]Player = " + player.NetId + "GainOjstar Successfully " + $"[OJStar] +{amount}, total = {data.OJStarTotal}");
     }
-    public static void LoseOJStar(this PlayerCombatState pcs, int amount,Player player)
+    public static void LoseOJStar(this PlayerCombatState pcs, int amount, Player player)
     {
-        if(amount <0) throw new ArgumentException("Must not be negative", nameof(amount));
+        if (amount < 0) throw new ArgumentException("Must not be negative", nameof(amount));
         var data = GetData(pcs);
-        data.OJStarTotal = Math.Max(data.OJStarTotal - amount,0);
+        data.OJStarTotal = Math.Max(data.OJStarTotal - amount, 0);
         if (LocalContext.IsMe(player.Creature))
         {
             Suguri46bOJStarNodeInitPatch.GetOJStarCounterLabel().Text = $"[center]{data.OJStarTotal}[/center]";

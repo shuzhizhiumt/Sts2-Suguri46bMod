@@ -32,7 +32,7 @@ public class Sumika : ModRelicTemplate
 	public override bool ShowCounter => base.ShowCounter;
 	public override Task AfterRoomEntered(AbstractRoom room)
 	{
-	
+
 		if (room is CombatRoom)
 		{
 			ActivatedThisCombat = false;
@@ -40,22 +40,22 @@ public class Sumika : ModRelicTemplate
 		}
 		return Task.CompletedTask;
 	}
-   public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		if (
-			CombatManager.Instance.IsInProgress        
-			&& cardPlay.Card.Owner == base.Owner       
-			&& cardPlay.Card.Type == CardType.Attack    
-			&& !ActivatedThisCombat                    
+			CombatManager.Instance.IsInProgress
+			&& cardPlay.Card.Owner == base.Owner
+			&& cardPlay.Card.Type == CardType.Attack
+			&& !ActivatedThisCombat
 		)
 		{
-			Flash();                                  
-			await PlayerCmd.GainEnergy(1,base.Owner);
+			Flash();
+			await PlayerCmd.GainEnergy(1, base.Owner);
 			AttackCardsPlayedThisCombat--;
 			if (AttackCardsPlayedThisCombat <= 0)
 			{
-				ActivatedThisCombat = true;               
-			}               
+				ActivatedThisCombat = true;
+			}
 		}
 	}
 }

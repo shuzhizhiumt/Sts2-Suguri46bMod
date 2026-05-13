@@ -10,7 +10,7 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class  Reproduction_of_Records: ModCardTemplate
+public class Reproduction_of_Records : ModCardTemplate
 {
     private const int energyCost = 3;
     private const CardType type = CardType.Skill;
@@ -40,12 +40,12 @@ public class  Reproduction_of_Records: ModCardTemplate
             clonedCard.AddKeyword(CardKeyword.Exhaust);
             clonedCard.SetToFreeThisCombat();
             await CardPileCmd.AddGeneratedCardToCombat(
-                clonedCard, 
-                PileType.Hand, 
+                clonedCard,
+                PileType.Hand,
                 base.Owner
             );
         }
-	}
+    }
 
     protected override void OnUpgrade()
     {

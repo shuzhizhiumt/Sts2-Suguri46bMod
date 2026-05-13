@@ -5,5 +5,9 @@
 
     "SUGURI46B_RELIC_SUMIKA.title": "栖海花",
     "SUGURI46B_RELIC_SUMIKA.description": "每场战斗前三次打出攻击牌时，获得{Energy:energyIcons()}。",
-    "SUGURI46B_RELIC_SUMIKA.flavor": "须玖莉小姐和栖海花一起就是最长最强组合！"
+    "SUGURI46B_RELIC_SUMIKA.flavor": "须玖莉小姐和栖海花一起就是最长最强组合！",
+
+    "SUGURI46B_RELIC_ORANGE_JUICE.title": "100%鲜橙汁",
+    "SUGURI46B_RELIC_ORANGE_JUICE.description": "每回合开始时，获得当前回合数的[gold]星星[/gold]。战斗开始时，获得一层[gold]目标[/gold]",
+    "SUGURI46B_RELIC_ORANGE_JUICE.flavor": "来玩100%鲜橙汁！"
 }

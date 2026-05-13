@@ -8,7 +8,7 @@ using Suguri46b.Scripts.Cards;
 namespace Suguri46b.Scripts.Powers;
 
 [RegisterPower]
-public class ATK_UP : TemporaryStrengthPower,IModPowerAssetOverrides
+public class ATK_UP : TemporaryStrengthPower, IModPowerAssetOverrides
 {
     public override AbstractModel OriginModel => ModelDb.Card<Intelligence_Officer>();
 

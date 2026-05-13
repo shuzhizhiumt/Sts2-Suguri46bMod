@@ -10,7 +10,7 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class  Long_Distance_Shot: ModCardTemplate
+public class Long_Distance_Shot : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Attack;

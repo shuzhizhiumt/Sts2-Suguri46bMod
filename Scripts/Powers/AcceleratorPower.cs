@@ -22,26 +22,26 @@ public class AcceleratorPower : ModPowerTemplate
         BigIconPath: "res://Suguri46b/images/powers/AcceleratorPower.png"
     );
 
-	public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-	{
-		if (dealer == null)
-		{
-			return 1;
-		}
-		if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer))
-		{
-			return 1;
-		}
-		if (!props.IsPoweredAttack())
-		{
-			return 1;
-		}
-		if (cardSource == null)
-		{
-			return 1;
-		}
-		return 2;
-	}
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (dealer == null)
+        {
+            return 1;
+        }
+        if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer))
+        {
+            return 1;
+        }
+        if (!props.IsPoweredAttack())
+        {
+            return 1;
+        }
+        if (cardSource == null)
+        {
+            return 1;
+        }
+        return 2;
+    }
     public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (base.Owner != target)
@@ -50,11 +50,11 @@ public class AcceleratorPower : ModPowerTemplate
         }
         return (decimal)Math.Pow(2.0, base.Amount);
     }
-     public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
-	{
-		if (side == base.Owner.Side)
-		{
-			await PowerCmd.Decrement(this);
-		}
-	}
+    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    {
+        if (side == base.Owner.Side)
+        {
+            await PowerCmd.Decrement(this);
+        }
+    }
 }

@@ -13,7 +13,7 @@ namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
 [RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
-public class  Observer_of_Eternity: ModCardTemplate
+public class Observer_of_Eternity : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
@@ -41,7 +41,7 @@ public class  Observer_of_Eternity: ModCardTemplate
         List<CardPoolModel> allPools = [.. base.Owner.UnlockState.CharacterCardPools];
         IEnumerable<CardModel> AttackCards = allPools
             .SelectMany(pool => pool.GetUnlockedCards(
-                base.Owner.UnlockState, 
+                base.Owner.UnlockState,
                 base.Owner.RunState.CardMultiplayerConstraint))
             .Where(c => c.Type == CardType.Attack && c.Rarity == CardRarity.Common);
 
@@ -55,9 +55,9 @@ public class  Observer_of_Eternity: ModCardTemplate
         foreach (var card in gainCards)
         {
             if (base.IsUpgraded)
-			{
-				CardCmd.Upgrade(card);
-			}
+            {
+                CardCmd.Upgrade(card);
+            }
             CardCmd.ApplyKeyword(card, CardKeyword.Retain);
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, base.Owner);
         }

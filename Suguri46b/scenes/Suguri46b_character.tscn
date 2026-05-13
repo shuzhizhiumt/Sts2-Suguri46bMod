@@ -15,7 +15,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 6.0
+"speed": 1.8
 }, {
 "frames": [{
 "duration": 1.0,
@@ -23,7 +23,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"cast",
-"speed": 6.0
+"speed": 1.8
 }, {
 "frames": [{
 "duration": 1.0,
@@ -39,7 +39,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 6.0
+"speed": 1.8
 }, {
 "frames": [{
 "duration": 1.0,
@@ -58,7 +58,7 @@ unique_name_in_owner = true
 position = Vector2(0.99999475, -190.00006)
 scale = Vector2(1.4843749, 1.4843749)
 sprite_frames = SubResource("SpriteFrames_xtrot")
-animation = &"hit"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Bounds" type="Control" parent="."]
