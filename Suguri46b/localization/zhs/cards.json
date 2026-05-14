@@ -23,6 +23,9 @@
     "SUGURI46B_CARD_INTELLIGENCE_OFFICER.title":"情报官",
     "SUGURI46B_CARD_INTELLIGENCE_OFFICER.description": "根据你抽牌堆顶的卡牌类型，获得相应的增益效果。\n攻击牌：本回合获得{Intelligence:diff()}点[gold]力量[/gold]。\n技能牌：本回合获得{Intelligence:diff()}点[gold]敏捷[/gold]。\n能力牌：获得{Intelligence:diff()}点[gold]覆甲[/gold]。",
     
+    "SUGURI46B_CARD_BACKDOOR_TRADE.title":"幕后交易",
+    "SUGURI46B_CARD_BACKDOOR_TRADE.description":"如果你的[gold]目标[/gold]层数小于5，获得一层[gold]目标[/gold]。\n将一张[gold]不幸护符[/gold]加入你的[gold]手牌[/gold]。",
+
     "SUGURI46B_CARD_UNLUCKY_CHARM.title":"不幸护符",
     "SUGURI46B_CARD_UNLUCKY_CHARM.description":"在你的回合结束时，如果这张牌在你的手牌中，失去相当于[gold]目标[/gold]层数*5的[gold]星星[/gold]。"
 }
