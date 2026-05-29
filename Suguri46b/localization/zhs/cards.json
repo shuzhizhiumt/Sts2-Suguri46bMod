@@ -6,7 +6,7 @@
     "SUGURI46B_CARD_SUGURI46B_DEFEND.description": "获得{Block:diff()}点防御。",
 
     "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.title": "永恒的观测者",
-    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description":"将{Cards:diff()}张随机角色{IfUpgraded:show:[gold]升级过[/gold]}的普通攻击牌加入你的[gold]手牌[/gold]，并为它们添加[gold]保留[/gold]。",
+    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description":"将{Cards:diff()}张随机角色{IfUpgraded:show:[gold]升级过[/gold]}的普通攻击牌加入你的[gold]手牌[/gold]，并为它们添加[gold]保留[/gold]。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n也可以生成罕见攻击牌。",
     
     "SUGURI46B_CARD_ACCEL_HYPER.title":"极速超能",
     "SUGURI46B_CARD_ACCEL_HYPER.description": "你本回合打出的下{doubleDamageAmount:diff()}张攻击牌，造成双倍伤害。",

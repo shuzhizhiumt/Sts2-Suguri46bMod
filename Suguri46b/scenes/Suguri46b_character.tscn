@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://1sb3yjut1s62"]
+[gd_scene load_steps=7 format=3 uid="uid://1sb3yjut1s62"]
 
-[ext_resource type="Script" uid="uid://bjdtl7ikdu4g2" path="res://Suguri46b/scenes/CustomCreatureVisuals.cs" id="1_fopxw"]
 [ext_resource type="Texture2D" uid="uid://dew7yup42aamy" path="res://Suguri46b/images/units/suguri46_00_00.png" id="1_jm6xw"]
 [ext_resource type="Texture2D" uid="uid://bfew3lwmeq5tb" path="res://Suguri46b/images/units/suguri46_00_01.png" id="2_h1uba"]
 [ext_resource type="Texture2D" uid="uid://x2h07gr2xfnf" path="res://Suguri46b/images/units/suguri46_00_05.png" id="3_uxtj5"]
@@ -48,17 +47,24 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jm6xw")
+}],
+"loop": true,
+"name": &"relaxed",
+"speed": 5.0
 }]
 
 [node name="Suguri46b" type="Node2D"]
-script = ExtResource("1_fopxw")
 
 [node name="Visuals" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0.99999475, -190.00006)
 scale = Vector2(1.4843749, 1.4843749)
 sprite_frames = SubResource("SpriteFrames_xtrot")
-animation = &"idle"
+animation = &"relaxed"
 autoplay = "idle"
 
 [node name="Bounds" type="Control" parent="."]
@@ -70,10 +76,10 @@ offset_top = -278.0
 offset_right = 121.0
 mouse_filter = 2
 
-[node name="CenterPos" type="Marker2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(4, -168)
-
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(30, -310)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(4, -168)

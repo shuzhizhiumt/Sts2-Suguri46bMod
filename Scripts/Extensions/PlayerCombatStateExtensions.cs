@@ -2,7 +2,11 @@ using System.Runtime.CompilerServices;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Logging;
+using Suguri46b.Scripts.Combat.History;
+using Suguri46b.Scripts.Combat.History.Entries;
+using Suguri46b.Scripts.Patches;
 
+namespace Suguri46b.Scripts.Extensions;
 static class PlayerCombatStateExtensions
 {
     private class ExtraOJStarData
@@ -37,7 +41,6 @@ static class PlayerCombatStateExtensions
         }
         Log.Info($">>>[Suguri46bMod]Player = " + player.NetId + "LoseOjstar Successfully " + $"[OJStar] -{amount}, total = {data.OJStarTotal}");
     }
-
     public static int GetOJStarGainedThisTurn(this PlayerCombatState pcs, Player player)
     {
         return GetData(pcs).History.GainedThisTurn(player.Creature.CombatState);

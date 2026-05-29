@@ -1,5 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
+using Suguri46b.Scripts.Combat.History.Entries;
 
+namespace Suguri46b.Scripts.Combat.History;
 public class OJStarHistory
 {
     private readonly List<OJStarModifiedEntry> _entries = new();

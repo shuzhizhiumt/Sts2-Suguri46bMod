@@ -10,7 +10,6 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 4)]
 public class Suguri46b_Strike : ModCardTemplate
 {
     private const int energyCost = 1;
@@ -22,7 +21,7 @@ public class Suguri46b_Strike : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
     );
-    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Strike };
+    protected override HashSet<CardTag> CanonicalTags =>[CardTag.Strike];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6, ValueProp.Move)
     ];

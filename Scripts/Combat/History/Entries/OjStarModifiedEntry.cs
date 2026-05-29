@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 
+namespace Suguri46b.Scripts.Combat.History.Entries;
 public class OJStarModifiedEntry
 {
     public PlayerCombatState State { get; }

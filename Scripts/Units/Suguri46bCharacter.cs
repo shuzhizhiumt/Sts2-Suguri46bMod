@@ -1,11 +1,13 @@
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
+using Suguri46b.Scripts.Cards;
 
 namespace Suguri46b.Scripts.Units;
 
@@ -85,23 +87,19 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
     // 攻击和施法动画延迟，以对齐动画
     public override float AttackAnimDelay => 0f;
     public override float CastAnimDelay => 0f;
-    public ModAnimStateMachine? TryCreateCombatAnimationStateMachine(Node visualsRoot)
+    protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(
+        Node visualsRoot,
+        CharacterModel character)
     {
-        var builder = ModAnimStateMachineBuilder.Create();
-        builder.AddState("idle", loop: true).AsInitial();
-        builder.AddState("attack", loop: false).WithNext("idle");
-        builder.AddState("hit", loop: false).WithNext("idle");
-        builder.AddState("cast", loop: false).WithNext("idle");
-        builder.AddState("die", loop: false);
-        builder
-            // 待机 ←→ 攻击
-            .AddBranch("idle", "Attack", "attack")
-            .AddBranch("idle", "Hit", "hit")
-            .AddBranch("idle", "Cast", "cast")
-            .AddAnyState("Dead", "die")
-            .AddAnyState("Idle", "idle");
-
-        return builder.BuildForVisualsRoot(visualsRoot);
+        return ModAnimStateMachines.StandardCue(
+            visualsRoot,
+            character,
+            idleName: "idle",
+            deadName: "die",
+            hitName: "hit",
+            attackName: "attack",
+            castName: "cast",
+            relaxedName: "relaxed");
     }
     public override bool RequiresEpochAndTimeline => false;
 
@@ -109,9 +107,10 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
     protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
 
     // 初始卡组，或者在卡牌类上用RegisterCharacterStarterCard就不用写这个
-    // protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [
-    //     new(typeof(Suguri46bCard), 5)
-    // ];
+    protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [
+        new(typeof(Suguri46b_Strike), 5),
+        new(typeof(Suguri46b_Defend),5)
+    ];
 
     // 初始遗物，或者在遗物类上用RegisterCharacterStarterRelic就不用写这个
     // protected override IEnumerable<Type> StartingRelicTypes => [

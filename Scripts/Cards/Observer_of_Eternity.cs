@@ -6,7 +6,10 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
+using Suguri46b.Scripts.Extensions;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
@@ -26,24 +29,33 @@ public class Observer_of_Eternity : ModCardTemplate
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2)
+        new CardsVar(2),
+        new DynamicVar("Additional_Payment",10)
     ];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
     ];
-
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
     public Observer_of_Eternity() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-
+    private int ojstartotal;
+    private bool uncommon;
+    protected override bool ShouldGlowGoldInternal => Owner.PlayerCombatState.GetOJStarTotal() >= 10;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        ojstartotal=Owner.PlayerCombatState.GetOJStarTotal();
+        if (ojstartotal>=10)
+        {
+            uncommon=true;
+            await PlayerCmdExtensions.LoseOJStar(10,Owner);
+        }
         List<CardPoolModel> allPools = [.. base.Owner.UnlockState.CharacterCardPools];
         IEnumerable<CardModel> AttackCards = allPools
             .SelectMany(pool => pool.GetUnlockedCards(
                 base.Owner.UnlockState,
                 base.Owner.RunState.CardMultiplayerConstraint))
-            .Where(c => c.Type == CardType.Attack && c.Rarity == CardRarity.Common);
+            .Where(c => c.Type == CardType.Attack && (uncommon? c.Rarity == CardRarity.Common || c.Rarity == CardRarity.Uncommon :c.Rarity == CardRarity.Common));
 
         List<CardModel> gainCards = [.. CardFactory.GetDistinctForCombat(
             base.Owner,

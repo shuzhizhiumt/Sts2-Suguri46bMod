@@ -4,7 +4,9 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
+using STS2RitsuLib.Patching.Core;
 using Suguri46b.Scripts.Cards;
+using Suguri46b.Scripts.Patches;
 using Suguri46b.Scripts.Relics;
 
 namespace Suguri46b.Scripts;
@@ -17,8 +19,12 @@ public class Entry
 
     public static void Init()
     {
-        var harmony = new Harmony("com.example.suguri46b");
-        harmony.PatchAll();
+        var patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
+        patcher.RegisterPatch<Suguri46bOJStarNodeInitPatch>();
+        patcher.RegisterPatch<Suguri46bOJStarNodeVisiblePatch>();
+        patcher.RegisterPatch<Dmgx2ButtonPatch>();
+        if (!patcher.PatchAll())
+            throw new InvalidOperationException("Critical patches failed.");
         var assembly = Assembly.GetExecutingAssembly();
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);

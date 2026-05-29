@@ -5,12 +5,21 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Patching.Models;
+using STS2RitsuLib.Scaffolding.Godot.NodeAttachments;
+using Suguri46b.Scripts.Extensions;
+using Suguri46b.Suguri46b.scenes;
 
 
-[HarmonyPatch(typeof(NCombatUi), "_Ready")]
-
-public static class Suguri46bOJStarNodeInitPatch
+namespace Suguri46b.Scripts.Patches;
+public  class Suguri46bOJStarNodeInitPatch : IPatchMethod
 {
+    public static string PatchId=>"suguri46b_ojstar_node_init";
+    public static string Description=>"Get OJStarNode";
+    public static bool IsCritical=>true;
+
+    public static ModPatchTarget[] GetTargets()=>[new(typeof(NCombatUi),"_Ready")];
     private static Control? _ojStarCounter;
     public static RichTextLabel? _ojStarCounterLabel;
     private static void Postfix(NCombatUi __instance)
@@ -29,15 +38,18 @@ public static class Suguri46bOJStarNodeInitPatch
     public static RichTextLabel GetOJStarCounterLabel() => _ojStarCounterLabel;
 }
 
-[HarmonyPatch(typeof(NCombatUi), "Activate")]
-public static class Suguri46bOJStarNodeVisiblePatch
+public  class Suguri46bOJStarNodeVisiblePatch : IPatchMethod
 {
+    public static string PatchId=>"suguri46b_ojstar_node_visible";
+    public static string Description=>"Visible OJStarNode";
+    public static bool IsCritical=>true;
+
+    public static ModPatchTarget[] GetTargets()=>[new(typeof(NCombatUi),"Activate")];
     private static void Postfix(CombatState state)
     {
         Player player = LocalContext.GetMe(state);
         Log.Info(">>>[Suguri46bMod]cjaracter.Id is " + player.Character.Id.ToString());
-
-        if (player.Character.Id.ToString() == "SUGURI46B_CHARACTER_SUGURI46B_CHARACTER")
+        if (player.Character.Id.ToString() == "CHARACTER.SUGURI46B_CHARACTER_SUGURI46B_CHARACTER")
         {
             Suguri46bOJStarNodeInitPatch.GetOJStarCounter().Visible = true;
         }
