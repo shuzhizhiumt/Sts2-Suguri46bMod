@@ -6,6 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_arupd"]
 
 [node name="Dmgx2Control" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0

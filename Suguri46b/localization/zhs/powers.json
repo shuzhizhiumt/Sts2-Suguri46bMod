@@ -9,5 +9,9 @@
 
     "SUGURI46B_POWER_NORMA.title": "目标",
     "SUGURI46B_POWER_NORMA.description": "根据层数获得加成，达到6层时胜利。",
-    "SUGURI46B_POWER_NORMA.smartDescription": "根据层数获得加成，达到6层时胜利。"
+    "SUGURI46B_POWER_NORMA.smartDescription": "根据层数获得加成，达到6层时胜利。",
+
+    "SUGURI46B_POWER_DOUBLE_POWER.title":"翻倍",
+    "SUGURI46B_POWER_DOUBLE_POWER.description":"点击翻倍按钮可以给手上任意数量的攻击牌附魔[gold]翻倍[/gold]",
+    "SUGURI46B_POWER_DOUBLE_POWER.smartDescription":"点击翻倍按钮可以给手上任意数量的攻击牌附魔[gold]翻倍[/gold]"
 }

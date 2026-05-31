@@ -3,6 +3,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
+using STS2RitsuLib.Audio;
 using STS2RitsuLib.Interop;
 using STS2RitsuLib.Patching.Core;
 using Suguri46b.Scripts.Cards;
@@ -26,6 +27,8 @@ public class Entry
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
         var assembly = Assembly.GetExecutingAssembly();
+        FmodStudioDeferredBankRegistration.RegisterBank("res://Suguri46b/audios/desktop/Suguri46b.bank");
+        FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://Suguri46b/audios/GUIDs.txt");
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<Accel_Hyper, Accelerator>();

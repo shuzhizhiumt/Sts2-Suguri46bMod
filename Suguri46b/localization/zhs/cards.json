@@ -27,5 +27,11 @@
     "SUGURI46B_CARD_BACKDOOR_TRADE.description":"如果你的[gold]目标[/gold]层数小于5，获得一层[gold]目标[/gold]。\n将一张[gold]不幸护符[/gold]加入你的[gold]手牌[/gold]。",
 
     "SUGURI46B_CARD_UNLUCKY_CHARM.title":"不幸护符",
-    "SUGURI46B_CARD_UNLUCKY_CHARM.description":"在你的回合结束时，如果这张牌在你的手牌中，失去相当于[gold]目标[/gold]层数*5的[gold]星星[/gold]。"
+    "SUGURI46B_CARD_UNLUCKY_CHARM.description":"在你的回合结束时，如果这张牌在你的手牌中，失去相当于[gold]目标[/gold]层数*5的[gold]星星[/gold]。",
+
+    "SUGURI46B_CARD_DOUBLE.title":"翻倍",
+    "SUGURI46B_CARD_DOUBLE.description":"添加翻倍按钮，可以给手上任意数量的攻击牌[gold]附魔[/gold]：[purple]翻倍[/purple]。",
+
+    "SUGURI46B_CARD_CLOUD_OF_SEAGULLS.title":"大群的海鸥",
+    "SUGURI46B_CARD_CLOUD_OF_SEAGULLS.description":"随机对{IfUpgraded:show:敌人|友方(包括自己)或敌人}造成{Damage:diff()}点伤害{Repeat:diff()}次。"
 }

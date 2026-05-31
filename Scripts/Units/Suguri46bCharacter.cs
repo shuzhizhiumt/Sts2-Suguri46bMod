@@ -70,7 +70,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             // 死亡音效
             // DeathSfx: null,
             // 角色选择音效
-            // CharacterSelectSfx: null,
+            CharacterSelectSfx: "event:/suguri46b/sfx/select_character_suguri46b"
             // 过渡音效
             // CharacterTransitionSfx: "event:/sfx/ui/wipe_ironclad"
             ),
@@ -85,8 +85,8 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             // ArmScissorsTexturePath: null
             )));
     // 攻击和施法动画延迟，以对齐动画
-    public override float AttackAnimDelay => 0f;
-    public override float CastAnimDelay => 0f;
+    public override float AttackAnimDelay => 0.2f;
+    public override float CastAnimDelay => 0.2f;
     protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(
         Node visualsRoot,
         CharacterModel character)
@@ -102,21 +102,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             relaxedName: "relaxed");
     }
     public override bool RequiresEpochAndTimeline => false;
-
-    // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
     protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
-
-    // 初始卡组，或者在卡牌类上用RegisterCharacterStarterCard就不用写这个
-    protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [
-        new(typeof(Suguri46b_Strike), 5),
-        new(typeof(Suguri46b_Defend),5)
-    ];
-
-    // 初始遗物，或者在遗物类上用RegisterCharacterStarterRelic就不用写这个
-    // protected override IEnumerable<Type> StartingRelicTypes => [
-    //     typeof(Akabeko)
-    // ];
-
 
     // 攻击建筑师的攻击特效列表
     public override List<string> GetArchitectAttackVfx() => [

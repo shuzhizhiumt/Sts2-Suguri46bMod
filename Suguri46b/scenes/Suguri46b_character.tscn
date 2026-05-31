@@ -14,7 +14,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 1.8
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -22,7 +22,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"cast",
-"speed": 1.8
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -38,7 +38,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 1.8
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
