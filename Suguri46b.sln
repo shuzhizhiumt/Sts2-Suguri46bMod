@@ -1,19 +1,52 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suguri46b", "Suguri46b.csproj", "{CDD3E429-9200-47D9-86F6-F19C858D827E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "inspect-sts2", "inspect-sts2", "{F435E1F5-AFA4-5D5C-F902-BFEC683B8B2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportDebug|x64 = ExportDebug|x64
+		ExportDebug|x86 = ExportDebug|x86
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+		ExportRelease|x64 = ExportRelease|x64
+		ExportRelease|x86 = ExportRelease|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Debug|x64.Build.0 = Debug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Debug|x86.Build.0 = Debug|Any CPU
 		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
 		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportDebug|x64.ActiveCfg = ExportDebug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportDebug|x64.Build.0 = ExportDebug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportDebug|x86.ActiveCfg = ExportDebug|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportDebug|x86.Build.0 = ExportDebug|Any CPU
 		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportRelease|x64.ActiveCfg = ExportRelease|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportRelease|x64.Build.0 = ExportRelease|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportRelease|x86.ActiveCfg = ExportRelease|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.ExportRelease|x86.Build.0 = ExportRelease|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Release|x64.ActiveCfg = Release|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Release|x64.Build.0 = Release|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDD3E429-9200-47D9-86F6-F19C858D827E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

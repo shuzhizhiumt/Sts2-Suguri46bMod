@@ -27,7 +27,9 @@ public class Observer_of_Eternity : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
     );
-
+    public Observer_of_Eternity() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
         new DynamicVar("Additional_Payment",10)
@@ -36,19 +38,18 @@ public class Observer_of_Eternity : ModCardTemplate
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
-    public Observer_of_Eternity() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
+
     private int ojstartotal;
     private bool uncommon;
-    protected override bool ShouldGlowGoldInternal => Owner.PlayerCombatState.GetOJStarTotal() >= 10;
+    protected override bool ShouldGlowGoldInternal => Owner.PlayerCombatState.GetOJStarTotal() >= base.DynamicVars["Additional_Payment"].BaseValue;
+    
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ojstartotal=Owner.PlayerCombatState.GetOJStarTotal();
-        if (ojstartotal>=10)
+        if (ojstartotal>=base.DynamicVars["Additional_Payment"].BaseValue)
         {
             uncommon=true;
-            await PlayerCmdExtensions.LoseOJStar(10,Owner);
+            await PlayerCmdExtensions.LoseOJStar(base.DynamicVars["Additional_Payment"].BaseValue,Owner);
         }
         List<CardPoolModel> allPools = [.. base.Owner.UnlockState.CharacterCardPools];
         IEnumerable<CardModel> AttackCards = allPools

@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.CardTargeting;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -31,33 +32,34 @@ public class Cloud_of_Seagulls : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if(!IsUpgraded){
-            var targets = CardModelTargetingExtensions.GetTargets(this, cardPlay.Target).ToList();
-            if (targets.Count == 0)
-            {
-                return;
-            }
-
+        var targets = CardModelTargetingExtensions.GetTargets(this, cardPlay.Target).ToList();
+        if (targets.Count == 0)
+        {
+            return;
+        }
+        Rng rng = base.Owner.RunState.Rng.CombatTargets;
+        if (!IsUpgraded)
+        {
             for (int i = 0; i < DynamicVars.Repeat.IntValue; i++)
             {
-                var randomTarget = targets[Random.Shared.Next(targets.Count)];
+                int index = rng.NextInt(targets.Count);
                 await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                     .FromCard(this)
-                    .Targeting(randomTarget)
+                    .Targeting(targets[index])
                     .Execute(choiceContext);
             }
         }
         else
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .WithHitCount(base.DynamicVars.Repeat.IntValue)
                 .FromCard(this)
                 .TargetingRandomOpponents(base.CombatState)
                 .Execute(choiceContext);
         }
-
     }
+
     protected override void OnUpgrade()
     {
-        
     }
 }

@@ -1,3 +1,4 @@
+using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -6,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Context;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Patches;
@@ -21,12 +23,16 @@ public class DoublePower : ModPowerTemplate
         IconPath: "res://Suguri46b/images/powers/DoublePower.png",
         BigIconPath: "res://Suguri46b/images/powers/DoublePower.png"
     );
-       public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (power != this || Owner == null || Owner.Player == null || !CombatManager.Instance.IsInProgress)
+        if (power != this || Owner == null || Owner.Player == null || !CombatManager.Instance.IsInProgress || !LocalContext.IsMe(Owner))
         {
             return;
         }
-        Dmgx2ButtonPatch.GetDmgx2Control().Visible = true;
+
+        if (Dmgx2ButtonPatch.GetDmgx2Control() is Control control)
+        {
+            control.Visible = amount > 0;
+        }
     }
 }

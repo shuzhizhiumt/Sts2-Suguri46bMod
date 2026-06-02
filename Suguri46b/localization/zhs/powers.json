@@ -1,6 +1,6 @@
 {
     "SUGURI46B_POWER_ACCEL_HYPER_POWER.title": "极速超能",
-    "SUGURI46B_POWER_ACCEL_HYPER_POWER.description": "本回合，你的下一张攻击牌会造成双倍伤害。",
+    "SUGURI46B_POWER_ACCEL_HYPER_POWER.description": "本回合，你的下1张攻击牌会造成双倍伤害。",
     "SUGURI46B_POWER_ACCEL_HYPER_POWER.smartDescription": "本回合，你的下[blue]{Amount}[/blue]张攻击牌会造成双倍伤害。",
 
     "SUGURI46B_POWER_ACCELERATOR_POWER.title": "极速装置",
@@ -12,6 +12,10 @@
     "SUGURI46B_POWER_NORMA.smartDescription": "根据层数获得加成，达到6层时胜利。",
 
     "SUGURI46B_POWER_DOUBLE_POWER.title":"翻倍",
-    "SUGURI46B_POWER_DOUBLE_POWER.description":"点击翻倍按钮可以给手上任意数量的攻击牌附魔[gold]翻倍[/gold]",
-    "SUGURI46B_POWER_DOUBLE_POWER.smartDescription":"点击翻倍按钮可以给手上任意数量的攻击牌附魔[gold]翻倍[/gold]"
+    "SUGURI46B_POWER_DOUBLE_POWER.description":"点击翻倍按钮可以给手上任意数量的攻击牌附魔[gold]翻倍[/gold]。",
+    "SUGURI46B_POWER_DOUBLE_POWER.smartDescription":"点击翻倍按钮可以给手上任意数量的攻击牌附魔[gold]翻倍[/gold]。",
+
+    "SUGURI46B_POWER_EXTREME_ALTERATION_POWER.title":"魔改",
+    "SUGURI46B_POWER_EXTREME_ALTERATION_POWER.description":"你每[gold]变化[/gold]一张牌，就抽1张牌。",
+    "SUGURI46B_POWER_EXTREME_ALTERATION_POWER.smartDescription":"你每[gold]变化[/gold]一张牌，就抽{Amount}张牌。"
 }

@@ -47,11 +47,34 @@ public  class Suguri46bOJStarNodeVisiblePatch : IPatchMethod
     public static ModPatchTarget[] GetTargets()=>[new(typeof(NCombatUi),"Activate")];
     private static void Postfix(CombatState state)
     {
-        Player player = LocalContext.GetMe(state);
-        Log.Info(">>>[Suguri46bMod]cjaracter.Id is " + player.Character.Id.ToString());
-        if (player.Character.Id.ToString() == "CHARACTER.SUGURI46B_CHARACTER_SUGURI46B_CHARACTER")
+        var player = LocalContext.GetMe(state);
+        Log.Info(">>>[Suguri46bMod] local player: " + (player?.NetId.ToString() ?? "null"));
+
+        bool show = false;
+        if (player != null)
         {
-            Suguri46bOJStarNodeInitPatch.GetOJStarCounter().Visible = true;
+            // Show node if local player is Suguri46b OR local player currently has any OJStar
+            try
+            {
+                if (player.Character?.Id.ToString() == "CHARACTER.SUGURI46B_CHARACTER_SUGURI46B_CHARACTER")
+                {
+                    show = true;
+                }
+                else if (player.PlayerCombatState != null && player.PlayerCombatState.GetOJStarTotal() > 0)
+                {
+                    show = true;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warn($">>>[Suguri46bMod] Error checking OJStar visibility: {ex}");
+            }
+        }
+
+        var node = Suguri46bOJStarNodeInitPatch.GetOJStarCounter();
+        if (node != null)
+        {
+            node.Visible = show;
         }
     }
 }

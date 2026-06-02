@@ -26,7 +26,24 @@ static class PlayerCombatStateExtensions
         data.History.Add(new OJStarModifiedEntry(pcs, amount, player.Creature.CombatState.RoundNumber, MegaCrit.Sts2.Core.Combat.CombatSide.Player));
         if (LocalContext.IsMe(player.Creature))
         {
-            Suguri46bOJStarNodeInitPatch.GetOJStarCounterLabel().Text = $"[center]{data.OJStarTotal}[/center]";
+            try
+            {
+                var label = Suguri46bOJStarNodeInitPatch.GetOJStarCounterLabel();
+                if (label != null)
+                {
+                    label.Text = $"[center]{data.OJStarTotal}[/center]";
+                }
+
+                var node = Suguri46bOJStarNodeInitPatch.GetOJStarCounter();
+                if (node != null && !node.Visible)
+                {
+                    node.Visible = data.OJStarTotal > 0;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warn($">>>[Suguri46bMod] Error updating OJStar UI on gain: {ex}");
+            }
         }
         Log.Info($">>>[Suguri46bMod]Player = " + player.NetId + "GainOjstar Successfully " + $"[OJStar] +{amount}, total = {data.OJStarTotal}");
     }
@@ -37,7 +54,24 @@ static class PlayerCombatStateExtensions
         data.OJStarTotal = Math.Max(data.OJStarTotal - amount, 0);
         if (LocalContext.IsMe(player.Creature))
         {
-            Suguri46bOJStarNodeInitPatch.GetOJStarCounterLabel().Text = $"[center]{data.OJStarTotal}[/center]";
+            try
+            {
+                var label = Suguri46bOJStarNodeInitPatch.GetOJStarCounterLabel();
+                if (label != null)
+                {
+                    label.Text = $"[center]{data.OJStarTotal}[/center]";
+                }
+
+                var node = Suguri46bOJStarNodeInitPatch.GetOJStarCounter();
+                if (node != null && data.OJStarTotal <= 0)
+                {
+                    node.Visible = false;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warn($">>>[Suguri46bMod] Error updating OJStar UI on lose: {ex}");
+            }
         }
         Log.Info($">>>[Suguri46bMod]Player = " + player.NetId + "LoseOjstar Successfully " + $"[OJStar] -{amount}, total = {data.OJStarTotal}");
     }

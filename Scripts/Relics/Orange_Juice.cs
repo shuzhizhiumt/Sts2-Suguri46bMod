@@ -25,7 +25,6 @@ public class Orange_Juice : ModRelicTemplate
         IconOutlinePath: $"res://Suguri46b/images/relics/{GetType().Name}.png",
         BigIconPath: $"res://Suguri46b/images/relics/{GetType().Name}.png"
     );
-    private bool giveNorma;
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
 		int currentTurn = base.Owner.Creature.CombatState.RoundNumber;

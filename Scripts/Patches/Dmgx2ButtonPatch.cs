@@ -22,6 +22,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Suguri46b.Scripts.Enchantments;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
+using Suguri46b.Scripts.Powers;
 using System.ComponentModel.Design.Serialization;
 
 namespace Suguri46b.Scripts.Patches;
@@ -40,10 +41,26 @@ public partial class Dmgx2ButtonPatch : IPatchMethod
         if (Dmgx2 == null)
         {
             _dmgx2control = GD.Load<PackedScene>("res://Suguri46b/scenes/dmgx2_button.tscn").Instantiate<Control>();
-            _dmgx2control.Name="Dmgx2Control";
-            _dmgx2button=_dmgx2control.GetNode<Button>("Dmgx2Button");
+            _dmgx2control.Name = "Dmgx2Control";
+            _dmgx2control.Visible = false;
+            _dmgx2button = _dmgx2control.GetNode<Button>("Dmgx2Button");
             _dmgx2button.Pressed += OnDmgx2ButtonPressed;
             __instance.AddChild(_dmgx2control, false);
+        }
+        else if (_dmgx2control == null)
+        {
+            _dmgx2control = Dmgx2;
+            _dmgx2button = _dmgx2control.GetNode<Button>("Dmgx2Button");
+        }
+
+        var combatState = CombatManager.Instance.DebugOnlyGetState();
+        if (combatState != null && _dmgx2control != null)
+        {
+            var localPlayer = LocalContext.GetMe(combatState);
+            if (localPlayer != null)
+            {
+                _dmgx2control.Visible = localPlayer.Creature.GetPower<DoublePower>()?.Amount > 0;
+            }
         }
     }
     private static async void OnDmgx2ButtonPressed()

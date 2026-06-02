@@ -24,6 +24,7 @@ public class Entry
         patcher.RegisterPatch<Suguri46bOJStarNodeInitPatch>();
         patcher.RegisterPatch<Suguri46bOJStarNodeVisiblePatch>();
         patcher.RegisterPatch<Dmgx2ButtonPatch>();
+        patcher.RegisterPatch<ExtremeAlterationTransformPatch>();
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
         var assembly = Assembly.GetExecutingAssembly();
