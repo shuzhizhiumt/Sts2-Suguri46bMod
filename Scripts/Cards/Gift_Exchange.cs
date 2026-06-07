@@ -36,8 +36,7 @@ public class Gift_Exchange : ModCardTemplate
     {
     }
         protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3)
-    ];
+        new CardsVar(3)];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: (CardModel c) =>c.Type == CardType.Attack || c.Type == CardType.Skill ||c.Type == CardType.Power, source: this)).FirstOrDefault();

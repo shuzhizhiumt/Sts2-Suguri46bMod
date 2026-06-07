@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Context;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Patches;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Suguri46b.Scripts.Powers;
 
@@ -23,5 +24,7 @@ public class Extreme_AlterationPower : ModPowerTemplate
         IconPath: "res://Suguri46b/images/powers/Extreme_AlterationPower.png",
         BigIconPath: "res://Suguri46b/images/powers/Extreme_AlterationPower.png"
     );
-    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
+    ];
 }

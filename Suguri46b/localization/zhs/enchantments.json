@@ -1,4 +1,10 @@
 {
     "SUGURI46B_ENCHANTMENT_DMGX2_ENCHANTMENT.title":"翻倍",
-    "SUGURI46B_ENCHANTMENT_DMGX2_ENCHANTMENT.description":"这张牌消耗的能量与造成的伤害翻倍。"
+    "SUGURI46B_ENCHANTMENT_DMGX2_ENCHANTMENT.description":"这张牌费用与造成的伤害翻倍。",
+
+    "SUGURI46B_ENCHANTMENT_FEATHER.title":"轻",
+    "SUGURI46B_ENCHANTMENT_FEATHER.description":"这张牌费用-1并获得[gold]消耗[/gold]。",
+
+    "SUGURI46B_ENCHANTMENT_HEAVIER.title":"重",
+    "SUGURI46B_ENCHANTMENT_HEAVIER.description":"这张牌费用+1并获得[gold]保留[/gold]。"
 }

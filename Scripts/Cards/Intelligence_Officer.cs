@@ -37,7 +37,7 @@ public class Intelligence_Officer : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var drawPile = PileType.Draw.GetPile(base.Owner);
+        CardPile drawPile = PileType.Draw.GetPile(base.Owner);
         if (drawPile.Cards.Count == 0)
             return;
         CardModel topCard = drawPile.Cards.First();

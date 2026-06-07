@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -21,7 +22,9 @@ public class Accel_HyperPower : ModPowerTemplate
         IconPath: "res://Suguri46b/images/powers/Accel_HyperPower.png",
         BigIconPath: "res://Suguri46b/images/powers/Accel_HyperPower.png"
     );
-
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
+    ];
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (dealer == null)

@@ -1,3 +1,5 @@
 {
-    "ADD_Dmgx2_Enchantment":"选择[blue]任意[/blue]张牌来[purple]附魔[/purple]。"
+    "ADD_DMGX2_ENCHANTMENT":"选择[blue]任意[/blue]张牌来[purple]附魔[/purple]。",
+    "ADD_RANDOM_ENCHANTMENT":"选择[blue]{Amount}[/blue]张牌来[purple]附魔[/purple]。",
+    "REMOVE_ENCHANTMENTS":"选择[blue]任意[/blue]张牌去除[purple]附魔[/purple]。"
 }
