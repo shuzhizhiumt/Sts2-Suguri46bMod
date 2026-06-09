@@ -1,4 +1,7 @@
 {
-    "SUGURI46B_KEYWORD_ADDITIONAL_PAYMENT.description": "当星星足够时，这张牌花费对应数量的星星加强其效果。",
-    "SUGURI46B_KEYWORD_ADDITIONAL_PAYMENT.title": "额外支付"
+    "SUGURI46B_KEYWORD_ADDITIONAL_PAYMENT.description": "当[gold]星星[/gold]足够时，这张牌花费对应数量的[gold]星星[/gold]加强其效果。",
+    "SUGURI46B_KEYWORD_ADDITIONAL_PAYMENT.title": "额外支付",
+
+    "SUGURI46B_KEYWORD_NORMA_CHECK.description": "检测玩家拥有[gold]星星[/gold]数量，根据[gold]目标[/gold]层数，若满足0/10/30/70/120/200[gold]星星[/gold]，则获得一层[gold]目标[/gold]。",
+    "SUGURI46B_KEYWORD_NORMA_CHECK.title": "目标检测"
 }

@@ -54,5 +54,11 @@
     "SUGURI46B_CARD_SUBSPACE_TUNNEL.description":"打出带有[gold]附魔[/gold]的牌后，如果[gold]目标[/gold]层数为奇数，则获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]，否则，抽{Cards:diff()}张牌。",
 
     "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.title":"另一个最终兵器",
-    "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.description":"打出你[gold]弃牌堆[/gold]中的{Cards:diff()}张随机攻击牌。\n[gold]额外支付[/gold]:所有[gold]星星[/gold]\n每失去{LoseOJStar:diff()}星星，就额外随机打出一张。"
+    "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.description":"打出你[gold]弃牌堆[/gold]中的{Cards:diff()}张随机攻击牌。\n[gold]额外支付[/gold]:所有[gold]星星[/gold]\n每失去{LoseOJStar:diff()}[gold]星星[/gold]，就额外随机打出一张。",
+
+    "SUGURI46B_CARD_LUCKY_CHARM.title":"幸运护符",
+    "SUGURI46B_CARD_LUCKY_CHARM.description":"若回合结束时此牌在[gold]手牌[/gold]中，则获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]。",
+
+    "SUGURI46B_CARD_SAFE_JOURNEY.title":"平安的旅途",
+    "SUGURI46B_CARD_SAFE_JOURNEY.description":"获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]。然后进行[gold]目标检测[/gold]。"
 }

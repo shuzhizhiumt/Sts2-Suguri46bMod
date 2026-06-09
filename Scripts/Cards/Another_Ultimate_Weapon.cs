@@ -58,7 +58,7 @@ public class Another_Ultimate_Weapon : ModCardTemplate
 			}
 			break;
 		}
-        PlayerCmdExtensions.LoseOJStar(Owner.PlayerCombatState.GetOJStarTotal(),Owner);
+        await PlayerCmdExtensions.LoseOJStar(Owner.PlayerCombatState.GetOJStarTotal(),Owner);
     }
 
     protected override void OnUpgrade()
