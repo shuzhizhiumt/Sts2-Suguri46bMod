@@ -9,9 +9,10 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.CardTargeting;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using Suguri46b.Scripts.Extensions;
+using Suguri46b.Scripts.Resources;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
@@ -33,11 +34,11 @@ public class Another_Ultimate_Weapon : ModCardTemplate
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
-        new DynamicVar("LoseOJStar", 10)
+        new DynamicVar("Additional_Payment", 10)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int count= (int)Math.Floor((double) Owner.PlayerCombatState.GetOJStarTotal() / base.DynamicVars["LoseOJStar"].IntValue)+base.DynamicVars.Cards.IntValue;
+        int count= (int)Math.Floor((double) SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) / base.DynamicVars["Additional_Payment"].IntValue)+base.DynamicVars.Cards.IntValue;
         CardPile DiscardPile = PileType.Discard.GetPile(base.Owner);
         IEnumerable<CardModel> enumerable = DiscardPile.Cards.Where((CardModel c) => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
 			.Take(count);
@@ -58,7 +59,7 @@ public class Another_Ultimate_Weapon : ModCardTemplate
 			}
 			break;
 		}
-        await PlayerCmdExtensions.LoseOJStar(Owner.PlayerCombatState.GetOJStarTotal(),Owner);
+            await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId, SecondaryResourceCmd.Get(Owner, ModResources.OJStarId));
     }
 
     protected override void OnUpgrade()

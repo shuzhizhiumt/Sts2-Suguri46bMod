@@ -1,5 +1,4 @@
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,6 +7,8 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Powers;
 using Suguri46b.Scripts.Units;
+using STS2RitsuLib.Combat.SecondaryResources;
+using Suguri46b.Scripts.Resources;
 
 namespace Suguri46b.Scripts.Cards;
 
@@ -36,7 +37,7 @@ public class Lucky_Charm : ModCardTemplate
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         int Level = Owner?.Creature.GetPower<Norma>()?.Amount ?? 0;
-        await PlayerCmdExtensions.GainOJStar(Level*base.DynamicVars["GainOJStar"].BaseValue,Owner);
+        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);
     }
 
     protected override void OnUpgrade()

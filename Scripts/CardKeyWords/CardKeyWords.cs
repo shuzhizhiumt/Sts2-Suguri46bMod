@@ -1,6 +1,5 @@
 using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 
 namespace Suguri46b.Scripts.CardKeyWords;
 [RegisterOwnedCardKeyword(nameof(Additional_Payment))]

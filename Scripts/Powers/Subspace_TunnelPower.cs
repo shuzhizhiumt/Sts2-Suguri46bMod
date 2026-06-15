@@ -1,16 +1,14 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.Resources;
 
 namespace Suguri46b.Scripts.Powers;
 
@@ -52,11 +50,11 @@ public class Subspace_TunnelPower : ModPowerTemplate
         if(_isOdd)
         {
             int Level=Owner?.GetPower<Norma>()?.Amount ?? 0;
-            await PlayerCmdExtensions.GainOJStar(Level*base.DynamicVars["GainOJStar"].BaseValue*Amount,Owner.Player);
+            await SecondaryResourceCmd.Gain(Owner.Player, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue*Amount);
         }
         else
         {
-            await CardPileCmd.Draw(choiceContext,(int)DynamicVars.Cards.BaseValue*Amount,Owner.Player);
+            await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.IntValue*Amount,Owner.Player);
         }
     }
 }

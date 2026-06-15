@@ -4,9 +4,10 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using Suguri46b.Scripts.Extensions;
+using Suguri46b.Scripts.Resources;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
@@ -32,7 +33,7 @@ public class Deceptive_Disarming : ModCardTemplate
     {
     }
     private int ojstartotal;
-    protected override bool ShouldGlowGoldInternal => Owner.PlayerCombatState.GetOJStarTotal() >= base.DynamicVars["Additional_Payment"].BaseValue;
+    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId)>= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -43,11 +44,11 @@ public class Deceptive_Disarming : ModCardTemplate
 		{
 			await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, base.DynamicVars.Weak.BaseValue, base.Owner.Creature, this);
 		}
-        ojstartotal=Owner.PlayerCombatState.GetOJStarTotal();
+        ojstartotal=SecondaryResourceCmd.Get(Owner, ModResources.OJStarId);
         if (ojstartotal >= base.DynamicVars["Additional_Payment"].BaseValue && cardPlay.Target.Monster.IntendsToAttack)
         {
             await PowerCmd.Apply<ReflectPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
-            await PlayerCmdExtensions.LoseOJStar(base.DynamicVars["Additional_Payment"].BaseValue,Owner);
+            await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
         }
     }
 

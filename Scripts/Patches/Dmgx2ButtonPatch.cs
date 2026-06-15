@@ -24,6 +24,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using Suguri46b.Scripts.Powers;
 using System.ComponentModel.Design.Serialization;
+using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 
 namespace Suguri46b.Scripts.Patches;
 
@@ -69,10 +71,10 @@ public partial class Dmgx2ButtonPatch : IPatchMethod
             CombatState combatState = CombatManager.Instance.DebugOnlyGetState();
             if (combatState == null)
                 return;
-
             Player player = LocalContext.GetMe(combatState);
             if (player == null)
                 return;
+
             CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("card_selection", "ADD_DMGX2_ENCHANTMENT"),0,10);
             IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
                 prefs: prefs,

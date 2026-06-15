@@ -1,14 +1,9 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using Suguri46b.Scripts.Enchantments;
-using Suguri46b.Scripts.Extensions;
 using Suguri46b.Scripts.Powers;
 using Suguri46b.Scripts.Units;
 
@@ -34,7 +29,7 @@ public class Extreme_Alteration : ModCardTemplate
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DoublePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
+        await PowerCmd.Apply<Extreme_AlterationPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
     }
     protected override void OnUpgrade()
     {

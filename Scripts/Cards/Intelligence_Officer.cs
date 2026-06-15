@@ -30,7 +30,8 @@ public class Intelligence_Officer : ModCardTemplate
         HoverTipFactory.FromPower<PlatingPower>()
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Intelligence", 3)
+        new DynamicVar("Intelligence", 3),
+        new CardsVar(2)
     ];
     public Intelligence_Officer() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
@@ -41,6 +42,10 @@ public class Intelligence_Officer : ModCardTemplate
         if (drawPile.Cards.Count == 0)
             return;
         CardModel topCard = drawPile.Cards.First();
+        if(topCard == null)
+        {
+            return;
+        }
         switch (topCard.Type)
         {
             case CardType.Attack:
@@ -51,6 +56,9 @@ public class Intelligence_Officer : ModCardTemplate
                 break;
             case CardType.Power:
                 await PowerCmd.Apply<PlatingPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Intelligence"].BaseValue, base.Owner.Creature, this);
+                break;
+            default:
+                await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.IntValue,Owner);
                 break;
         }
     }

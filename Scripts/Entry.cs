@@ -1,5 +1,4 @@
 using System.Reflection;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
@@ -9,6 +8,7 @@ using STS2RitsuLib.Patching.Core;
 using Suguri46b.Scripts.Cards;
 using Suguri46b.Scripts.Patches;
 using Suguri46b.Scripts.Relics;
+using Suguri46b.Scripts.Resources;
 
 namespace Suguri46b.Scripts;
 
@@ -21,12 +21,13 @@ public class Entry
     public static void Init()
     {
         var patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
-        patcher.RegisterPatch<Suguri46bOJStarNodeInitPatch>();
-        patcher.RegisterPatch<Suguri46bOJStarNodeVisiblePatch>();
+        // patcher.RegisterPatch<Suguri46bOJStarNodeInitPatch>();
+        // patcher.RegisterPatch<Suguri46bOJStarNodeVisiblePatch>();
         patcher.RegisterPatch<Dmgx2ButtonPatch>();
         patcher.RegisterPatch<ExtremeAlterationTransformPatch>();
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
+        ModResources.Register();
         var assembly = Assembly.GetExecutingAssembly();
         FmodStudioDeferredBankRegistration.RegisterBank("res://Suguri46b/audios/desktop/Suguri46b.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://Suguri46b/audios/GUIDs.txt");
@@ -34,5 +35,6 @@ public class Entry
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<Accel_Hyper, Accelerator>();
         RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<Navi, Sumika>();
+        
     }
 }

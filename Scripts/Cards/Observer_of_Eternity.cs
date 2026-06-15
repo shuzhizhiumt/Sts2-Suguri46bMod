@@ -5,11 +5,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.CardKeyWords;
-using Suguri46b.Scripts.Extensions;
+using Suguri46b.Scripts.Resources;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
@@ -41,15 +42,15 @@ public class Observer_of_Eternity : ModCardTemplate
 
     private int ojstartotal;
     private bool uncommon;
-    protected override bool ShouldGlowGoldInternal => Owner.PlayerCombatState.GetOJStarTotal() >= base.DynamicVars["Additional_Payment"].BaseValue;
+    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ojstartotal=Owner.PlayerCombatState.GetOJStarTotal();
+        ojstartotal=SecondaryResourceCmd.Get(Owner, ModResources.OJStarId);
         if (ojstartotal>=base.DynamicVars["Additional_Payment"].BaseValue)
         {
             uncommon=true;
-            await PlayerCmdExtensions.LoseOJStar(base.DynamicVars["Additional_Payment"].BaseValue,Owner);
+            await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
         }
         List<CardPoolModel> allPools = [.. base.Owner.UnlockState.CharacterCardPools];
         IEnumerable<CardModel> AttackCards = allPools

@@ -1,15 +1,14 @@
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Powers;
-using Suguri46b.Scripts.Units;
+using Suguri46b.Scripts.Resources;
 
 namespace Suguri46b.Scripts.Curse;
 
@@ -25,11 +24,15 @@ public class Unlucky_Charm : ModCardTemplate
     public override bool HasTurnEndInHandEffect => true;
     public Unlucky_Charm() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
+        
     }
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
     );
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Unplayable];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("LoseOJStar", 10)
+    ];
     private int _level;
     private int Level
     {
@@ -54,7 +57,7 @@ public class Unlucky_Charm : ModCardTemplate
     }
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-        await PlayerCmdExtensions.LoseOJStar(Level*5,base.Owner);
+        await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId,Level*base.DynamicVars["LoseOJStar"].IntValue);
     }
 
 }

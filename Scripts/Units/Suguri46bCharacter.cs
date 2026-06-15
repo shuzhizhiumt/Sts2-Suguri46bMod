@@ -7,7 +7,6 @@ using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
-using Suguri46b.Scripts.Cards;
 
 namespace Suguri46b.Scripts.Units;
 
