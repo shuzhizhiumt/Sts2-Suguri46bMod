@@ -18,8 +18,8 @@ public class AcceleratorPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://Suguri46b/images/powers/AcceleratorPower.png",
-        BigIconPath: "res://Suguri46b/images/powers/AcceleratorPower.png"
+        IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
+        BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)

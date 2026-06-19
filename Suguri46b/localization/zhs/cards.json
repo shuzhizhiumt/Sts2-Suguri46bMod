@@ -30,7 +30,7 @@
     "SUGURI46B_CARD_UNLUCKY_CHARM.description":"在你的回合结束时，如果这张牌在你的手牌中，失去相当于[gold]目标[/gold]层数*5的[gold]星星[/gold]。",
 
     "SUGURI46B_CARD_DOUBLE.title":"翻倍",
-    "SUGURI46B_CARD_DOUBLE.description":"添加翻倍按钮，可以给手上任意数量的攻击牌[gold]附魔[/gold]：[purple]翻倍[/purple]。",
+    "SUGURI46B_CARD_DOUBLE.description":"添加翻倍按钮，可以给手上任意数量的攻击牌[purple]附魔[/purple]：[purple]翻倍[/purple]。",
 
     "SUGURI46B_CARD_CLOUD_OF_SEAGULLS.title":"大群的海鸥",
     "SUGURI46B_CARD_CLOUD_OF_SEAGULLS.description":"随机对{IfUpgraded:show:敌人|友方(包括自己)或敌人}造成{Damage:diff()}点伤害{Repeat:diff()}次。",
@@ -45,13 +45,13 @@
     "SUGURI46B_CARD_DECEPTIVE_DISARMING.description":"造成{Damage:diff()}点伤害。如果敌人的意图是攻击，则给予{WeakPower:diff()}层虚弱。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n在本回合将你格挡掉的攻击伤害反弹给攻击者。",
 
     "SUGURI46B_CARD_EXTENSION.title":"部件扩张",
-    "SUGURI46B_CARD_EXTENSION.description":"为你至多{Cards:diff()}张[gold]手牌[/gold]添加随机[gold]附魔[/gold]。",
+    "SUGURI46B_CARD_EXTENSION.description":"为你至多{Cards:diff()}张[gold]手牌[/gold]添加随机[purple]附魔[/purple]。",
 
     "SUGURI46B_CARD_SEALED_MEMORIES.title":"记忆封印",
-    "SUGURI46B_CARD_SEALED_MEMORIES.description":"去除你[gold]手牌[/gold]中任意数量牌的[gold]附魔[/gold]，并获得去除[gold]附魔[/gold]数量*{GainOJStar:diff()}的[gold]星星[/gold]。",
+    "SUGURI46B_CARD_SEALED_MEMORIES.description":"去除你[gold]手牌[/gold]中任意数量牌的[purple]附魔[/purple]，并获得去除[purple]附魔[/purple]数量*{GainOJStar:diff()}的[gold]星星[/gold]。",
 
     "SUGURI46B_CARD_SUBSPACE_TUNNEL.title":"亚空间通道",
-    "SUGURI46B_CARD_SUBSPACE_TUNNEL.description":"打出带有[gold]附魔[/gold]的牌后，如果[gold]目标[/gold]层数为奇数，则获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]，否则，抽{Cards:diff()}张牌。",
+    "SUGURI46B_CARD_SUBSPACE_TUNNEL.description":"打出带有[purple]附魔[/purple]的牌后，如果[gold]目标[/gold]层数为奇数，则获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]，否则，抽{Cards:diff()}张牌。",
 
     "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.title":"另一个最终兵器",
     "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.description":"打出你[gold]弃牌堆[/gold]中的{Cards:diff()}张随机攻击牌。\n[gold]额外支付[/gold]:所有[gold]星星[/gold]\n每失去{Additional_Payment:diff()}[gold]星星[/gold]，就额外随机打出一张。",
@@ -63,7 +63,7 @@
     "SUGURI46B_CARD_SAFE_JOURNEY.description":"获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]。然后进行[gold]目标检测[/gold]。",
 
     "SUGURI46B_CARD_AWAKENING_OF_TALENT.title":"才气觉醒",
-    "SUGURI46B_CARD_AWAKENING_OF_TALENT.description":"造成{Damage:diff()}点伤害。\n选择{IfUpgraded:show:至多}{Cards:diff()}张[gold]手牌[/gold][gold]附魔[/gold]：[purple]伶俐[/purple]。",
+    "SUGURI46B_CARD_AWAKENING_OF_TALENT.description":"造成{Damage:diff()}点伤害。\n选择{IfUpgraded:show:至多}{Cards:diff()}张[gold]手牌[/gold][purple]附魔[/purple]：[purple]伶俐[/purple]。",
 
     "SUGURI46B_CARD_MIMIC.title":"模仿",
     "SUGURI46B_CARD_MIMIC.description":"选择一张[gold]手牌[/gold]变化为其它随机{Cards:diff()}张[gold]手牌[/gold]中的一张。",
@@ -78,5 +78,11 @@
     "SUGURI46B_CARD_BANA_NANA.description":"抽到此牌时，再抽{Cards:diff()}张牌。{IfUpgraded:show:打出时抽{Cards:diff()}张牌。}",
 
     "SUGURI46B_CARD_NICE_PRESENT.title":"美妙的礼物",
-    "SUGURI46B_CARD_NICE_PRESENT.description":"抽{Cards:diff()}张牌。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n额外抽取1张牌。"
+    "SUGURI46B_CARD_NICE_PRESENT.description":"抽{Cards:diff()}张牌。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n额外抽取1张牌。",
+    
+    "SUGURI46B_CARD_HOLY_NIGHT.title":"神圣之夜",
+    "SUGURI46B_CARD_HOLY_NIGHT.description":"每回合开始时，获得{Power:diff()}[gold]星星[/gold]。",
+
+    "SUGURI46B_CARD_MIX_PHENOMENON.title":"混成化现象",
+    "SUGURI46B_CARD_MIX_PHENOMENON.description":"为你至多{Cards:diff()}张[gold]手牌[/gold][purple]附魔[/purple]：[gold]混成化[/gold]。"
 }

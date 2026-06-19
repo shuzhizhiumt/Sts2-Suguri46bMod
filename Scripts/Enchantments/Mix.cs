@@ -1,13 +1,19 @@
+using Godot;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
+using STS2RitsuLib.Models.Capabilities;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Suguri46b.Scripts.Enchantments;
 
 [RegisterEnchantment]
-public class Heavier : ModEnchantmentTemplate
+public class Mix : ModEnchantmentTemplate
 {
     public override bool HasExtraCardText => false;
 
@@ -26,7 +32,10 @@ public class Heavier : ModEnchantmentTemplate
 
     protected override void OnEnchant()
     {
-        Card.EnergyCost.UpgradeBy(1);
-        Card.AddKeyword(CardKeyword.Retain);
+        
+    }
+    public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay? cardPlay)
+    {
+
     }
 }

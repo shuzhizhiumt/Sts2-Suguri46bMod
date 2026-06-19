@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Suguri46b.Scripts.Enchantments;
@@ -11,12 +12,16 @@ public class Feather : ModEnchantmentTemplate
     public override bool HasExtraCardText => false;
 
     public override EnchantmentAssetProfile AssetProfile => new(
-        IconPath: "res://Suguri46b/images/enchantment/Feather.png"
+        IconPath: $"res://Suguri46b/images/enchantment/{GetType().Name}.png"
     );
 
     public override bool CanEnchant(CardModel card)
     {
-        return true;
+        if (!card.HasModKeyword(CardKeyword.Unplayable))
+        {
+            return true;
+        }
+        return false;
     }
 
     protected override void OnEnchant()

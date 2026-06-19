@@ -19,8 +19,8 @@ public class Accel_HyperPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://Suguri46b/images/powers/Accel_HyperPower.png",
-        BigIconPath: "res://Suguri46b/images/powers/Accel_HyperPower.png"
+        IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
+        BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),

@@ -19,8 +19,8 @@ public class Subspace_TunnelPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://Suguri46b/images/powers/Subspace_TunnelPower.png",
-        BigIconPath: "res://Suguri46b/images/powers/Subspace_TunnelPower.png"
+        IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
+        BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),

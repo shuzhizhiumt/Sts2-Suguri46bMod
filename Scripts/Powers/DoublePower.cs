@@ -17,8 +17,8 @@ public class DoublePower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://Suguri46b/images/powers/DoublePower.png",
-        BigIconPath: "res://Suguri46b/images/powers/DoublePower.png"
+        IconPath:$"res://Suguri46b/images/powers/{GetType().Name}.png",
+        BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {

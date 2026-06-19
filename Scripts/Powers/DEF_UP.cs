@@ -13,8 +13,8 @@ public class DEF_UP : TemporaryDexterityPower, IModPowerAssetOverrides
     public override AbstractModel OriginModel => ModelDb.Card<Intelligence_Officer>();
     public PowerAssetProfile AssetProfile => PowerAssetProfile.Empty;
 
-    public string? CustomIconPath => "res://Suguri46b/images/powers/DEF_UP.png";
+    public string? CustomIconPath => $"res://Suguri46b/images/powers/{GetType().Name}.png";
 
-    public string? CustomBigIconPath => "res://Suguri46b/images/powers/DEF_UP.png";
+    public string? CustomBigIconPath => $"res://Suguri46b/images/powers/{GetType().Name}.png";
 }
 

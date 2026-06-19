@@ -14,8 +14,8 @@ public class ATK_UP : TemporaryStrengthPower, IModPowerAssetOverrides
 
     public PowerAssetProfile AssetProfile => PowerAssetProfile.Empty;
 
-    public string? CustomIconPath => "res://Suguri46b/images/powers/ATK_UP.png";
+    public string? CustomIconPath => $"res://Suguri46b/images/powers/{GetType().Name}.png";
 
-    public string? CustomBigIconPath => "res://Suguri46b/images/powers/ATK_UP.png";
+    public string? CustomBigIconPath => $"res://Suguri46b/images/powers/{GetType().Name}.png";
 }
 

@@ -17,8 +17,8 @@ public class Norma : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://Suguri46b/images/powers/Norma.png",
-        BigIconPath: "res://Suguri46b/images/powers/Norma.png"
+        IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
+        BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     public bool Norma2;
     public bool Norma3;
