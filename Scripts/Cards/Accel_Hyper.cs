@@ -13,14 +13,14 @@ namespace Suguri46b.Scripts.Cards;
 [RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
 public class Accel_Hyper : ModCardTemplate
 {
-    private const int energyCost = 1;
+    private const int energyCost = 2;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -39,6 +39,6 @@ public class Accel_Hyper : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars["doubleDamageAmount"].UpgradeValueBy(1);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

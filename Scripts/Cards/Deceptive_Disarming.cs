@@ -22,17 +22,18 @@ public class Deceptive_Disarming : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(13, ValueProp.Move),
-        new PowerVar<WeakPower>(2),
+        new DamageVar(9, ValueProp.Move),
+        new PowerVar<WeakPower>(1),
         new DynamicVar("Additional_Payment",10)
     ];
     public Deceptive_Disarming() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
+        this.SecondaryResourceUses()
+        .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
-    private int ojstartotal;
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId)>= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -44,11 +45,10 @@ public class Deceptive_Disarming : ModCardTemplate
 		{
 			await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, base.DynamicVars.Weak.BaseValue, base.Owner.Creature, this);
 		}
-        ojstartotal=SecondaryResourceCmd.Get(Owner, ModResources.OJStarId);
-        if (ojstartotal >= base.DynamicVars["Additional_Payment"].BaseValue && cardPlay.Target.Monster.IntendsToAttack)
+        var ledger = cardPlay.SecondaryResources();
+        if (ledger.Activated("ojstars_charge") && cardPlay.Target.Monster.IntendsToAttack)
         {
             await PowerCmd.Apply<ReflectPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
-            await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
         }
     }
 

@@ -47,22 +47,22 @@ public static class ModResources
         );
 
         // 卡牌面上的次级资源费用显示。使用的图标就是你注册时提供的图标
-        // registry.RegisterCardUi(
-        //     "ojstar_card_ui",
-        //     parent =>
-        //     {
-        //         var ui = NSecondaryResourceCardCostUi.Create(OJStarId, new SecondaryResourceCardCostUiStyle
-        //         {
-        //             IconSize = new Vector2(48, 48),
-        //             FontSize = 24,
-        //         });
-        //         // 自由指定位置。例如这里我们找到能量图标的位置，放在它旁边
-        //         var energyIcon = parent.GetNode<TextureRect>("%EnergyIcon");
-        //         ui.Position = energyIcon.Position + new Vector2(0, 80);
-        //         return ui;
-        //     },
-        //     ctx => ctx.Node.Refresh(ctx)
-        // );
+        registry.RegisterCardUi(
+            "ojstar_card_ui",
+            parent =>
+            {
+                var ui = NSecondaryResourceCardCostUi.Create(OJStarId, new SecondaryResourceCardCostUiStyle
+                {
+                    IconSize = new Vector2(48, 48),
+                    FontSize = 24,
+                });
+                // 自由指定位置。例如这里我们找到能量图标的位置，放在它旁边
+                var energyIcon = parent.GetNode<TextureRect>("%EnergyIcon");
+                ui.Position = energyIcon.Position + new Vector2(0, 80);
+                return ui;
+            },
+            ctx => ctx.Node.Refresh(ctx)
+        );
 
         // 限定仅对特定角色始终显示
         registry.AlwaysShowInCombatUiForCharacter<Suguri46bCharacter>(OJStarDefinition.LocalId);

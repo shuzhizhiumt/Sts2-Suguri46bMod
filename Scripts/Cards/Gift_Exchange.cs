@@ -21,13 +21,13 @@ public class Gift_Exchange : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public Gift_Exchange() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-        protected override IEnumerable<DynamicVar> CanonicalVars => [
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(3)];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

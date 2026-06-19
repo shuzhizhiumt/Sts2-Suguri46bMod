@@ -19,7 +19,7 @@ public class Long_Distance_Shot : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(10, ValueProp.Move)

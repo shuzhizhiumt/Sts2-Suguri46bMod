@@ -14,14 +14,14 @@ namespace Suguri46b.Scripts.Cards;
 [RegisterCard(typeof(Suguri46bCardPool))]
 public class Cloud_of_Seagulls : ModCardTemplate
 {
-    private const int energyCost = 0;
+    private const int energyCost = 1;
     private const CardType type = CardType.Attack;
     private const CardRarity rarity = CardRarity.Common;
     private static readonly TargetType targetType = CustomTargetType.Everyone;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4, ValueProp.Move),

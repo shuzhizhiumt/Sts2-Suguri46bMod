@@ -24,10 +24,6 @@ public class AcceleratorPower : ModPowerTemplate
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (dealer == null)
-        {
-            return 1;
-        }
         if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer))
         {
             return 1;
@@ -44,7 +40,7 @@ public class AcceleratorPower : ModPowerTemplate
     }
     public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (base.Owner != target)
+        if (target !=base.Owner)
         {
             return 1;
         }
@@ -52,7 +48,7 @@ public class AcceleratorPower : ModPowerTemplate
     }
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == base.Owner.Side)
+        if (participants.Contains(base.Owner))
         {
             await PowerCmd.Decrement(this);
         }

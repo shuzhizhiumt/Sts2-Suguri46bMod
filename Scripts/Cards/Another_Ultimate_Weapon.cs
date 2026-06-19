@@ -6,9 +6,6 @@ using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Random;
-using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Combat.CardTargeting;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -27,10 +24,15 @@ public class Another_Ultimate_Weapon : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Another_Ultimate_Weapon() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
+        this.SecondaryCosts()
+            .Set(
+            ModResources.OJStarId,
+            SecondaryResourceCost.X(),
+            SecondaryResourceCostDuration.UntilPlayed);
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
@@ -59,7 +61,6 @@ public class Another_Ultimate_Weapon : ModCardTemplate
 			}
 			break;
 		}
-            await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId, SecondaryResourceCmd.Get(Owner, ModResources.OJStarId));
     }
 
     protected override void OnUpgrade()

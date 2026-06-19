@@ -4,14 +4,13 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
-using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 
 namespace Suguri46b.Scripts.Units;
 
 [RegisterCharacter]
-public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri46bRelicPool, Suguri46bPotionPool>, IModCreatureVisualsFactory, IModCreatureCombatAnimationStateMachineFactory
+public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri46bRelicPool, Suguri46bPotionPool>
 {
     // 角色名称颜色
     public override Color NameColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);

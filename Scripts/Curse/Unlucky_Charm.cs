@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using STS2RitsuLib.Combat.SecondaryResources;
@@ -27,9 +28,12 @@ public class Unlucky_Charm : ModCardTemplate
         
     }
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Unplayable];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
+        HoverTipFactory.FromPower<Norma>()
+        ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("LoseOJStar", 10)
     ];

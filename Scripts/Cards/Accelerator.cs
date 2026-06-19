@@ -19,7 +19,7 @@ public class Accelerator : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public override bool CanBeGeneratedInCombat => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [

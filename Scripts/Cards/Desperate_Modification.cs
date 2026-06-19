@@ -4,11 +4,10 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
-using System.Reflection;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Units;
+using Suguri46b.Scripts.Extensions;
 using Godot;
 
 namespace Suguri46b.Scripts.Cards;
@@ -23,20 +22,21 @@ public class Extension: ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Extension() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2)];
+        new CardsVar(2)
+        ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selectedCards = await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(new LocString("card_selection", "ADD_RANDOM_ENCHANTMENT"), 0, (int)DynamicVars.Cards.BaseValue),
+            prefs: new CardSelectorPrefs(new LocString("card_selection", "ADD_RANDOM_ENCHANTMENT"), 0, DynamicVars.Cards.IntValue),
             context: choiceContext,
             player: Owner,
-            filter: card => card.Enchantment == null && CanBeEnchanted(card),
+            filter: card => card.Enchantment == null && RandomEnchantments.CanBeEnchanted(card) && (card.Type==CardType.Attack||card.Type==CardType.Skill||card.Type==CardType.Power),
             source: this);
 
         if (selectedCards == null)
@@ -47,7 +47,7 @@ public class Extension: ModCardTemplate
         var rng = Owner.RunState.Rng.CombatCardGeneration;
         foreach (var selectedCard in selectedCards)
         {
-            var validEnchantments = GetValidEnchantments(selectedCard);
+            var validEnchantments =RandomEnchantments.GetValidEnchantments(selectedCard);
             if (validEnchantments.Count == 0)
             {
                 continue;
@@ -57,121 +57,6 @@ public class Extension: ModCardTemplate
             GD.Print("[Debug]chosenEnchantment:"+chosenEnchantment);
             CardCmd.Enchant(chosenEnchantment, selectedCard, 1);
         }
-    }
-
-    private static IList<EnchantmentModel> GetValidEnchantments(CardModel card)
-    {
-        var valid = new List<EnchantmentModel>();
-        foreach (var enchantmentType in GetAllEnchantmentTypes())
-        {
-            var enchantment = GetEnchantmentModel(enchantmentType, mutable: true);
-            if (enchantment != null && enchantment.CanEnchant(card) && IsAllowedCardForEnchantment(enchantmentType, card))
-            {
-                valid.Add(enchantment);
-            }
-        }
-
-        return valid;
-    }
-
-    private static IEnumerable<Type> GetAllEnchantmentTypes()
-    {
-        var enchantmentBaseType = typeof(EnchantmentModel);
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-        {
-            Type[] types;
-            try
-            {
-                types = assembly.GetTypes();
-            }
-            catch (ReflectionTypeLoadException ex)
-            {
-                types = ex.Types.Where(t => t != null).Cast<Type>().ToArray();
-            }
-
-            foreach (var type in types)
-            {
-                if (type == null || !type.IsClass || type.IsAbstract)
-                {
-                    continue;
-                }
-
-                if (!enchantmentBaseType.IsAssignableFrom(type))
-                {
-                    continue;
-                }
-
-                yield return type;
-            }
-        }
-    }
-
-    private static EnchantmentModel? GetEnchantmentModel(Type enchantmentType, bool mutable = false)
-    {
-        var method = typeof(ModelDb).GetMethod("Enchantment", BindingFlags.Public | BindingFlags.Static);
-        if (method == null || !method.IsGenericMethodDefinition)
-        {
-            return null;
-        }
-
-        var generic = method.MakeGenericMethod(enchantmentType);
-        var model = generic.Invoke(null, null) as EnchantmentModel;
-        if (model == null)
-        {
-            return null;
-        }
-
-        if (!mutable)
-        {
-            return model;
-        }
-
-        var toMutable = typeof(EnchantmentModel).GetMethod("ToMutable", BindingFlags.Public | BindingFlags.Instance);
-        if (toMutable == null)
-        {
-            return model;
-        }
-
-        return toMutable.Invoke(model, null) as EnchantmentModel ?? model;
-    }
-
-    private static bool CanBeEnchanted(CardModel card)
-    {
-        return GetAllEnchantmentTypes().Any(enchantmentType =>
-        {
-            var enchantment = GetEnchantmentModel(enchantmentType);
-            return enchantment != null && enchantment.CanEnchant(card) && IsAllowedCardForEnchantment(enchantmentType, card);
-        });
-    }
-
-    private static bool IsAllowedCardForEnchantment(Type enchantmentType, CardModel card)
-    {
-        if (IsExcludedEnchantment(enchantmentType))
-        {
-            return false;
-        }
-
-        if (IsInkyEnchantment(enchantmentType))
-        {
-            return card.Type == CardType.Attack;
-        }
-        return true;
-    }
-
-    private static bool IsExcludedEnchantment(Type enchantmentType)
-    {
-        var name = enchantmentType.Name;
-        return name.Equals("Goopy", StringComparison.OrdinalIgnoreCase)
-            || name.Equals("Imbued", StringComparison.OrdinalIgnoreCase)
-            || name.Equals("Clone", StringComparison.OrdinalIgnoreCase)
-            || name.Equals("DeprecatedEnchantment", StringComparison.OrdinalIgnoreCase)
-            || name.Equals("MockFreeEnchantment", StringComparison.OrdinalIgnoreCase);
-    }
-
-    private static bool IsInkyEnchantment(Type enchantmentType)
-    {
-        var name = enchantmentType.Name;
-        return name.Equals("Inky", StringComparison.OrdinalIgnoreCase);
     }
 
     protected override void OnUpgrade()

@@ -22,7 +22,7 @@ public class Sealed_Memories : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Sealed_Memories() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

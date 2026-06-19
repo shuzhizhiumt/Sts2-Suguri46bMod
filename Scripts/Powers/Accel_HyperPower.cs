@@ -1,4 +1,3 @@
-using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -28,10 +27,6 @@ public class Accel_HyperPower : ModPowerTemplate
     ];
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (dealer == null)
-        {
-            return 1;
-        }
         if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer))
         {
             return 1;
@@ -44,19 +39,22 @@ public class Accel_HyperPower : ModPowerTemplate
         {
             return 1;
         }
+        if (cardSource.Type != CardType.Attack)
+        {
+            return 1;
+        }
         return 2;
     }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext,CardPlay cardPlay)
     {
-        if (cardPlay.Card.Type == CardType.Attack)
-        {
-            await PowerCmd.Decrement(this);
-        }
+        if (cardPlay.Card.Owner.Creature == base.Owner && cardPlay.Card.Type == CardType.Attack)
+		{
+			await PowerCmd.Decrement(this);
+		}
     }
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == base.Owner.Side)
+        if (participants.Contains(base.Owner))
         {
             await PowerCmd.Remove(this);
         }

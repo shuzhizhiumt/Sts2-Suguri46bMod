@@ -1,5 +1,3 @@
-using System.Reflection.Emit;
-using System.Threading.Tasks;
 using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
@@ -7,25 +5,13 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
-using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
-using MegaCrit.Sts2.Core.Entities.Enchantments;
-using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Patching.Models;
-using STS2RitsuLib.Scaffolding.Godot.NodeAttachments;
-using STS2RitsuLib.Screens;
-using STS2RitsuLib.TopBar;
-using STS2RitsuLib.Ui.Toast;
-using static System.Net.Mime.MediaTypeNames;
 using Suguri46b.Scripts.Enchantments;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using Suguri46b.Scripts.Powers;
-using System.ComponentModel.Design.Serialization;
-using MegaCrit.Sts2.Core.Models.Events;
-using MegaCrit.Sts2.Core.Entities.Multiplayer;
 
 namespace Suguri46b.Scripts.Patches;
 

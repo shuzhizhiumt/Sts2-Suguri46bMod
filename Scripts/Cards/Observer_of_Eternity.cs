@@ -26,31 +26,31 @@ public class Observer_of_Eternity : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Observer_of_Eternity() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
+        this.SecondaryResourceUses()
+        .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
-        new DynamicVar("Additional_Payment",10)
+        new DynamicVar("Additional_Payment",6)
     ];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
 
-    private int ojstartotal;
     private bool uncommon;
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ojstartotal=SecondaryResourceCmd.Get(Owner, ModResources.OJStarId);
-        if (ojstartotal>=base.DynamicVars["Additional_Payment"].BaseValue)
+        var ledger = cardPlay.SecondaryResources();
+        if (ledger.Activated("ojstars_charge"))
         {
             uncommon=true;
-            await SecondaryResourceCmd.Lose(Owner, ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
         }
         List<CardPoolModel> allPools = [.. base.Owner.UnlockState.CharacterCardPools];
         IEnumerable<CardModel> AttackCards = allPools

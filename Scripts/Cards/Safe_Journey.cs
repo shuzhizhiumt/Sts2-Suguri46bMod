@@ -24,7 +24,7 @@ public class Safe_Journey : ModCardTemplate
     
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Safe_Journey() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

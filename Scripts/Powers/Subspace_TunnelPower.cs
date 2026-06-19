@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.SecondaryResources;
@@ -24,6 +25,9 @@ public class Subspace_TunnelPower : ModPowerTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
         new DynamicVar("GainOJStar",3)
+    ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
+        HoverTipFactory.FromPower<Norma>()
     ];
 
     public bool _isOdd;
@@ -54,7 +58,7 @@ public class Subspace_TunnelPower : ModPowerTemplate
         }
         else
         {
-            await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.IntValue*Amount,Owner.Player);
+            await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.IntValue,Owner.Player);
         }
     }
 }

@@ -16,8 +16,6 @@ public class Sumika : ModRelicTemplate
 {
 	private bool ActivatedThisCombat = false;
 	private int AttackCardsPlayedThisCombat = 3;
-
-	// 稀有度
 	public override RelicRarity Rarity => RelicRarity.Starter;
 
 	protected override IEnumerable<DynamicVar> CanonicalVars => [

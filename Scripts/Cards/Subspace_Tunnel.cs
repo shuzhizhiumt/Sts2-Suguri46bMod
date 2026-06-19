@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -19,11 +20,14 @@ public class Subspace_Tunnel : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Subspace_Tunnel() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
+        HoverTipFactory.FromPower<Norma>()
+    ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
         new DynamicVar("GainOJStar",3),

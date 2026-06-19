@@ -21,11 +21,11 @@ public class Backdoor_Trade : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public override bool CanBeGeneratedInCombat => false;
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<Unlucky_Charm>(),
         HoverTipFactory.FromPower<Norma>()
     ];
