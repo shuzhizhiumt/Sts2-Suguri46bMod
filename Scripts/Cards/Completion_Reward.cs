@@ -1,8 +1,13 @@
+using Godot;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -16,7 +21,7 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Nice_Present : ModCardTemplate
+public class Completion_Reward : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
@@ -27,31 +32,28 @@ public class Nice_Present : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3),
-        new DynamicVar("Additional_Payment",10)
-    ];
-    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
 
-    public Nice_Present() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculatedVar("GainOJStar").WithMultiplier((CardModel card, Creature? _) => CombatManager.Instance.History.Entries.OfType<CardGeneratedEntry>().Count((CardGeneratedEntry c) => c.HappenedThisTurn(card.CombatState) && c.Creator == card.Owner)),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(7)
+    ];
+
+    public Completion_Reward() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
-        this.SecondaryResourceUses()
-        .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var ledger = cardPlay.SecondaryResources();
-        int cards= base.DynamicVars.Cards.IntValue;
-        if (ledger.Activated("ojstars_charge"))
+        GD.Print("[DEBUG]GainOJStar.IntValue="+base.DynamicVars["GainOJStar"].IntValue);
+        GD.Print("[DEBUG]base.DynamicVars.CalculationBase.IntValue="+base.DynamicVars.CalculationBase.IntValue);
+        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,(int)((CalculatedVar)base.DynamicVars["GainOJStar"]).Calculate(cardPlay.Target));
+        if (IsUpgraded)
         {
-            cards++;
+            this.AddKeyword(MyKeywords.Norma_Check.GetModCardKeyword());
         }
-        await CardPileCmd.Draw(choiceContext,cards,Owner);
     }
-
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        
     }
 }

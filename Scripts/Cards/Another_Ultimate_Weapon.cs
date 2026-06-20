@@ -8,7 +8,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Resources;
 using Suguri46b.Scripts.Units;
 
@@ -34,6 +36,8 @@ public class Another_Ultimate_Weapon : ModCardTemplate
             SecondaryResourceCost.X(),
             SecondaryResourceCostDuration.UntilPlayed);
     }
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
         new DynamicVar("Additional_Payment", 10)

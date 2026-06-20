@@ -36,6 +36,5 @@ public class Mix : ModEnchantmentTemplate
     }
     public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay? cardPlay)
     {
-
     }
 }

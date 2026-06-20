@@ -1,4 +1,5 @@
 using Godot;
+using MegaCrit.Sts2.Core.Models.Events;
 using STS2RitsuLib;
 using STS2RitsuLib.Combat.SecondaryResources;
 using Suguri46b.Scripts.Units;
@@ -53,12 +54,12 @@ public static class ModResources
             {
                 var ui = NSecondaryResourceCardCostUi.Create(OJStarId, new SecondaryResourceCardCostUiStyle
                 {
-                    IconSize = new Vector2(48, 48),
+                    IconSize = new Vector2(48,48),
                     FontSize = 24,
                 });
                 // 自由指定位置。例如这里我们找到能量图标的位置，放在它旁边
                 var energyIcon = parent.GetNode<TextureRect>("%EnergyIcon");
-                ui.Position = energyIcon.Position + new Vector2(0, 80);
+                ui.Position = energyIcon.Position + new Vector2(-10, 40);
                 return ui;
             },
             ctx => ctx.Node.Refresh(ctx)

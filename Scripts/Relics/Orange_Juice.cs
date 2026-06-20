@@ -34,7 +34,6 @@ public class Orange_Juice : ModRelicTemplate
         int currentTurn = base.Owner.Creature.CombatState.RoundNumber;
         if (participants.Contains(base.Owner.Creature))
         {
-            Flash();
             await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,currentTurn);
         }
     }

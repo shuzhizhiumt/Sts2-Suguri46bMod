@@ -32,7 +32,7 @@ public class Holy_NightPower : ModPowerTemplate
     {
         if (player == base.Owner.Player)
         {
-            await SecondaryResourceCmd.Gain(player, ModResources.OJStarId, base.DynamicVars["GainOJStar"].IntValue);
+            await SecondaryResourceCmd.Gain(player, ModResources.OJStarId,Amount);
         }
     }
 }

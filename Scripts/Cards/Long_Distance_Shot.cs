@@ -22,7 +22,7 @@ public class Long_Distance_Shot : ModCardTemplate
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(10, ValueProp.Move)
+        new DamageVar(13, ValueProp.Move)
     ];
     public Long_Distance_Shot() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

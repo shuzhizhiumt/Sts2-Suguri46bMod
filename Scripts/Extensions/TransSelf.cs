@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Logging;
@@ -19,13 +20,16 @@ public class TransSelf : HookedSingletonModel
     public TransSelf() : base(HookType.Combat)
     {
     }
-    private readonly List<CardModel> cardModel= new();
+    private readonly List<CardModel> cardModels= new();
     private CardModel? newcard;
+
+    private bool IsTrans;
+
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Enchantment != null && cardPlay.Card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType())
         {
-            cardModel.Add(cardPlay.Card);
+            cardModels.Add(cardPlay.Card);
             List<CardPoolModel> allPools = [.. cardPlay.Card.Owner.UnlockState.CharacterCardPools];
             IEnumerable<CardModel> allCards = allPools
                 .SelectMany(pool => pool.GetUnlockedCards(
@@ -39,16 +43,20 @@ public class TransSelf : HookedSingletonModel
             ).First();
         }
     }
+
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if (cardModel.Count>0 && newcard!= null)
+
+        if (cardModels.Count>0 && newcard!= null && !IsTrans)
         {
-            foreach (var item in cardModel)
+            IsTrans= true;
+            foreach (var item in cardModels)
             {
-                cardModel.Remove(item);
                 CardPileAddResult? cardPileAddResult=await CardCmd.Transform(item,newcard);
                 CardCmd.Enchant<Mix>(cardPileAddResult.Value.cardAdded,1);
             }
+            cardModels.Clear();
+            IsTrans= false;
         }
     }
 }
