@@ -23,8 +23,8 @@ public class Subspace_TunnelPower : ModPowerTemplate
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1),
-        new DynamicVar("GainOJStar",3)
+        new CardsVar(Amount),
+        new DynamicVar("GainOJStar",3*Amount)
     ];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
         HoverTipFactory.FromPower<Norma>()
@@ -54,7 +54,7 @@ public class Subspace_TunnelPower : ModPowerTemplate
         if(_isOdd)
         {
             int Level=Owner?.GetPower<Norma>()?.Amount ?? 0;
-            await SecondaryResourceCmd.Gain(Owner.Player, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue*Amount);
+            await SecondaryResourceCmd.Gain(Owner.Player, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);
         }
         else
         {

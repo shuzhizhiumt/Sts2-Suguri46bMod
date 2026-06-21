@@ -5,6 +5,9 @@
     "SUGURI46B_KEYWORD_NORMA_CHECK.description": "检测玩家拥有[gold]星星[/gold]数量，根据[gold]目标[/gold]层数，若满足0/10/30/70/120/200[gold]星星[/gold]，则获得一层[gold]目标[/gold]。",
     "SUGURI46B_KEYWORD_NORMA_CHECK.title": "目标检测",
 
-    "SUGURI46B_KEYWORD_REPEAT.description": "根据已经打出的相同卡的数量，获得额外效果",
-    "SUGURI46B_KEYWORD_REPEAT.title": "重复(X)"
+    "SUGURI46B_KEYWORD_REPEAT.description": "当所有玩家使用相同卡名的卡牌合计X次时，卡牌获得额外效果",
+    "SUGURI46B_KEYWORD_REPEAT.title": "重复(X)",
+
+    "SUGURI46B_KEYWORD_TRIGGER.description": "触发条件后，替换原效果",
+    "SUGURI46B_KEYWORD_TRIGGER.title": "触发"
 }

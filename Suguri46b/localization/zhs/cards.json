@@ -6,7 +6,7 @@
     "SUGURI46B_CARD_SUGURI46B_DEFEND.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
 
     "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.title": "永恒的观测者",
-    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description":"将{Cards:diff()}张随机角色{IfUpgraded:show:[gold]升级过[/gold]}的普通攻击牌加入你的[gold]手牌[/gold]，并为它们添加[gold]保留[/gold]。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n也可以生成罕见攻击牌。",
+    "SUGURI46B_CARD_OBSERVER_OF_ETERNITY.description":"将{Cards:diff()}张随机角色{IfUpgraded:show:[gold]升级过[/gold]}的普通攻击牌加入你的[gold]手牌[/gold]，并为它们添加[gold]保留[/gold]。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n也可以生成罕见攻击牌。",
     
     "SUGURI46B_CARD_ACCEL_HYPER.title":"极速超能",
     "SUGURI46B_CARD_ACCEL_HYPER.description": "你本回合打出的下{Accel_HyperPower:diff()}张攻击牌，造成双倍伤害。",
@@ -42,7 +42,7 @@
     "SUGURI46B_CARD_GIFT_EXCHANGE.description":"选择你[gold]手牌[/gold]中的一张攻击、技能或能力牌,从{Cards:diff()}张其它角色的相同类型及{IfUpgraded:show:稀有度提高一级（最高提升为稀有）|相同稀有度}的牌中选择一张[gold]变化[/gold]。",
 
     "SUGURI46B_CARD_DECEPTIVE_DISARMING.title": "虚假除械",
-    "SUGURI46B_CARD_DECEPTIVE_DISARMING.description":"造成{Damage:diff()}点伤害。\n如果敌人的意图是攻击，则给予{WeakPower:diff()}层虚弱。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n将一张[gold]{IfUpgraded:show:远距离射击+|远距离射击}[/gold]加入[gold]手牌[/gold]。",
+    "SUGURI46B_CARD_DECEPTIVE_DISARMING.description":"造成{Damage:diff()}点伤害。\n如果敌人的意图是攻击，则给予{WeakPower:diff()}层虚弱。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n将一张[gold]{IfUpgraded:show:远距离射击+|远距离射击}[/gold]加入[gold]手牌[/gold]。",
 
     "SUGURI46B_CARD_EXTENSION.title":"部件扩张",
     "SUGURI46B_CARD_EXTENSION.description":"为你至多{Cards:diff()}张[gold]手牌[/gold]添加随机[purple]附魔[/purple]。",
@@ -54,7 +54,7 @@
     "SUGURI46B_CARD_SUBSPACE_TUNNEL.description":"打出带有[purple]附魔[/purple]的牌后，如果[gold]目标[/gold]层数为奇数，则获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]，否则，抽{Cards:diff()}张牌。",
 
     "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.title":"另一个最终兵器",
-    "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.description":"打出你[gold]弃牌堆[/gold]中的{Cards:diff()}张随机攻击牌。\n[gold]额外支付[/gold]:所有[gold]星星[/gold]\n每失去{Additional_Payment:diff()}[gold]星星[/gold]，就额外随机打出一张。",
+    "SUGURI46B_CARD_ANOTHER_ULTIMATE_WEAPON.description":"打出你[gold]弃牌堆[/gold]中的{Cards:diff()}张随机攻击牌。\n[gold]额外支付：[/gold]所有[gold]星星[/gold]\n每失去{Additional_Payment:diff()}[gold]星星[/gold]，就额外随机打出一张。",
 
     "SUGURI46B_CARD_LUCKY_CHARM.title":"幸运护符",
     "SUGURI46B_CARD_LUCKY_CHARM.description":"第一次加入[gold]手牌[/gold]时，[gold]手牌[/gold]上限减少{ReduceMaxHandSize:diff()}。\n若回合结束时此牌在[gold]手牌[/gold]中，则获得[gold]目标[/gold]层数*{GainOJStar:diff()}的[gold]星星[/gold]。",
@@ -69,7 +69,7 @@
     "SUGURI46B_CARD_MIMIC.description":"选择一张[gold]手牌[/gold]变化为其它随机{Cards:diff()}张[gold]手牌[/gold]中的一张。",
 
     "SUGURI46B_CARD_STAR_BLASTING_LIGHT.title":"烧毁星球之光",
-    "SUGURI46B_CARD_STAR_BLASTING_LIGHT.description":"[gold]消耗[/gold]你所有的攻击牌和状态牌。每有一张被[gold]消耗[/gold]的牌，就随机对敌人造成{Damage:diff()}点伤害。{InCombat:\n（攻击{CalculatedHits:diff()}次）|}",
+    "SUGURI46B_CARD_STAR_BLASTING_LIGHT.description":"[gold]消耗[/gold]你所有的攻击牌和状态牌。\n每有一张被[gold]消耗[/gold]的牌，就随机对敌人造成{Damage:diff()}点伤害。{InCombat:\n（攻击{CalculatedHits:diff()}次）|}",
     
     "SUGURI46B_CARD_EXTEND.title":"残机奖励",
     "SUGURI46B_CARD_EXTEND.description":"阻止下{BufferPower:diff()}次你受到的生命值损伤。",
@@ -78,7 +78,7 @@
     "SUGURI46B_CARD_BANA_NANA.description":"抽到此牌时，再抽{Cards:diff()}张牌。{IfUpgraded:show:打出时抽{Cards:diff()}张牌。}",
 
     "SUGURI46B_CARD_NICE_PRESENT.title":"美妙的礼物",
-    "SUGURI46B_CARD_NICE_PRESENT.description":"抽{Cards:diff()}张牌。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n额外抽取1张牌。",
+    "SUGURI46B_CARD_NICE_PRESENT.description":"抽{Cards:diff()}张牌。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n额外抽取1张牌。",
     
     "SUGURI46B_CARD_HOLY_NIGHT.title":"神圣之夜",
     "SUGURI46B_CARD_HOLY_NIGHT.description":"每回合开始时，获得{Holy_NightPower:diff()}[gold]星星[/gold]。",
@@ -87,7 +87,7 @@
     "SUGURI46B_CARD_MIX_PHENOMENON.description":"为你至多{Cards:diff()}张[gold]手牌[/gold][purple]附魔[/purple]：[gold]混成化[/gold]。",
 
     "SUGURI46B_CARD_REFLECTIVE_SHELL.title":"反射外壳",
-    "SUGURI46B_CARD_REFLECTIVE_SHELL.description":"获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合将你格挡掉的攻击伤害反弹给攻击者。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n额外获得{Block:diff()}点[gold]格挡[/gold]。",
+    "SUGURI46B_CARD_REFLECTIVE_SHELL.description":"获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合将你格挡掉的攻击伤害反弹给攻击者。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n额外获得{Block:diff()}点[gold]格挡[/gold]。",
 
     "SUGURI46B_CARD_PLAY_OF_THE_GODS.title":"众神的嬉戏",
     "SUGURI46B_CARD_PLAY_OF_THE_GODS.description":"随机打出你的[gold]手牌[/gold]中{Cards:diff()}张带有任意[purple]附魔[/purple]的牌。{IfUpgraded:show:\n若[gold]手牌[/gold]中无可打出的牌，则从[gold]抽牌堆[/gold]中抽取。}",
@@ -99,11 +99,21 @@
     "SUGURI46B_CARD_COMPLETION_REWARD.description":"获得{GainOJStar:diff()}[gold]星星[/gold]。\n你在本回合中每生成过一张牌，就获得{CalculationExtra:diff()}[gold]星星[/gold]。{IfUpgraded:show:\n进行[gold]目标检测[/gold]。}",
 
     "SUGURI46B_CARD_DINNER.title":"晚餐",
-    "SUGURI46B_CARD_DINNER.description":"获得{Energy:energyIcons()}。\n[gold]额外支付[/gold]:{Additional_Payment:diff()}[gold]星星[/gold]\n额外获得{energyPrefix:energyIcons(1)}。",
+    "SUGURI46B_CARD_DINNER.description":"获得{Energy:energyIcons()}。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n额外获得{energyPrefix:energyIcons(1)}。",
 
     "SUGURI46B_CARD_BAD_PUDDING.title":"糟糕的布丁",
     "SUGURI46B_CARD_BAD_PUDDING.description": "获得{Energy:energyIcons()}。随机[gold]丢弃[/gold]1张牌。",
 
     "SUGURI46B_CARD_THE_GREATEST_TROUBLEMAKER_EVER.title":"烦人透顶的家伙",
-    "SUGURI46B_CARD_THE_GREATEST_TROUBLEMAKER_EVER.description": "对随机敌人造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]抽{Cards:diff()}张牌。\n[gold]重复(2)：[/gold]对随机敌人造成{Damage:diff()}点伤害。"
+    "SUGURI46B_CARD_THE_GREATEST_TROUBLEMAKER_EVER.description": "对随机敌人造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]抽{Cards:diff()}张牌。\n[gold]重复(2)：[/gold]对随机敌人造成{Damage:diff()}点伤害。",
+
+    "SUGURI46B_CARD_NANAKO_BIT.title": "奈奈子的浮游炮",
+    "SUGURI46B_CARD_NANAKO_BIT.description": "每回合开始时，失去{Additional_Payment:diff()}[gold]星星[/gold]，获得{StrengthPower:diff()}点力量。",
+
+    "SUGURI46B_CARD_REVIVAL_OF_STARS.title": "星之再生",
+    "SUGURI46B_CARD_REVIVAL_OF_STARS.description": "每当你生成牌时，获得{Energy:energyIcons()}，抽{Cards:diff()}张牌。",
+
+    "SUGURI46B_CARD_DESPERATE_MODIFICATION.title": "自暴自弃的改造",
+    "SUGURI46B_CARD_DESPERATE_MODIFICATION.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若此卡拥有任意[purple]附魔[/purple]，则伤害增加{ExtraDamage:diff()}。"
+
 }

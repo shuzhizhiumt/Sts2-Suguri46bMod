@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -16,7 +17,7 @@ using Suguri46b.Scripts.Resources;
 namespace Suguri46b.Scripts.Powers;
 
 [RegisterPower]
-public class Holy_NightPower : ModPowerTemplate
+public class Revival_of_StarsPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -26,13 +27,15 @@ public class Holy_NightPower : ModPowerTemplate
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("GainOJStar",1)
+        new EnergyVar(1),
+        new CardsVar(Amount)
     ];
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
-        if (player == base.Owner.Player)
+        if (card !=null && creator==Owner.Player)
         {
-            await SecondaryResourceCmd.Gain(player, ModResources.OJStarId,Amount);
+            await PlayerCmd.GainEnergy(Amount,Owner.Player);
+            await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(),Amount,Owner.Player);
         }
     }
 }

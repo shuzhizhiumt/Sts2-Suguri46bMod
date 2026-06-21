@@ -9,57 +9,51 @@ using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Units;
 using Suguri46b.Scripts.Extensions;
 using Godot;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Combat.CardTargeting;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Extension: ModCardTemplate
+public class Desperate_Modification: ModCardTemplate
 {
     private const int energyCost = 1;
-    private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Uncommon;
-    private const TargetType targetType = TargetType.Self;
+    private const CardType type = CardType.Attack;
+    private const CardRarity rarity = CardRarity.Common;
+    private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public Extension() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Desperate_Modification() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2)
+        new DamageVar(1, ValueProp.Move),
+        new RepeatVar(6),
+        new ExtraDamageVar(1)
         ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var selectedCards = await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(new LocString("card_selection", "ADD_RANDOM_ENCHANTMENT"), 0, DynamicVars.Cards.IntValue),
-            context: choiceContext,
-            player: Owner,
-            filter: card => card.Enchantment == null && RandomEnchantments.CanBeEnchanted(card) && (card.Type==CardType.Attack||card.Type==CardType.Skill||card.Type==CardType.Power),
-            source: this);
-
-        if (selectedCards == null)
-        {
-            return;
-        }
-
-        var rng = Owner.RunState.Rng.CombatCardGeneration;
-        foreach (var selectedCard in selectedCards)
-        {
-            var validEnchantments =RandomEnchantments.GetValidEnchantments(selectedCard);
-            if (validEnchantments.Count == 0)
-            {
-                continue;
-            }
-
-            var chosenEnchantment = validEnchantments[rng.NextInt(validEnchantments.Count)];
-            CardCmd.Enchant(chosenEnchantment, selectedCard, 1);
-        }
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(base.DynamicVars.Repeat.IntValue)
+            .FromCard(this)
+            .Targeting(cardPlay.Target!)
+            .Execute(choiceContext);
     }
-
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (cardSource==this && this.Enchantment!=null)
+        {
+            return base.DynamicVars.ExtraDamage.IntValue;
+        }
+        return 0;
+    }
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(1);
     }
 }
