@@ -33,5 +33,9 @@
 
     "SUGURI46B_POWER_REVIVAL_OF_STARS_POWER.title":"星之再生",
     "SUGURI46B_POWER_REVIVAL_OF_STARS_POWER.description":"每当你生成牌时，获得[blue]1[/blue]点[gold]能量[/gold]，抽[blue]1[/blue]张牌。",
-    "SUGURI46B_POWER_REVIVAL_OF_STARS_POWER.smartDescription":"每当你生成牌时，获得{Amount:energyIcons()}，抽[blue]{Amount}[/blue]张牌。"
+    "SUGURI46B_POWER_REVIVAL_OF_STARS_POWER.smartDescription":"每当你生成牌时，获得{Amount:energyIcons()}，抽[blue]{Amount}[/blue]张牌。",
+
+    "SUGURI46B_POWER_SWEET_PARADISE_POWER.title":"甜点天堂",
+    "SUGURI46B_POWER_SWEET_PARADISE_POWER.description":"每打出一张带有[gold]甜点[/gold]的牌就获得[blue]1[/blue]星星。",
+    "SUGURI46B_POWER_SWEET_PARADISE_POWER.smartDescription":"每打出一张带有[gold]甜点[/gold]的牌就获得[blue]{Amount}[/blue]星星。"
 }

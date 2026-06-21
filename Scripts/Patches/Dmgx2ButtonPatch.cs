@@ -61,7 +61,7 @@ public partial class Dmgx2ButtonPatch : IPatchMethod
             if (player == null)
                 return;
 
-            CardSelectorPrefs prefs = new CardSelectorPrefs(new LocString("card_selection", "ADD_DMGX2_ENCHANTMENT"),0,10);
+            CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt,0,10);
             IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
                 prefs: prefs,
                 context: new BlockingPlayerChoiceContext(),

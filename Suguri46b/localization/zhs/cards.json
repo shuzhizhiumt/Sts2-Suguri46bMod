@@ -114,6 +114,15 @@
     "SUGURI46B_CARD_REVIVAL_OF_STARS.description": "每当你生成牌时，获得{Energy:energyIcons()}，抽{Cards:diff()}张牌。",
 
     "SUGURI46B_CARD_DESPERATE_MODIFICATION.title": "自暴自弃的改造",
-    "SUGURI46B_CARD_DESPERATE_MODIFICATION.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若此卡拥有任意[purple]附魔[/purple]，则伤害增加{ExtraDamage:diff()}。"
+    "SUGURI46B_CARD_DESPERATE_MODIFICATION.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若此卡拥有任意[purple]附魔[/purple]，则伤害增加{ExtraDamage:diff()}。",
+
+    "SUGURI46B_CARD_PUDDING.title":"布丁",
+    "SUGURI46B_CARD_PUDDING.description": "恢复所有{Energy:energyIcons()}。",
+
+    "SUGURI46B_CARD_SWEET_PARADISE.title": "甜点天堂",
+    "SUGURI46B_CARD_SWEET_PARADISE.description": "将{Cards:diff()}张[gold]{IfUpgraded:show:甜点纵溺+|甜点纵溺}[/gold]加入[gold]弃牌堆[/gold]。\n每打出一张带有[gold]甜点[/gold]的牌就获得{GainOJStar:diff()}星星。",
+
+    "SUGURI46B_CARD_SWEET_INDULGENCE.title": "甜点纵溺",
+     "SUGURI46B_CARD_SWEET_INDULGENCE.description": "选择一张[gold]手牌[/gold]变化为随机一张带有[gold]甜点[/gold]，{IfUpgraded:show:[gold]升级过[/gold]}的牌。"
 
 }

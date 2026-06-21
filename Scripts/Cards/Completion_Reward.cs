@@ -48,6 +48,6 @@ public class Completion_Reward : ModCardTemplate
     }
     protected override void OnUpgrade()
     {
-        this.AddKeyword(MyKeywords.Norma_Check.GetModCardKeyword());
+        this.AddKeyword(MyKeywords.Norma_Check);
     }
 }

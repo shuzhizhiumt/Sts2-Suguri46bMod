@@ -27,7 +27,7 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Repeat.GetModCardKeyword()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Repeat];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(8, ValueProp.Move),
         new CardsVar(1)

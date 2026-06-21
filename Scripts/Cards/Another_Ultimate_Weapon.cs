@@ -36,7 +36,7 @@ public class Another_Ultimate_Weapon : ModCardTemplate
             SecondaryResourceCost.X(),
             SecondaryResourceCostDuration.UntilPlayed);
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),

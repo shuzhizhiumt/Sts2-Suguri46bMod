@@ -34,7 +34,7 @@ public class Deceptive_Disarming : ModCardTemplate
         new PowerVar<WeakPower>(1),
         new DynamicVar("Additional_Payment",5)
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<Long_Distance_Shot>(base.IsUpgraded),
         HoverTipFactory.FromPower<WeakPower>()

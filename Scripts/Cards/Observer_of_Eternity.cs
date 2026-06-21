@@ -40,7 +40,7 @@ public class Observer_of_Eternity : ModCardTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
 
     private bool uncommon;
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;

@@ -30,7 +30,7 @@ public class Reflective_Shell : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(8,ValueProp.Move),
         new PowerVar<ReflectPower>(1),

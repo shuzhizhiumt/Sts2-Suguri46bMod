@@ -9,5 +9,8 @@
     "SUGURI46B_KEYWORD_REPEAT.title": "重复(X)",
 
     "SUGURI46B_KEYWORD_TRIGGER.description": "触发条件后，替换原效果",
-    "SUGURI46B_KEYWORD_TRIGGER.title": "触发"
+    "SUGURI46B_KEYWORD_TRIGGER.title": "触发",
+
+    "SUGURI46B_KEYWORD_SWEETS.description": "甜点卡",
+    "SUGURI46B_KEYWORD_SWEETS.title": "甜点"
 }

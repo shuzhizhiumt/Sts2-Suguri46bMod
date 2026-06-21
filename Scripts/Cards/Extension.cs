@@ -33,7 +33,7 @@ public class Extension: ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selectedCards = await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(new LocString("card_selection", "ADD_RANDOM_ENCHANTMENT"), 0, DynamicVars.Cards.IntValue),
+            prefs: new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 0, DynamicVars.Cards.IntValue),
             context: choiceContext,
             player: Owner,
             filter: card => card.Enchantment == null && RandomEnchantments.CanBeEnchanted(card) && (card.Type==CardType.Attack||card.Type==CardType.Skill||card.Type==CardType.Power),

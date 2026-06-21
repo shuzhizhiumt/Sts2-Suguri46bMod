@@ -27,7 +27,7 @@ public class Nice_Present : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(3),
         new DynamicVar("Additional_Payment",10)
