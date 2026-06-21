@@ -36,7 +36,7 @@ public class Deceptive_Disarming : ModCardTemplate
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment.GetModCardKeyword()];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromCard<Long_Distance_Shot>(),
+        HoverTipFactory.FromCard<Long_Distance_Shot>(base.IsUpgraded),
         HoverTipFactory.FromPower<WeakPower>()
     ];
     public Deceptive_Disarming() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -59,6 +59,10 @@ public class Deceptive_Disarming : ModCardTemplate
         if (ledger.Activated("ojstars_charge"))
         {
 			CardModel cardModel = base.CombatState.CreateCard<Long_Distance_Shot>(base.Owner);
+            if (IsUpgraded)
+            {
+                CardCmd.Upgrade(cardModel);
+            }
             await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, base.Owner);
         }
     }

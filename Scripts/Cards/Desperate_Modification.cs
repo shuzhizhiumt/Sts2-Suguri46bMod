@@ -54,7 +54,6 @@ public class Extension: ModCardTemplate
             }
 
             var chosenEnchantment = validEnchantments[rng.NextInt(validEnchantments.Count)];
-            GD.Print("[Debug]chosenEnchantment:"+chosenEnchantment);
             CardCmd.Enchant(chosenEnchantment, selectedCard, 1);
         }
     }

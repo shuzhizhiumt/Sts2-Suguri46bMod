@@ -63,25 +63,24 @@ public class Norma : ModPowerTemplate
             await ExecuteCombatVictory();
         }
     }
-        private async Task ExecuteCombatVictory()
+    private async Task ExecuteCombatVictory()
+    {
+        var combatState = CombatManager.Instance.DebugOnlyGetState();
+        List<Creature> allEnemies = [.. combatState!.Enemies];
+
+        if (allEnemies.Count == 0)
         {
-            var combatState = CombatManager.Instance.DebugOnlyGetState();
-            List<Creature> allEnemies = [.. combatState!.Enemies];
-
-            if (allEnemies.Count == 0)
-            {
-                await CombatManager.Instance.CheckWinCondition();
-                return;
-            }
-
-            foreach (var enemy in allEnemies)
-            {
-                enemy.RemoveAllPowersInternalExcept();
-                await CreatureCmd.Kill(enemy);
-            }
-
             await CombatManager.Instance.CheckWinCondition();
+            return;
         }
+
+        foreach (var enemy in allEnemies)
+        {
+            enemy.RemoveAllPowersInternalExcept();
+            await CreatureCmd.Kill(enemy);
+        }
+        await CombatManager.Instance.CheckWinCondition();
+    }
     public override decimal ModifyMaxEnergy(Player player, decimal amount)
     {
         if (Norma5)

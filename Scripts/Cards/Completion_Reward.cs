@@ -44,16 +44,10 @@ public class Completion_Reward : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        GD.Print("[DEBUG]GainOJStar.IntValue="+base.DynamicVars["GainOJStar"].IntValue);
-        GD.Print("[DEBUG]base.DynamicVars.CalculationBase.IntValue="+base.DynamicVars.CalculationBase.IntValue);
         await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,(int)((CalculatedVar)base.DynamicVars["GainOJStar"]).Calculate(cardPlay.Target));
-        if (IsUpgraded)
-        {
-            this.AddKeyword(MyKeywords.Norma_Check.GetModCardKeyword());
-        }
     }
     protected override void OnUpgrade()
     {
-        
+        this.AddKeyword(MyKeywords.Norma_Check.GetModCardKeyword());
     }
 }
