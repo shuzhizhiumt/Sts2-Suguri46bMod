@@ -31,6 +31,7 @@ public class Revival_of_Stars : ModCardTemplate
     {
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.ForEnergy(this)
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Revival_of_StarsPower>(1),

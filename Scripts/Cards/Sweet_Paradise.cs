@@ -19,7 +19,7 @@ namespace Suguri46b.Scripts.Cards;
 public class Sweet_Paradise : ModCardTemplate
 {
     private const int energyCost = 2;
-    private const CardType type = CardType.Skill;
+    private const CardType type = CardType.Power;
     private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
@@ -33,7 +33,6 @@ public class Sweet_Paradise : ModCardTemplate
     {
 
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(MyKeywords.Sweets),
@@ -41,22 +40,19 @@ public class Sweet_Paradise : ModCardTemplate
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Sweet_ParadisePower>(5),
-        new CardsVar(2),
+        new CardsVar(1),
         new DynamicVar("GainOJStar",5)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        for (int i = 0; i < base.DynamicVars.Cards.IntValue; i++)
+        CardModel cardModel = base.CombatState.CreateCard<Sweet_Indulgence>(base.Owner);
+        if (base.IsUpgraded)
         {
-            CardModel cardModel = base.CombatState.CreateCard<Sweet_Indulgence>(base.Owner);
-            if (base.IsUpgraded)
-            {
-                CardCmd.Upgrade(cardModel);
-            }
-            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Discard, base.Owner);
+            CardCmd.Upgrade(cardModel);
         }
+        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Discard, base.Owner);
         await PowerCmd.Apply<Sweet_ParadisePower>(choiceContext, base.Owner.Creature, base.DynamicVars["Sweet_ParadisePower"].BaseValue, base.Owner.Creature, this);
     }
 

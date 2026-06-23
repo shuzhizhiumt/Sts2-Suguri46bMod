@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -34,11 +35,13 @@ public class Safe_Journey : ModCardTemplate
         HoverTipFactory.FromPower<Norma>()
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("GainOJStar", 3)
+        new DynamicVar("GainOJStar", 3),
+        new BlockVar(7,ValueProp.Move)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+
         int Level = Owner?.Creature.GetPower<Norma>()?.Amount ?? 0;
         await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);
         await PlayerCmdExtensions.NormaUPCheck(choiceContext,Owner,this);

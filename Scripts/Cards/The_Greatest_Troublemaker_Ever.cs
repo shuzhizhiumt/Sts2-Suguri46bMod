@@ -37,13 +37,11 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        GD.Print("[DEBUG]Title="+cardPlay.Card.Title);
-        GD.Print("[DEBUG]ToString()="+cardPlay.Card.ToString());
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingRandomOpponents(base.CombatState)
             .Execute(choiceContext);
-        int repeatcount=RepeatCount.ThisCardRepeatCount(cardPlay);
+        int repeatcount=RepeatCount.ThisCardRepeatCount(cardPlay.Card);
         switch (repeatcount)
         {
             case >=2: await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

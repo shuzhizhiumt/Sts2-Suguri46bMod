@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Models;
@@ -36,8 +37,17 @@ public class RepeatCount : HookedSingletonModel
         }
         AllCardsRepeatCount[cardPlay.Card.Title]++;
     }
-    public static int ThisCardRepeatCount(CardPlay cardPlay)
+    public override Task AfterCombatEnd(CombatRoom room)
     {
-        return AllCardsRepeatCount.ContainsKey(cardPlay.Card.Title)?AllCardsRepeatCount[cardPlay.Card.Title]:0;
+        AllCardsRepeatCount.Clear();
+        return base.AfterCombatEnd(room);
+    }
+    public static int ThisCardRepeatCount(CardModel card)
+    {
+        if (card==null)
+        {
+            return 0;
+        }
+        return AllCardsRepeatCount.ContainsKey(card.Title)?AllCardsRepeatCount[card.Title]:0;
     }
 }

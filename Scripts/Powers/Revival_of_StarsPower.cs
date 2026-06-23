@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -26,6 +27,9 @@ public class Revival_of_StarsPower : ModPowerTemplate
         IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.ForEnergy(this)
+    ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1),
         new CardsVar(Amount)

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
+using STS2RitsuLib.Scaffolding.Visuals;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 
 namespace Suguri46b.Scripts.Units;
@@ -39,21 +40,21 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
                 // 篝火休息场景。
                 RestSiteAnimPath: "res://Suguri46b/scenes/suguri46b_rest_site.tscn"
             ),
+            VisualCues: ModVisualCues.CueSet()
+            .Single("idle", "res://Suguri46b/images/units/suguri46_00_00.png")
+            .Single("hit", "res://Suguri46b/images/units/suguri46_00_02.png",0.5f)
+            .Sequence("attack", seq => seq
+                .Frame("res://Suguri46b/images/units/suguri46_00_01.png", 0.5f)
+                .Frame("res://Suguri46b/images/units/suguri46_00_03.png", 0.4f))
+            .Single("dead", "res://Suguri46b/images/units/suguri46_00_04.png")
+            .Single("cast", "res://Suguri46b/images/units/suguri46_00_05.png",0.5f)
+            .Single("relaxed", "res://Suguri46b/images/units/suguri46_00_00.png")
+            .Build(), 
             Ui: new(
-                // 人物头像路径。
                 IconTexturePath: "res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png",
-                // 人物头像-锁定状态路径。
-                // 人物头像2号。
                 IconPath: "res://Suguri46b/scenes/suguri46b_icon.tscn",
-                // 人物选择背景。
                 CharacterSelectBgPath: "res://Suguri46b/scenes/suguri46b_bg.tscn",
-                // 人物选择图标。
                 CharacterSelectIconPath: "res://Suguri46b/images/packed/character_select/char_select_suguri46b.png",
-                // 人物选择图标-锁定状态。
-                //CharacterSelectLockedIconPath: "res://Suguri46b/images/suguri46_00_03.png"
-                // 人物选择过渡动画。
-                // CharacterSelectTransitionPath: "res://materials/transitions/ironclad_transition_mat.tres",
-                // 地图上的角色标记图标、表情轮盘上的角色头像
                 MapMarkerPath: "res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png"
             ),
             Vfx: new(
@@ -83,8 +84,8 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             // ArmScissorsTexturePath: null
             )));
     // 攻击和施法动画延迟，以对齐动画
-    public override float AttackAnimDelay => 0.2f;
-    public override float CastAnimDelay => 0.2f;
+    public override float AttackAnimDelay => 0.1f;
+    public override float CastAnimDelay => 0.1f;
     protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(
         Node visualsRoot,
         CharacterModel character)
@@ -92,12 +93,13 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
         return ModAnimStateMachines.StandardCue(
             visualsRoot,
             character,
-            idleName: "idle",
-            deadName: "die",
-            hitName: "hit",
-            attackName: "attack",
-            castName: "cast",
-            relaxedName: "relaxed");
+            "idle",
+            "dead",false,
+            "hit",false,
+            "attack",false,
+            "cast",false,
+            "relaxed",false,
+            VisualCues);
     }
     public override bool RequiresEpochAndTimeline => false;
     protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);

@@ -37,7 +37,6 @@ public class Sweet_Indulgence : ModCardTemplate
     {
 
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(MyKeywords.Sweets)
     ];

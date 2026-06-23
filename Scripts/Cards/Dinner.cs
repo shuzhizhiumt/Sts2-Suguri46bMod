@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.SecondaryResources;
@@ -31,11 +32,14 @@ public class Dinner : ModCardTemplate
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.ForEnergy(this)
+    ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1),
         new DynamicVar("ExtraEnergyVar",1),
         new DynamicVar("Additional_Payment",10)
-        ];
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,cardPlay.Card.Owner);
