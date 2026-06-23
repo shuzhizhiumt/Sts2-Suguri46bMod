@@ -46,13 +46,13 @@ public class Sweet_Paradise : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         CardModel cardModel = base.CombatState.CreateCard<Sweet_Indulgence>(base.Owner);
         if (base.IsUpgraded)
         {
             CardCmd.Upgrade(cardModel);
         }
-        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Discard, base.Owner);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Discard, base.Owner),2.2f);
         await PowerCmd.Apply<Sweet_ParadisePower>(choiceContext, base.Owner.Creature, base.DynamicVars["Sweet_ParadisePower"].BaseValue, base.Owner.Creature, this);
     }
 

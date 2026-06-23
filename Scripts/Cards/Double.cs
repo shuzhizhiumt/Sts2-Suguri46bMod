@@ -30,6 +30,7 @@ public class Double : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<DoublePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
     }
 

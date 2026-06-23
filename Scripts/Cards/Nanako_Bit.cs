@@ -38,6 +38,7 @@ public class Nanako_Bit : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Nanako_BitPower>(choiceContext,base.Owner.Creature,base.DynamicVars["Nanako_BitPower"].IntValue,base.Owner.Creature,this);
     }
 

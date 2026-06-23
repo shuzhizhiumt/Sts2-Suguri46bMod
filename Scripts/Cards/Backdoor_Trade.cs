@@ -40,7 +40,7 @@ public class Backdoor_Trade : ModCardTemplate
         if (Owner?.Creature.GetPower<Norma>()?.Amount < 5)
         {
         await PowerCmd.Apply<Norma>(choiceContext, base.Owner.Creature,1, base.Owner.Creature, this);
-		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, base.Owner));
+		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, base.Owner),2.2f);
         }
     }
 

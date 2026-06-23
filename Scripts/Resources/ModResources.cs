@@ -39,15 +39,13 @@ public static class ModResources
                         HoverTip = SecondaryResourceHoverTipStyle.Default,
                     },
                 });
-                // 自由指定位置。例如这里我们找到能量计数器的位置，放在它旁边
                 var energyCounter = parent.GetNode<Control>("%EnergyCounterContainer");
-                row.Position = energyCounter.Position + new Vector2(110, -110);
+                row.Position = energyCounter.Position + new Vector2(70, -45);
                 return row;
             },
             ctx => ctx.Node.Bind(ctx.Player)
         );
 
-        // 卡牌面上的次级资源费用显示。使用的图标就是你注册时提供的图标
         registry.RegisterCardUi(
             "ojstar_card_ui",
             parent =>
@@ -57,7 +55,6 @@ public static class ModResources
                     IconSize = new Vector2(48,48),
                     FontSize = 24,
                 });
-                // 自由指定位置。例如这里我们找到能量图标的位置，放在它旁边
                 var energyIcon = parent.GetNode<TextureRect>("%EnergyIcon");
                 ui.Position = energyIcon.Position + new Vector2(-10, 40);
                 return ui;
@@ -65,7 +62,6 @@ public static class ModResources
             ctx => ctx.Node.Refresh(ctx)
         );
 
-        // 限定仅对特定角色始终显示
         registry.AlwaysShowInCombatUiForCharacter<Suguri46bCharacter>(OJStarDefinition.LocalId);
         }
 }

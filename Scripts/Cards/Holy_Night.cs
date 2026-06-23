@@ -31,6 +31,7 @@ public class Holy_Night : ModCardTemplate
     }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Holy_NightPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Holy_NightPower"].BaseValue, base.Owner.Creature, this);
     }
 

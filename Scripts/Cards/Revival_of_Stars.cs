@@ -41,6 +41,7 @@ public class Revival_of_Stars : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Revival_of_StarsPower>(choiceContext,base.Owner.Creature,base.DynamicVars["Revival_of_StarsPower"].IntValue,base.Owner.Creature,this);
         
     }

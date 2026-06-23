@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -29,10 +30,10 @@ public class Orange_Juice : ModRelicTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
         HoverTipFactory.FromPower<Norma>()
         ];
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         int currentTurn = base.Owner.Creature.CombatState.RoundNumber;
-        if (participants.Contains(base.Owner.Creature))
+        if (player==Owner)
         {
             await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,currentTurn);
         }

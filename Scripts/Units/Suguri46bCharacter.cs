@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
+using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
@@ -13,31 +14,22 @@ namespace Suguri46b.Scripts.Units;
 [RegisterCharacter]
 public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri46bRelicPool, Suguri46bPotionPool>
 {
-    // 角色名称颜色
-    public override Color NameColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);
-    // 能量图标轮廓颜色
-    public override Color EnergyLabelOutlineColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);
-    // 地图绘制颜色
-    public override Color MapDrawingColor => new(0.8987582f, 0.32446608f, 0.9800934f, 1f);
+    public override Color NameColor => new(0.702f, 0.24f, 1f);
+    public override Color EnergyLabelOutlineColor => new(0.702f, 0.24f, 1f);
+    public override Color MapDrawingColor => new(0.702f, 0.24f, 1f);
 
-    // 人物性别（男女中立）
     public override CharacterGender Gender => CharacterGender.Feminine;
 
-    // 初始血量和金币
-    public override int StartingHp => 80;
+    public override int StartingHp => 60;
     public override int StartingGold => 99;
 
     public override CharacterAssetProfile AssetProfile => CharacterAssetProfiles.Merge(
         CharacterAssetProfiles.Ironclad(),
         new(
             Scenes: new(
-                // 人物模型tscn路径。
                 VisualsPath: "res://Suguri46b/scenes/suguri46b_character.tscn",
-                // 能量表盘tscn路径。
                 EnergyCounterPath: "res://Suguri46b/scenes/suguri46b_energy_counter.tscn",
-                // 商店人物场景。
                 MerchantAnimPath: "res://Suguri46b/scenes/suguri46b_merchant.tscn",
-                // 篝火休息场景。
                 RestSiteAnimPath: "res://Suguri46b/scenes/suguri46b_rest_site.tscn"
             ),
             VisualCues: ModVisualCues.CueSet()
@@ -100,6 +92,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             "cast",false,
             "relaxed",false,
             VisualCues);
+            
     }
     public override bool RequiresEpochAndTimeline => false;
     protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
@@ -112,4 +105,5 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
         // "vfx/vfx_bloody_impact",
         // "vfx/vfx_rock_shatter"
     ];
+    
 }

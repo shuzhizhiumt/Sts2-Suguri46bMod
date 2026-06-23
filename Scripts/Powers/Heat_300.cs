@@ -5,9 +5,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -17,25 +17,27 @@ using Suguri46b.Scripts.Resources;
 namespace Suguri46b.Scripts.Powers;
 
 [RegisterPower]
-public class Nanako_BitPower : ModPowerTemplate
+public class Heat_300Power : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Additional_Payment",7)
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.ForEnergy(this)
     ];
-
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar(1)
+    ];
+    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
-                if (Owner.Player!=null && player==Owner.Player && SecondaryResourceCmd.Get(Owner.Player, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue)
+        if (creator==Owner.Player && card.Type==CardType.Attack && !card.EnergyCost.CostsX)
         {
-            await SecondaryResourceCmd.Lose(Owner.Player, ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
-            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(),base.Owner,Amount, base.Owner,null);
+			card.EnergyCost.AddThisTurn(-1);
         }
+        return Task.CompletedTask;
     }
 }

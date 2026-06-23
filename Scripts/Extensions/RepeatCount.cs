@@ -37,10 +37,10 @@ public class RepeatCount : HookedSingletonModel
         }
         AllCardsRepeatCount[cardPlay.Card.Title]++;
     }
-    public override Task AfterCombatEnd(CombatRoom room)
+    public override Task BeforeCombatStart()
     {
         AllCardsRepeatCount.Clear();
-        return base.AfterCombatEnd(room);
+        return base.BeforeCombatStart();
     }
     public static int ThisCardRepeatCount(CardModel card)
     {
