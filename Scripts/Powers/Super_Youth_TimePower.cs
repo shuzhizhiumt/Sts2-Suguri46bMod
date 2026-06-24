@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Suguri46b.Scripts.Powers;
 
 [RegisterPower]
-public class AcceleratorPower : ModPowerTemplate
+public class Super_Youth_TimePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -39,20 +39,12 @@ public class AcceleratorPower : ModPowerTemplate
         }
         return 2;
     }
-    public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)
-    {
-        if (target !=base.Owner)
-        {
-            return 1;
-        }
-        return (decimal)Math.Pow(2.0, base.Amount);
-    }
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player==Owner.Player)
         {
             await PowerCmd.Decrement(this);
-            
         }
     }
+
 }

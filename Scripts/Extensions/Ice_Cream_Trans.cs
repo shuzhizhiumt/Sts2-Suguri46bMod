@@ -8,16 +8,20 @@ using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Models;
+using Suguri46b.Scripts.Cards;
+using Suguri46b.Scripts.Cards.Token;
 using Suguri46b.Scripts.Enchantments;
+using Suguri46b.Scripts.Resources;
 
 namespace Suguri46b.Scripts.Extensions;
 
 [RegisterSingleton]
-public class TransSelf : HookedSingletonModel
+public class Ice_Cream_Trans : HookedSingletonModel
 {
-    public TransSelf() : base(HookType.Combat)
+    public Ice_Cream_Trans() : base(HookType.Combat)
     {
     }
     private readonly List<CardModel> cardModels= new();
@@ -28,26 +32,22 @@ public class TransSelf : HookedSingletonModel
     {
         cardModels.Clear();
         newcard=null;
-        IsTrans= false;
+        IsTrans=false;
         return base.BeforeCombatStart();
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Enchantment != null && cardPlay.Card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType())
+
+        if (cardPlay.Card.Title == cardPlay.Card.CombatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(cardPlay.Card.Owner).Title && SecondaryResourceCmd.Get(cardPlay.Card.Owner, ModResources.OJStarId)>=10)
         {
             cardModels.Add(cardPlay.Card);
-            List<CardPoolModel> allPools = [.. cardPlay.Card.Owner.UnlockState.CharacterCardPools];
-            IEnumerable<CardModel> allCards = allPools
-                .SelectMany(pool => pool.GetUnlockedCards(
-                    cardPlay.Card.Owner.UnlockState,
-                    cardPlay.Card.Owner.RunState.CardMultiplayerConstraint)).Where(c=>c.Type==CardType.Attack || c.Type==CardType.Skill || c.Type==CardType.Power);
-            newcard = CardFactory.GetDistinctForCombat(
-                cardPlay.Card.Owner,
-                allCards,
-                1,
-                cardPlay.Card.Owner.RunState.Rng.CombatCardGeneration
-            ).First();
+            newcard = cardPlay.Card.CombatState.CreateCard<Magical_Revenge>(cardPlay.Card.Owner);
+        }
+        if (cardPlay.Card.Title == cardPlay.Card.CombatState.CreateCard<Magical_Revenge>(cardPlay.Card.Owner).Title)
+        {
+            cardModels.Add(cardPlay.Card);
+            newcard = cardPlay.Card.CombatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(cardPlay.Card.Owner);
         }
     }
 
@@ -59,10 +59,10 @@ public class TransSelf : HookedSingletonModel
             IsTrans= true;
             foreach (var item in cardModels)
             {
-                CardPileAddResult? cardPileAddResult=await CardCmd.Transform(item,newcard);
-                CardCmd.Enchant<Mix>(cardPileAddResult.Value.cardAdded,1);
+                await CardCmd.Transform(item,newcard);
             }
             cardModels.Clear();
+            newcard=null;
             IsTrans= false;
         }
     }

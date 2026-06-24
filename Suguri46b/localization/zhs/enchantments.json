@@ -1,12 +1,12 @@
 {
     "SUGURI46B_ENCHANTMENT_DMGX2_ENCHANTMENT.title":"翻倍",
-    "SUGURI46B_ENCHANTMENT_DMGX2_ENCHANTMENT.description":"这张牌费用与造成的伤害翻倍。",
+    "SUGURI46B_ENCHANTMENT_DMGX2_ENCHANTMENT.description":"这张牌耗能与造成的伤害翻倍。",
 
     "SUGURI46B_ENCHANTMENT_FEATHER.title":"轻",
-    "SUGURI46B_ENCHANTMENT_FEATHER.description":"这张牌费用-1并获得[gold]消耗[/gold]。",
+    "SUGURI46B_ENCHANTMENT_FEATHER.description":"这张牌耗能减少1并获得[gold]消耗[/gold]。",
 
     "SUGURI46B_ENCHANTMENT_HEAVIER.title":"重",
-    "SUGURI46B_ENCHANTMENT_HEAVIER.description":"这张牌费用+1并获得[gold]保留[/gold]。",
+    "SUGURI46B_ENCHANTMENT_HEAVIER.description":"这张牌耗能增加1并获得[gold]保留[/gold]。",
 
     "SUGURI46B_ENCHANTMENT_MIX.title":"混成化",
     "SUGURI46B_ENCHANTMENT_MIX.description":"这张牌打出后[gold]变化[/gold]为带有[gold]混成化[/gold][gold]附魔[/gold]的随机牌。"

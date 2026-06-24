@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -7,7 +8,9 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.Cards.Token;
 
 namespace Suguri46b.Scripts.Powers;
 
@@ -42,13 +45,15 @@ public class Norma : ModPowerTemplate
         {
             Norma3=true;
             Flash();
-            await PowerCmd.Apply<DexterityPower>(choiceContext,base.Owner, 1, base.Owner,cardSource);
+            CardModel cardModel = base.CombatState.CreateCard<Sweet_Indulgence>(base.Owner.Player);
+            cardModel.AddModKeyword(CardKeyword.Retain);
+            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, base.Owner.Player);
         }
         if (!Norma4 && Amount>=4)
         {
             Norma4=true;
             Flash();
-            await PowerCmd.Apply<StrengthPower>(choiceContext,base.Owner, 1, base.Owner,cardSource);
+            await PowerCmd.Apply<StrengthPower>(choiceContext,base.Owner, 3, base.Owner,cardSource);
             await PowerCmd.Apply<DexterityPower>(choiceContext,base.Owner, 1, base.Owner,cardSource);
         }
         if (!Norma5 && Amount>=5)

@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -41,7 +42,7 @@ public class Safe_Journey : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         int Level = Owner?.Creature.GetPower<Norma>()?.Amount ?? 0;
         await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);
         await PlayerCmdExtensions.NormaUPCheck(choiceContext,Owner,this);
@@ -49,6 +50,7 @@ public class Safe_Journey : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars["GainOJStar"].UpgradeValueBy(2);
+        base.DynamicVars.Block.UpgradeValueBy(3);
+        base.DynamicVars["GainOJStar"].UpgradeValueBy(1);
     }
 }

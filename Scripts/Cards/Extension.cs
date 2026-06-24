@@ -9,6 +9,10 @@ using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Units;
 using Suguri46b.Scripts.Extensions;
 using Godot;
+using STS2RitsuLib.Combat.SecondaryResources;
+using Suguri46b.Scripts.Resources;
+using MegaCrit.Sts2.Core.Models;
+using Suguri46b.Scripts.CardKeyWords;
 
 namespace Suguri46b.Scripts.Cards;
 
@@ -26,10 +30,17 @@ public class Extension: ModCardTemplate
     );
     public Extension() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
+        this.SecondaryResourceUses()
+        .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2)
+        new CardsVar(2),
+        new DynamicVar("Additional_Payment",10),
+        new EnergyVar(1)
         ];
+    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selectedCards = await CardSelectCmd.FromHand(
@@ -43,7 +54,6 @@ public class Extension: ModCardTemplate
         {
             return;
         }
-
         var rng = Owner.RunState.Rng.CombatCardGeneration;
         foreach (var selectedCard in selectedCards)
         {
@@ -57,7 +67,14 @@ public class Extension: ModCardTemplate
             CardCmd.Enchant(chosenEnchantment, selectedCard, 1);
         }
     }
-
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        if (ShouldGlowGoldInternal && card==this)
+        {
+            return base.TryModifyEnergyCostInCombat(card, originalCost-1, out modifiedCost);  
+        }
+        return base.TryModifyEnergyCostInCombat(card, originalCost, out modifiedCost);
+    }
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1);
