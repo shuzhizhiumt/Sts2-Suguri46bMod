@@ -1,3 +1,4 @@
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
@@ -19,7 +20,7 @@ namespace Suguri46b.Scripts.Cards;
 [RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
 public class Observer_of_Eternity : ModCardTemplate
 {
-    private const int energyCost = 1;
+    private const int energyCost = 0;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.Self;
@@ -51,13 +52,16 @@ public class Observer_of_Eternity : ModCardTemplate
         if (ledger.Activated("ojstars_charge"))
         {
             uncommon=true;
+        }else
+        {
+            uncommon=false;
         }
         List<CardPoolModel> allPools = [.. base.Owner.UnlockState.CharacterCardPools];
         IEnumerable<CardModel> AttackCards = allPools
             .SelectMany(pool => pool.GetUnlockedCards(
                 base.Owner.UnlockState,
                 base.Owner.RunState.CardMultiplayerConstraint))
-            .Where(c => c.Type == CardType.Attack && (uncommon? c.Rarity == CardRarity.Common || c.Rarity == CardRarity.Uncommon :c.Rarity == CardRarity.Common));
+            .Where(c => c.Type == CardType.Attack && (uncommon?c.Rarity == CardRarity.Uncommon :c.Rarity == CardRarity.Common));
 
         List<CardModel> gainCards = [.. CardFactory.GetDistinctForCombat(
             base.Owner,

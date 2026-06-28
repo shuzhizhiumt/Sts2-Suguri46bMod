@@ -31,7 +31,6 @@ public class Lifeguard_on_the_White_Beach : ModCardTemplate
     {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3),
         new HealVar(5)
         ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

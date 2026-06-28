@@ -33,6 +33,8 @@ public class Accelerator : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        SfxCmd.Play("event:/suguri46b/sfx/Accelerator");
         await PowerCmd.Apply<AcceleratorPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Power"].BaseValue, base.Owner.Creature, this);
     }
 

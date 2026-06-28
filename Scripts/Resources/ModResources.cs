@@ -1,6 +1,9 @@
 using Godot;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models.Events;
 using STS2RitsuLib;
+using STS2RitsuLib.Combat.CardTargeting;
 using STS2RitsuLib.Combat.SecondaryResources;
 using Suguri46b.Scripts.Units;
 

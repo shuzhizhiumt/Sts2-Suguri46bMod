@@ -6,19 +6,19 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using STS2RitsuLib.Combat.SecondaryResources;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
-using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.CardKeyWords;
-using Suguri46b.Scripts.Resources;
+using Suguri46b.Scripts.Extensions;
+using Suguri46b.Scripts.Powers;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Pudding : ModCardTemplate
+public class Final_Battle : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
@@ -29,28 +29,38 @@ public class Pudding : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public Pudding() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Final_Battle() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    protected override HashSet<CardTag> CanonicalTags => [
-
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords=>[CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.ForEnergy(this)
+        HoverTipFactory.Static(StaticHoverTip.ReplayStatic)
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust,MyKeywords.Sweets];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1)
-    ];
-    
+        new DynamicVar("Replay", 1)
+        ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int gainenergy=Owner.GetMaxEnergy()-Owner.GetEnergy();
-        await PlayerCmd.GainEnergy(gainenergy,cardPlay.Card.Owner);
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        List<CardModel> list = PileType.Hand.GetPile(base.Owner).Cards.ToList();
+		if (list.Count == 0)
+		{
+			return;
+		}
+        foreach (var item in list)
+        {
+            if (!item.Keywords.Contains(CardKeyword.Unplayable)&& item.Type==CardType.Attack)
+            {
+			    item.BaseReplayCount += base.DynamicVars["Replay"].IntValue; 
+            }
+        }
+		await PowerCmd.Apply<Final_BattlePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
     }
+
+
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
+        base.DynamicVars["Replay"].UpgradeValueBy(1);
     }
 }

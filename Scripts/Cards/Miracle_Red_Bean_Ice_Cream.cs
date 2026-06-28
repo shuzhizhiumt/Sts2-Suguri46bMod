@@ -48,16 +48,12 @@ public class Miracle_Red_Bean_Ice_Cream : ModCardTemplate
         new DynamicVar("Additional_Payment",10)
     ];
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<Miracle_Red_Bean_Ice_CreamPower>(choiceContext, base.Owner.Creature,base.DynamicVars["Miracle_Red_Bean_Ice_CreamPower"].IntValue, base.Owner.Creature,this);
-        var ledger = cardPlay.SecondaryResources();
-        if (ledger.Activated("ojstars_charge"))
-        {
-            this.ModifyCardPlayResultPileTypeAndPosition(this,false,cardPlay.Resources,PileType.Hand,CardPilePosition.None);
-        }
+        
     }
+
     protected override void OnUpgrade()
     {
         base.DynamicVars["Miracle_Red_Bean_Ice_CreamPower"].UpgradeValueBy(1);

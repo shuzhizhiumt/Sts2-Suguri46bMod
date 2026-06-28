@@ -10,7 +10,6 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-[RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
 public class Super_Youth_Time : ModCardTemplate
 {
     private const int energyCost = 1;

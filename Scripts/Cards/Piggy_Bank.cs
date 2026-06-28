@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
+using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Resources;
@@ -17,7 +18,7 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Bad_Pudding : ModCardTemplate
+public class Piggy_Bank : ModCardTemplate
 {
     private const int energyCost = 0;
     private const CardType type = CardType.Skill;
@@ -28,44 +29,26 @@ public class Bad_Pudding : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public Bad_Pudding() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Piggy_Bank() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.ForEnergy(this)
-    ];
     protected override HashSet<CardTag> CanonicalTags => [
-
     ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
-        new CardsVar(1)
-        ];
-    CardModel cardModel2;
+        new DynamicVar("GainOJStar", 3)
+    ];
+    
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,cardPlay.Card.Owner);
-        CardPile pile = PileType.Hand.GetPile(base.Owner);
-        if (this.IsUpgraded)
-        {
-            cardModel2=(await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, DynamicVars.Cards.IntValue),
-            context: choiceContext,
-            player: Owner,
-            filter: null,
-            source: this)).FirstOrDefault();
-        }
-        else
-        {
-		    cardModel2 = base.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
-        }
-		if (cardModel2 != null)
-		{
-			await CardCmd.Discard(choiceContext, cardModel2);
-		}
+        int currentTurn = base.Owner.Creature.CombatState.RoundNumber;
+        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,currentTurn*base.DynamicVars["GainOJStar"].IntValue);
     }
 
     protected override void OnUpgrade()
     {
+        this.AddKeyword(CardKeyword.Retain);
     }
 }

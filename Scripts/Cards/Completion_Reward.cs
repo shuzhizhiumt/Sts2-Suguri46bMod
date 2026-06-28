@@ -36,7 +36,7 @@ public class Completion_Reward : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculatedVar("GainOJStar").WithMultiplier((CardModel card, Creature? _) => CombatManager.Instance.History.Entries.OfType<CardGeneratedEntry>().Count((CardGeneratedEntry c) => c.HappenedThisTurn(card.CombatState) && c.Creator == card.Owner)),
         new CalculationBaseVar(0),
-        new CalculationExtraVar(7)
+        new CalculationExtraVar(7),
     ];
 
     public Completion_Reward() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)

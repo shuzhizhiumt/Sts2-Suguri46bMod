@@ -34,6 +34,7 @@ public class Accel_Hyper : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Accel_HyperPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Accel_HyperPower"].BaseValue, base.Owner.Creature, this);
     }
 

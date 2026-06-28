@@ -40,6 +40,7 @@ public class Cloud_of_Seagulls : ModCardTemplate
         Rng rng = base.Owner.RunState.Rng.CombatTargets;
         if (!IsUpgraded)
         {
+		    ArgumentNullException.ThrowIfNull(TargetType.RandomEnemy, "cardPlay.Target");
             for (int i = 0; i < DynamicVars.Repeat.IntValue; i++)
             {
                 int index = rng.NextInt(targets.Count);

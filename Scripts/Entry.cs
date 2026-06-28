@@ -21,10 +21,9 @@ public class Entry
     public static void Init()
     {
         var patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
-        // patcher.RegisterPatch<Suguri46bOJStarNodeInitPatch>();
-        // patcher.RegisterPatch<Suguri46bOJStarNodeVisiblePatch>();
         patcher.RegisterPatch<Dmgx2ButtonPatch>();
         patcher.RegisterPatch<ExtremeAlterationTransformPatch>();
+        patcher.RegisterPatch<CostsEnergyOrStarsPatch>();
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
         ModResources.Register();

@@ -38,8 +38,7 @@ public class Ice_Cream_Trans : HookedSingletonModel
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-
-        if (cardPlay.Card.Title == cardPlay.Card.CombatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(cardPlay.Card.Owner).Title && SecondaryResourceCmd.Get(cardPlay.Card.Owner, ModResources.OJStarId)>=10)
+        if (cardPlay.Card.Title == cardPlay.Card.CombatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(cardPlay.Card.Owner).Title && cardPlay.SecondaryResources().Activated("ojstars_charge") && !(cardPlay.Card.Enchantment != null && cardPlay.Card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType()))
         {
             cardModels.Add(cardPlay.Card);
             newcard = cardPlay.Card.CombatState.CreateCard<Magical_Revenge>(cardPlay.Card.Owner);
