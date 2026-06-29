@@ -32,9 +32,8 @@ public class Sealed_Memories : ModCardTemplate
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 5),
-        new BlockVar(7,ValueProp.Move)
+        new BlockVar(7, ValueProp.Move)
     ];
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selectedCards = await CardSelectCmd.FromHand(
@@ -65,9 +64,10 @@ public class Sealed_Memories : ModCardTemplate
             {
                 await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
             }
-            await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,removedCount * base.DynamicVars["GainOJStar"].IntValue);
+            await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId, removedCount * base.DynamicVars["GainOJStar"].IntValue);
         }
     }
+
     protected override void OnUpgrade()
     {
         base.DynamicVars["GainOJStar"].UpgradeValueBy(2);

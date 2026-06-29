@@ -29,9 +29,10 @@ public class Extreme_Alteration : ModCardTemplate
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Extreme_AlterationPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
     }
+
     protected override void OnUpgrade()
     {
         base.EnergyCost.UpgradeBy(-1);

@@ -36,35 +36,37 @@ public class Another_Ultimate_Weapon : ModCardTemplate
             SecondaryResourceCost.X(),
             SecondaryResourceCostDuration.UntilPlayed);
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
         new DynamicVar("Additional_Payment", 10)
     ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         int count= (int)Math.Floor((double) SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) / base.DynamicVars["Additional_Payment"].IntValue)+base.DynamicVars.Cards.IntValue;
         CardPile DiscardPile = PileType.Discard.GetPile(base.Owner);
         IEnumerable<CardModel> enumerable = DiscardPile.Cards.Where((CardModel c) => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
-			.Take(count);
+            .Take(count);
         foreach (CardModel item in enumerable)
-		{
-			if (!CombatManager.Instance.IsOverOrEnding)
-			{
-				if (item.TargetType == TargetType.AnyEnemy)
-				{
-					Creature target = base.Owner.RunState.Rng.CombatTargets.NextItem(base.CombatState.HittableEnemies);
-					await CardCmd.AutoPlay(choiceContext, item, target);
-				}
-				else
-				{
-					await CardCmd.AutoPlay(choiceContext, item, null);
-				}
-				continue;
-			}
-			break;
-		}
+        {
+            if (!CombatManager.Instance.IsOverOrEnding)
+            {
+                if (item.TargetType == TargetType.AnyEnemy)
+                {
+                    Creature target = base.Owner.RunState.Rng.CombatTargets.NextItem(base.CombatState.HittableEnemies);
+                    await CardCmd.AutoPlay(choiceContext, item, target);
+                }
+                else
+                {
+                    await CardCmd.AutoPlay(choiceContext, item, null);
+                }
+                continue;
+            }
+            break;
+        }
     }
 
     protected override void OnUpgrade()

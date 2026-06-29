@@ -24,23 +24,25 @@ public class Backdoor_Trade : ModCardTemplate
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public override bool CanBeGeneratedInCombat => false;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    public Backdoor_Trade() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<Unlucky_Charm>(),
         HoverTipFactory.FromPower<Norma>()
     ];
-    public Backdoor_Trade() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
 
-    }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel card = base.CombatState.CreateCard<Unlucky_Charm>(base.Owner);
         if (Owner?.Creature.GetPower<Norma>()?.Amount < 5)
         {
-        await PowerCmd.Apply<Norma>(choiceContext, base.Owner.Creature,1, base.Owner.Creature, this);
-		CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, base.Owner),2.2f);
+            await PowerCmd.Apply<Norma>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, base.Owner), 2.2f);
         }
     }
 

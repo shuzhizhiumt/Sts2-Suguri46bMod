@@ -1,14 +1,14 @@
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Units;
-using STS2RitsuLib.Combat.HandSize;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Extensions;
 
 namespace Suguri46b.Scripts.Cards;
 
@@ -30,7 +30,8 @@ public class Mimic : ModCardTemplate, IMaxHandSizeModifier
 
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3)];
+        new CardsVar(3)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (PileType.Hand.GetPile(base.Owner).Cards.Count<=1)

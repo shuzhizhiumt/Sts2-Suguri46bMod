@@ -25,44 +25,48 @@ public class Bad_Pudding : ModCardTemplate
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
+    private CardModel cardModel2;
+
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Bad_Pudding() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.ForEnergy(this)
     ];
-    protected override HashSet<CardTag> CanonicalTags => [
 
+    protected override HashSet<CardTag> CanonicalTags => [
     ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1),
         new CardsVar(1)
-        ];
-    CardModel cardModel2;
+    ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,cardPlay.Card.Owner);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, cardPlay.Card.Owner);
         CardPile pile = PileType.Hand.GetPile(base.Owner);
         if (this.IsUpgraded)
         {
-            cardModel2=(await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, DynamicVars.Cards.IntValue),
-            context: choiceContext,
-            player: Owner,
-            filter: null,
-            source: this)).FirstOrDefault();
+            cardModel2 = (await CardSelectCmd.FromHand(
+                prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, DynamicVars.Cards.IntValue),
+                context: choiceContext,
+                player: Owner,
+                filter: null,
+                source: this)).FirstOrDefault();
         }
         else
         {
-		    cardModel2 = base.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
+            cardModel2 = base.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
         }
-		if (cardModel2 != null)
-		{
-			await CardCmd.Discard(choiceContext, cardModel2);
-		}
+        if (cardModel2 != null)
+        {
+            await CardCmd.Discard(choiceContext, cardModel2);
+        }
     }
 
     protected override void OnUpgrade()

@@ -49,5 +49,13 @@
 
     "SUGURI46B_POWER_FINAL_BATTLE_POWER.title":"最终决战",
     "SUGURI46B_POWER_FINAL_BATTLE_POWER.description":"你在本回合内不能再抽任何牌，且只能打出攻击牌。",
-    "SUGURI46B_POWER_FINAL_BATTLE_POWER.smartDescription":"你在本回合内不能再抽任何牌，且只能打出攻击牌。"
+    "SUGURI46B_POWER_FINAL_BATTLE_POWER.smartDescription":"你在本回合内不能再抽任何牌，且只能打出攻击牌。",
+
+    "SUGURI46B_POWER_SUPER_YOUTH_TIME_POWER.title":"超级青春Time",
+    "SUGURI46B_POWER_SUPER_YOUTH_TIME_POWER.description":"在这个回合，你打出的下[blue]1[/blue]张非能力牌会被额外打出一次。",
+    "SUGURI46B_POWER_SUPER_YOUTH_TIME_POWER.smartDescription":"在这个回合，你打出的下[blue]{Amount}[/blue]张非能力牌会被额外打出一次。",
+
+    "SUGURI46B_POWER_FEEL_THE_RUSH_WITH_AN_ENERGY_DRINK_POWER.title":"来罐饮料提提神",
+    "SUGURI46B_POWER_FEEL_THE_RUSH_WITH_AN_ENERGY_DRINK_POWER.description":"战斗中生成的卡牌耗能减少[blue]1[/blue]。",
+    "SUGURI46B_POWER_FEEL_THE_RUSH_WITH_AN_ENERGY_DRINK_POWER.smartDescription":"战斗中生成的卡牌耗能减少{Amount:energyIcons()}。"
 }

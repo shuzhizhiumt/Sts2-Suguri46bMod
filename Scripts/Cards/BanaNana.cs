@@ -23,28 +23,29 @@ public class BanaNana : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
+    public BanaNana() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1)
     ];
 
-    public BanaNana() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (base.IsUpgraded)
         {
-            await CardPileCmd.Draw(choiceContext,base.DynamicVars.Cards.BaseValue,Owner);
+            await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.BaseValue, Owner);
         }
     }
+
     public override async Task AfterCardDrawn(
         PlayerChoiceContext choiceContext,
         CardModel card,
         bool fromHandDraw)
     {
         if (Owner != null && card == this)
-            await CardPileCmd.Draw(choiceContext,base.DynamicVars.Cards.BaseValue,card.Owner);
+            await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.BaseValue, card.Owner);
     }
 
     protected override void OnUpgrade()

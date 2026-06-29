@@ -25,36 +25,38 @@ public class Star_Blasting_Light : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(5, ValueProp.Move),
-        new CalculationBaseVar(0),
-		new CalculationExtraVar(1),
-        new CalculatedVar("CalculatedHits").WithMultiplier((CardModel card, Creature? _) => GetAttacksAndStatuses(card.Owner).Count())
-    ];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-    ];
     public Star_Blasting_Light() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
+    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(5, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("CalculatedHits").WithMultiplier((CardModel card, Creature? _) => GetAttacksAndStatuses(card.Owner).Count())
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		List<CardModel> list = GetAttacksAndStatuses(base.Owner).ToList();
-		int attacksandstatusCount = (int)((CalculatedVar)base.DynamicVars["CalculatedHits"]).Calculate(cardPlay.Target);
-		foreach (CardModel item in list)
-		{
-			await CardCmd.Exhaust(choiceContext, item);
-		}
-		await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).WithHitCount(attacksandstatusCount).FromCard(this)
-			.TargetingRandomOpponents(base.CombatState)
-			.Execute(choiceContext);
+        List<CardModel> list = GetAttacksAndStatuses(base.Owner).ToList();
+        int attacksandstatusCount = (int)((CalculatedVar)base.DynamicVars["CalculatedHits"]).Calculate(cardPlay.Target);
+        foreach (CardModel item in list)
+        {
+            await CardCmd.Exhaust(choiceContext, item);
+        }
+        await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).WithHitCount(attacksandstatusCount).FromCard(this)
+            .TargetingRandomOpponents(base.CombatState)
+            .Execute(choiceContext);
     }
-	private static IEnumerable<CardModel> GetAttacksAndStatuses(Player owner)
-	{
-		return owner.PlayerCombatState.AllCards.Where((CardModel c) => (c.Type == CardType.Attack || c.Type == CardType.Status) && c.Pile.Type != PileType.Exhaust);
-	}
+
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3);
+    }
+
+    private static IEnumerable<CardModel> GetAttacksAndStatuses(Player owner)
+    {
+        return owner.PlayerCombatState.AllCards.Where((CardModel c) => (c.Type == CardType.Attack || c.Type == CardType.Status) && c.Pile.Type != PileType.Exhaust);
     }
 }

@@ -24,7 +24,10 @@ public class Intelligence_Officer : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-       protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    public Intelligence_Officer() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromPower<PlatingPower>()
@@ -33,9 +36,6 @@ public class Intelligence_Officer : ModCardTemplate
         new DynamicVar("Intelligence", 3),
         new CardsVar(2)
     ];
-    public Intelligence_Officer() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardPile drawPile = PileType.Draw.GetPile(base.Owner);

@@ -55,6 +55,7 @@ public static class ModResources
             {
                 var ui = NSecondaryResourceCardCostUi.Create(OJStarId, new SecondaryResourceCardCostUiStyle
                 {
+                    ReserveVanillaStarCostSlot=true,
                     IconSize = new Vector2(48,48),
                     FontSize = 24,
                 });
@@ -64,7 +65,6 @@ public static class ModResources
             },
             ctx => ctx.Node.Refresh(ctx)
         );
-
         registry.AlwaysShowInCombatUiForCharacter<Suguri46bCharacter>(OJStarDefinition.LocalId);
         }
 }

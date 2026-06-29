@@ -23,27 +23,28 @@ public class Play_of_the_Gods : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1)
-    ];
 
     public Play_of_the_Gods() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1)
+    ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel cardModel = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment!=null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
-			.FirstOrDefault();
-		if (cardModel == null && this.IsUpgraded)
-		{
-			cardModel = PileType.Draw.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment!=null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
-				.FirstOrDefault();
-		}
-		if (cardModel != null)
-		{
-			await CardCmd.AutoPlay(choiceContext, cardModel, null);
-		}
+        CardModel cardModel = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment != null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
+            .FirstOrDefault();
+        if (cardModel == null && this.IsUpgraded)
+        {
+            cardModel = PileType.Draw.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment != null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
+                .FirstOrDefault();
+        }
+        if (cardModel != null)
+        {
+            await CardCmd.AutoPlay(choiceContext, cardModel, null);
+        }
     }
 
     protected override void OnUpgrade()

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -i \"Loop\\\\|loop\\\\|Looping\\\\|looping\\\\|Repeat\\\\|repeat\" \"D:/steam/Steam/steamapps/workshop/content/2868840/3747602295/lib/0.107.1/STS2-RitsuLib.xml\" 2>/dev/null | grep -i \"cue\\\\|sequence\\\\|frame\\\\|visual\\\\|anim\\\\|sprite\" | head -20)",
+      "Read(//d/steam/Steam/steamapps/workshop/content/2868840/3747602295/lib/0.107.1/**)",
+      "Bash(find \"D:/steam/Steam/steamapps/workshop/content/2868840/\" -name \"*.cs\" 2>/dev/null | head -20)",
+      "Read(//d/steam/Steam/steamapps/workshop/content/2868840/**)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

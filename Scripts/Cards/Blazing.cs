@@ -28,13 +28,15 @@ public class Blazing : ModCardTemplate
     public Blazing() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<BlazingPower>(1)
     ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<BlazingPower>(choiceContext, base.Owner.Creature,DynamicVars["BlazingPower"].IntValue, base.Owner.Creature, this);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await PowerCmd.Apply<BlazingPower>(choiceContext, base.Owner.Creature, DynamicVars["BlazingPower"].IntValue, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

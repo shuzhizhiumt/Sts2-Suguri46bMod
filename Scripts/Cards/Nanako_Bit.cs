@@ -28,17 +28,17 @@ public class Nanako_Bit : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
+    public Nanako_Bit() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Nanako_BitPower>(1),
         new PowerVar<StrengthPower>(1),
         new DynamicVar("Additional_Payment",7)
     ];
-    public Nanako_Bit() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Nanako_BitPower>(choiceContext,base.Owner.Creature,base.DynamicVars["Nanako_BitPower"].IntValue,base.Owner.Creature,this);
     }
 

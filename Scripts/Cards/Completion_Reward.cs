@@ -32,20 +32,19 @@ public class Completion_Reward : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-
+    public Completion_Reward() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculatedVar("GainOJStar").WithMultiplier((CardModel card, Creature? _) => CombatManager.Instance.History.Entries.OfType<CardGeneratedEntry>().Count((CardGeneratedEntry c) => c.HappenedThisTurn(card.CombatState) && c.Creator == card.Owner)),
         new CalculationBaseVar(0),
         new CalculationExtraVar(7),
     ];
-
-    public Completion_Reward() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,(int)((CalculatedVar)base.DynamicVars["GainOJStar"]).Calculate(cardPlay.Target));
     }
+
     protected override void OnUpgrade()
     {
         this.AddKeyword(MyKeywords.Norma_Check);

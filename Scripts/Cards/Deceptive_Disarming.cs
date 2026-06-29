@@ -29,36 +29,36 @@ public class Deceptive_Disarming : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(9, ValueProp.Move),
-        new PowerVar<WeakPower>(1),
-        new DynamicVar("Additional_Payment",5)
-    ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromCard<Long_Distance_Shot>(base.IsUpgraded),
-        HoverTipFactory.FromPower<WeakPower>()
-    ];
     public Deceptive_Disarming() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
         this.SecondaryResourceUses()
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
-    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId)>= base.DynamicVars["Additional_Payment"].BaseValue ||base.CombatState.HittableEnemies.Any((Creature e) => e.Monster?.IntendsToAttack ?? false);
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromCard<Long_Distance_Shot>(base.IsUpgraded),
+        HoverTipFactory.FromPower<WeakPower>()
+    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(9, ValueProp.Move),
+        new PowerVar<WeakPower>(1),
+        new DynamicVar("Additional_Payment",5)
+    ];
+    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue || base.CombatState.HittableEnemies.Any((Creature e) => e.Monster?.IntendsToAttack ?? false);
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
-        if (cardPlay.Target.Monster!=null && cardPlay.Target.Monster.IntendsToAttack )
-		{
-			await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, base.DynamicVars.Weak.BaseValue, base.Owner.Creature, this);
-		}
+        if (cardPlay.Target.Monster != null && cardPlay.Target.Monster.IntendsToAttack)
+        {
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, base.DynamicVars.Weak.BaseValue, base.Owner.Creature, this);
+        }
         var ledger = cardPlay.SecondaryResources();
         if (ledger.Activated("ojstars_charge"))
         {
-			CardModel cardModel = base.CombatState.CreateCard<Long_Distance_Shot>(base.Owner);
+            CardModel cardModel = base.CombatState.CreateCard<Long_Distance_Shot>(base.Owner);
             if (IsUpgraded)
             {
                 CardCmd.Upgrade(cardModel);

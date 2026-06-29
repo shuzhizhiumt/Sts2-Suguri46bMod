@@ -23,32 +23,33 @@ public class Gift_Exchange : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public Gift_Exchange() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3)];
+        new CardsVar(3)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: (CardModel c) =>c.Type == CardType.Attack || c.Type == CardType.Skill ||c.Type == CardType.Power, source: this)).FirstOrDefault();
         List<CardPoolModel> otherPools = [.. base.Owner.UnlockState.CharacterCardPools];
-		if (otherPools.Count > 1)
-		{
-			otherPools.Remove(base.Owner.Character.CardPool);
-		}
+        if (otherPools.Count > 1)
+        {
+            otherPools.Remove(base.Owner.Character.CardPool);
+        }
         IEnumerable<CardModel> candidateCards;
         if (base.IsUpgraded)
         {
             candidateCards = from c in otherPools.SelectMany(c => c.GetUnlockedCards(base.Owner.UnlockState, base.Owner.RunState.CardMultiplayerConstraint))
-				where c.Type == selectedCard.Type && (selectedCard.Rarity == CardRarity.Basic || selectedCard.Rarity == CardRarity.Common?c.Rarity == CardRarity.Uncommon:selectedCard.Rarity ==CardRarity.Uncommon || selectedCard.Rarity ==CardRarity.Rare?c.Rarity == CardRarity.Rare:c.Rarity==CardRarity.Ancient)
-				select c;
+                where c.Type == selectedCard.Type && (selectedCard.Rarity == CardRarity.Basic || selectedCard.Rarity == CardRarity.Common?c.Rarity == CardRarity.Uncommon:selectedCard.Rarity ==CardRarity.Uncommon || selectedCard.Rarity ==CardRarity.Rare?c.Rarity == CardRarity.Rare:c.Rarity==CardRarity.Ancient)
+                select c;
         }
         else
         {
             candidateCards = from c in otherPools.SelectMany(c => c.GetUnlockedCards(base.Owner.UnlockState, base.Owner.RunState.CardMultiplayerConstraint))
-				where c.Type == selectedCard.Type && (selectedCard.Rarity == CardRarity.Basic?c.Rarity == CardRarity.Common:c.Rarity == selectedCard.Rarity)
-				select c;
+                where c.Type == selectedCard.Type && (selectedCard.Rarity == CardRarity.Basic?c.Rarity == CardRarity.Common:c.Rarity == selectedCard.Rarity)
+                select c;
         }
         List<CardModel> choices =  CardFactory.GetDistinctForCombat(base.Owner, candidateCards, 3, base.Owner.RunState.Rng.CombatCardGeneration).ToList();
 
@@ -56,7 +57,6 @@ public class Gift_Exchange : ModCardTemplate
 
         await CardCmd.Transform(selectedCard, chosenCard);
     }
-
 
     protected override void OnUpgrade()
     {

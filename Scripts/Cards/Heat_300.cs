@@ -36,14 +36,13 @@ public class Heat_300 : ModCardTemplate
         new EnergyVar(1),
         new PowerVar<DexterityPower>(2),
         new PowerVar<Heat_300Power>(1)
-        ];
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<DexterityPower>(choiceContext,Owner.Creature,-base.DynamicVars["DexterityPower"].IntValue,Owner.Creature,this);
         await PowerCmd.Apply<Heat_300Power>(choiceContext,Owner.Creature,base.DynamicVars["Heat_300Power"].IntValue,Owner.Creature,this);
     }
-
 
     protected override void OnUpgrade()
     {

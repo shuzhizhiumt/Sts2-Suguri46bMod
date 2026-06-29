@@ -24,45 +24,43 @@ public class Ice_Cream_Trans : HookedSingletonModel
     public Ice_Cream_Trans() : base(HookType.Combat)
     {
     }
-    private readonly List<CardModel> cardModels= new();
-    private CardModel? newcard;
 
-    private bool IsTrans;
+    // 每张待变换的卡 → 目标卡，一对一映射，支持同时多张
+    private readonly Dictionary<CardModel, CardModel> pendingTransforms = [];
+
     public override Task BeforeCombatStart()
     {
-        cardModels.Clear();
-        newcard=null;
-        IsTrans=false;
+        pendingTransforms.Clear();
         return base.BeforeCombatStart();
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Title == cardPlay.Card.CombatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(cardPlay.Card.Owner).Title && cardPlay.SecondaryResources().Activated("ojstars_charge") && !(cardPlay.Card.Enchantment != null && cardPlay.Card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType()))
+        var card = cardPlay.Card;
+        var owner = card.Owner;
+        var combatState = card.CombatState;
+        if (combatState == null)
+            return;
+
+        // Miracle_Red_Bean_Ice_Cream（支付了 ojstars）→ Magical_Revenge
+        if (card.Title == combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner).Title
+            && cardPlay.SecondaryResources().Activated("ojstars_charge")
+            && !(card.Enchantment != null && card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType()))
         {
-            cardModels.Add(cardPlay.Card);
-            newcard = cardPlay.Card.CombatState.CreateCard<Magical_Revenge>(cardPlay.Card.Owner);
+            pendingTransforms[card] = combatState.CreateCard<Magical_Revenge>(owner);
         }
-        if (cardPlay.Card.Title == cardPlay.Card.CombatState.CreateCard<Magical_Revenge>(cardPlay.Card.Owner).Title)
+        // Magical_Revenge → Miracle_Red_Bean_Ice_Cream
+        else if (card.Title == combatState.CreateCard<Magical_Revenge>(owner).Title)
         {
-            cardModels.Add(cardPlay.Card);
-            newcard = cardPlay.Card.CombatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(cardPlay.Card.Owner);
+            pendingTransforms[card] = combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner);
         }
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-
-        if (cardModels.Count>0 && newcard!= null && !IsTrans)
+        if (pendingTransforms.Remove(card, out var target))
         {
-            IsTrans= true;
-            foreach (var item in cardModels)
-            {
-                await CardCmd.Transform(item,newcard);
-            }
-            cardModels.Clear();
-            newcard=null;
-            IsTrans= false;
+            await CardCmd.Transform(card, target);
         }
     }
 }

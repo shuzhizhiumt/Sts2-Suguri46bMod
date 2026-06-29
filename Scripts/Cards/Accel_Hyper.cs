@@ -22,19 +22,17 @@ public class Accel_Hyper : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
+    public Accel_Hyper() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Accel_HyperPower>(1)
     ];
 
-    public Accel_Hyper() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-
-    }
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Accel_HyperPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Accel_HyperPower"].BaseValue, base.Owner.Creature, this);
     }
 

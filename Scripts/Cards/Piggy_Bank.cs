@@ -32,19 +32,19 @@ public class Piggy_Bank : ModCardTemplate
     public Piggy_Bank() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    protected override HashSet<CardTag> CanonicalTags => [
-    ];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    ];
+    protected override HashSet<CardTag> CanonicalTags => [
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 3)
     ];
-    
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         int currentTurn = base.Owner.Creature.CombatState.RoundNumber;
-        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,currentTurn*base.DynamicVars["GainOJStar"].IntValue);
+        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId, currentTurn * base.DynamicVars["GainOJStar"].IntValue);
     }
 
     protected override void OnUpgrade()

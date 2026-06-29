@@ -23,13 +23,13 @@ public class Cloud_of_Seagulls : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
+    public Cloud_of_Seagulls() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4, ValueProp.Move),
         new RepeatVar(4)
     ];
-    public Cloud_of_Seagulls() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var targets = CardModelTargetingExtensions.GetTargets(this, cardPlay.Target).ToList();
@@ -40,7 +40,7 @@ public class Cloud_of_Seagulls : ModCardTemplate
         Rng rng = base.Owner.RunState.Rng.CombatTargets;
         if (!IsUpgraded)
         {
-		    ArgumentNullException.ThrowIfNull(TargetType.RandomEnemy, "cardPlay.Target");
+                ArgumentNullException.ThrowIfNull(TargetType.RandomEnemy, "cardPlay.Target");
             for (int i = 0; i < DynamicVars.Repeat.IntValue; i++)
             {
                 int index = rng.NextInt(targets.Count);

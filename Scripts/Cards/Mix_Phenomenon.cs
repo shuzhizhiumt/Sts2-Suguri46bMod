@@ -22,22 +22,22 @@ public class Mix_Phenomenon : ModCardTemplate
     private const int energyCost = 0;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
-    private static readonly TargetType targetType = TargetType.Self;
+    private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1)
-    ];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromEnchantment<Mix>();
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    
     public Mix_Phenomenon() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => 
+        HoverTipFactory.FromEnchantment<Mix>()
+    ;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selectedCards = await CardSelectCmd.FromHand(

@@ -21,12 +21,12 @@ public class Long_Distance_Shot : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(13, ValueProp.Move)
-    ];
     public Long_Distance_Shot() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(13, ValueProp.Move)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

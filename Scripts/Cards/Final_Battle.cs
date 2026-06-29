@@ -32,32 +32,30 @@ public class Final_Battle : ModCardTemplate
     public Final_Battle() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.ReplayStatic)
     ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Replay", 1)
-        ];
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         List<CardModel> list = PileType.Hand.GetPile(base.Owner).Cards.ToList();
-		if (list.Count == 0)
-		{
-			return;
-		}
+        if (list.Count == 0)
+        {
+            return;
+        }
         foreach (var item in list)
         {
-            if (!item.Keywords.Contains(CardKeyword.Unplayable)&& item.Type==CardType.Attack)
+            if (!item.Keywords.Contains(CardKeyword.Unplayable))
             {
-			    item.BaseReplayCount += base.DynamicVars["Replay"].IntValue; 
+                item.BaseReplayCount += base.DynamicVars["Replay"].IntValue;
             }
         }
-		await PowerCmd.Apply<Final_BattlePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
+        await PowerCmd.Apply<Final_BattlePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
     }
-
-
 
     protected override void OnUpgrade()
     {

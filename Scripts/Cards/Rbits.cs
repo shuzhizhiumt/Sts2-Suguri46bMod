@@ -25,16 +25,19 @@ public class Rbits : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(16, ValueProp.Unpowered)
-    ];
+
+    public Rbits() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<FrailPower>(),
         HoverTipFactory.FromPower<DexterityPower>()
     ];
-    public Rbits() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(16, ValueProp.Unpowered)
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

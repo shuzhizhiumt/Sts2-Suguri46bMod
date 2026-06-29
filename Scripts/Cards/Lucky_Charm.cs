@@ -1,17 +1,17 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Combat.HandSize;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Powers;
-using Suguri46b.Scripts.Units;
-using STS2RitsuLib.Combat.SecondaryResources;
 using Suguri46b.Scripts.Resources;
-using STS2RitsuLib.Combat.HandSize;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.HoverTips;
+using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
@@ -32,10 +32,10 @@ public class Lucky_Charm : ModCardTemplate,IMaxHandSizeModifier
     {
 
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<Norma>()
-        ];
+    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 3),
         new DynamicVar("ReduceMaxHandSize", 2)
@@ -55,7 +55,7 @@ public class Lucky_Charm : ModCardTemplate,IMaxHandSizeModifier
         }
         if (participants.Contains(base.Owner.Creature) && InHand)
         {
-            await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);  
+            await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);
         }
     }
     public int ModifyMaxHandSize(Player player, int currentMaxHandSize)

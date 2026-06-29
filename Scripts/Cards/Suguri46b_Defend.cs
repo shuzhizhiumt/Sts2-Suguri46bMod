@@ -22,15 +22,13 @@ public class Suguri46b_Defend : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.png"
     );
-    protected override HashSet<CardTag> CanonicalTags =>[CardTag.Defend];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5, ValueProp.Move)
-    ];
-
     public Suguri46b_Defend() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-
+    protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(5, ValueProp.Move)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);

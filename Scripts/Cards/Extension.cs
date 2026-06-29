@@ -1,23 +1,24 @@
+using System;
+using Godot;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using Suguri46b.Scripts.Units;
-using Suguri46b.Scripts.Extensions;
-using Godot;
-using STS2RitsuLib.Combat.SecondaryResources;
-using Suguri46b.Scripts.Resources;
-using MegaCrit.Sts2.Core.Models;
 using Suguri46b.Scripts.CardKeyWords;
+using Suguri46b.Scripts.Extensions;
+using Suguri46b.Scripts.Resources;
+using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Extension: ModCardTemplate
+public class Extension : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
@@ -33,13 +34,12 @@ public class Extension: ModCardTemplate
         this.SecondaryResourceUses()
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
-    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
         new DynamicVar("Additional_Payment",10),
         new EnergyVar(1)
-        ];
+    ];
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -71,10 +71,11 @@ public class Extension: ModCardTemplate
     {
         if (ShouldGlowGoldInternal && card==this)
         {
-            return base.TryModifyEnergyCostInCombat(card, originalCost-1, out modifiedCost);  
+            return base.TryModifyEnergyCostInCombat(card, originalCost-1, out modifiedCost);
         }
         return base.TryModifyEnergyCostInCombat(card, originalCost, out modifiedCost);
     }
+
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1);

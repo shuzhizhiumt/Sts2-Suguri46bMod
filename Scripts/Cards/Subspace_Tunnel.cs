@@ -25,17 +25,17 @@ public class Subspace_Tunnel : ModCardTemplate
     public Subspace_Tunnel() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>[
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<Norma>()
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
-        new DynamicVar("GainOJStar",3),
+        new DynamicVar("GainOJStar", 3),
         new PowerVar<Subspace_TunnelPower>(1)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Subspace_TunnelPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Subspace_TunnelPower"].BaseValue, base.Owner.Creature, this);
     }
 

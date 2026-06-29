@@ -20,7 +20,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
 
     public override CharacterGender Gender => CharacterGender.Feminine;
 
-    public override int StartingHp => 60;
+    public override int StartingHp => 66;
     public override int StartingGold => 99;
 
     public override CharacterAssetProfile AssetProfile => CharacterAssetProfiles.Merge(
@@ -95,7 +95,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             
     }
     public override bool RequiresEpochAndTimeline => false;
-    protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>("res://Suguri46b/scenes/suguri46b_character.tscn");
+    protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
 
     // 攻击建筑师的攻击特效列表
     public override List<string> GetArchitectAttackVfx() => [

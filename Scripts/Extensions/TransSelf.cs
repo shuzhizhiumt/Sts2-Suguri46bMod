@@ -20,50 +20,47 @@ public class TransSelf : HookedSingletonModel
     public TransSelf() : base(HookType.Combat)
     {
     }
-    private readonly List<CardModel> cardModels= new();
-    private CardModel? newcard;
 
-    private bool IsTrans;
+    // 每张待变换的卡 → 目标卡，一对一映射，支持同时多张
+    private readonly Dictionary<CardModel, CardModel> pendingTransforms = [];
+
     public override Task BeforeCombatStart()
     {
-        cardModels.Clear();
-        newcard=null;
-        IsTrans= false;
+        pendingTransforms.Clear();
         return base.BeforeCombatStart();
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Enchantment != null && cardPlay.Card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType())
-        {
-            cardModels.Add(cardPlay.Card);
-            List<CardPoolModel> allPools = [.. cardPlay.Card.Owner.UnlockState.CharacterCardPools];
-            IEnumerable<CardModel> allCards = allPools
-                .SelectMany(pool => pool.GetUnlockedCards(
-                    cardPlay.Card.Owner.UnlockState,
-                    cardPlay.Card.Owner.RunState.CardMultiplayerConstraint)).Where(c=>c.Type==CardType.Attack || c.Type==CardType.Skill || c.Type==CardType.Power);
-            newcard = CardFactory.GetDistinctForCombat(
-                cardPlay.Card.Owner,
-                allCards,
-                1,
-                cardPlay.Card.Owner.RunState.Rng.CombatCardGeneration
-            ).First();
-        }
+        var card = cardPlay.Card;
+        if (card.Enchantment == null || card.Enchantment.GetType() != ModelDb.Enchantment<Mix>().GetType())
+            return;
+
+        var owner = card.Owner;
+        List<CardPoolModel> allPools = [.. owner.UnlockState.CharacterCardPools];
+        IEnumerable<CardModel> allCards = allPools
+            .SelectMany(pool => pool.GetUnlockedCards(
+                owner.UnlockState,
+                owner.RunState.CardMultiplayerConstraint))
+            .Where(c => c.Type == CardType.Attack || c.Type == CardType.Skill || c.Type == CardType.Power);
+
+        var newcard = CardFactory.GetDistinctForCombat(
+            owner,
+            allCards,
+            1,
+            owner.RunState.Rng.CombatCardGeneration
+        ).First();
+
+        pendingTransforms[card] = newcard;
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-
-        if (cardModels.Count>0 && newcard!= null && !IsTrans)
+        if (pendingTransforms.Remove(card, out var target))
         {
-            IsTrans= true;
-            foreach (var item in cardModels)
-            {
-                CardPileAddResult? cardPileAddResult=await CardCmd.Transform(item,newcard);
-                CardCmd.Enchant<Mix>(cardPileAddResult.Value.cardAdded,1);
-            }
-            cardModels.Clear();
-            IsTrans= false;
+            var result = await CardCmd.Transform(card, target);
+            if (result.HasValue)
+                CardCmd.Enchant<Mix>(result.Value.cardAdded, 1);
         }
     }
 }

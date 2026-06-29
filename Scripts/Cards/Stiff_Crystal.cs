@@ -23,7 +23,6 @@ public class Stiff_Crystal : ModCardTemplate
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
-    
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
@@ -31,18 +30,16 @@ public class Stiff_Crystal : ModCardTemplate
     public Stiff_Crystal() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-    ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 3),
-        new BlockVar(4,ValueProp.Move)
+        new BlockVar(4, ValueProp.Move)
     ];
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,base.DynamicVars["GainOJStar"].IntValue);
+        await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId, base.DynamicVars["GainOJStar"].IntValue);
     }
 
     protected override void OnUpgrade()

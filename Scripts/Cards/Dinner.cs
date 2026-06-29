@@ -31,7 +31,6 @@ public class Dinner : ModCardTemplate
         this.SecondaryResourceUses()
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
-    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.ForEnergy(this)
     ];
@@ -40,6 +39,7 @@ public class Dinner : ModCardTemplate
         new DynamicVar("ExtraEnergyVar",1),
         new DynamicVar("Additional_Payment",10)
     ];
+    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,cardPlay.Card.Owner);

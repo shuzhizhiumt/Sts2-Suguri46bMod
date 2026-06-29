@@ -32,21 +32,21 @@ public class Pudding : ModCardTemplate
     public Pudding() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    protected override HashSet<CardTag> CanonicalTags => [
-
-    ];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.ForEnergy(this)
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust,MyKeywords.Sweets];
+    protected override HashSet<CardTag> CanonicalTags => [
+
+    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, MyKeywords.Sweets];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1)
     ];
-    
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int gainenergy=Owner.GetMaxEnergy()-Owner.GetEnergy();
-        await PlayerCmd.GainEnergy(gainenergy,cardPlay.Card.Owner);
+        int gainenergy = Owner.GetMaxEnergy() - Owner.GetEnergy();
+        await PlayerCmd.GainEnergy(gainenergy, cardPlay.Card.Owner);
     }
 
     protected override void OnUpgrade()

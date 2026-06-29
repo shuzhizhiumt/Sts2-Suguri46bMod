@@ -26,15 +26,18 @@ public class Awakening_of_Talent : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
+    public Awakening_of_Talent() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => 
+        HoverTipFactory.FromEnchantment<Adroit>(5);
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5, ValueProp.Move),
         new CardsVar(1)
     ];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromEnchantment<Adroit>(5);
-    public Awakening_of_Talent() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var selectedCards = await CardSelectCmd.FromHand(

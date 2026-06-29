@@ -26,24 +26,24 @@ public class Lifeguard_on_the_White_Beach : ModCardTemplate
     );
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public Lifeguard_on_the_White_Beach() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HealVar(5)
-        ];
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         IEnumerable<Creature> enumerable = from c in base.CombatState.GetTeammatesOf(base.Owner.Creature)
-			where c != null && c.IsAlive && c.IsPlayer
-			select c;
-		foreach (Creature item in enumerable)
-		{
-			await CreatureCmd.Heal(item,base.DynamicVars.Heal.IntValue);
-		}
+            where c != null && c.IsAlive && c.IsPlayer
+            select c;
+        foreach (Creature item in enumerable)
+        {
+            await CreatureCmd.Heal(item,base.DynamicVars.Heal.IntValue);
+        }
     }
-
 
     protected override void OnUpgrade()
     {

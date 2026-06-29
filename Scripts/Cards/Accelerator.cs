@@ -22,18 +22,18 @@ public class Accelerator : ModCardTemplate
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public override bool CanBeGeneratedInCombat => false;
+
+    public Accelerator() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Power", 1)
     ];
 
-    public Accelerator() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-
-    }
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         SfxCmd.Play("event:/suguri46b/sfx/Accelerator");
         await PowerCmd.Apply<AcceleratorPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Power"].BaseValue, base.Owner.Creature, this);
     }

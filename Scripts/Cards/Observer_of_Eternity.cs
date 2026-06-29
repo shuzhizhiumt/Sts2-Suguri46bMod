@@ -34,18 +34,19 @@ public class Observer_of_Eternity : ModCardTemplate
         this.SecondaryResourceUses()
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
-        new DynamicVar("Additional_Payment",6)
+        new DynamicVar("Additional_Payment",6),
+        SecondaryResourceVars.For("OJStar", ModResources.OJStarId, 1)
+
     ];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Retain),
-    ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
 
     private bool uncommon;
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
-    
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var ledger = cardPlay.SecondaryResources();

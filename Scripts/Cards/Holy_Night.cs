@@ -23,20 +23,20 @@ public class Holy_Night : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Holy_NightPower>(3)
-    ];
     public Holy_Night() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<Holy_NightPower>(3)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Holy_NightPower>(choiceContext, base.Owner.Creature, base.DynamicVars["Holy_NightPower"].BaseValue, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Holy_NightPower"].UpgradeValueBy(2);
+        base.DynamicVars["Holy_NightPower"].UpgradeValueBy(2);
     }
 }

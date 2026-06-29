@@ -26,23 +26,22 @@ public class Home_Improvement : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1)
-    ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     public Home_Improvement() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-		int distohandnum = Math.Min(base.DynamicVars.Cards.IntValue, CardPile.MaxCardsInHand - PileType.Hand.GetPile(base.Owner).Cards.Count);
-		if (distohandnum > 0)
-		{
-			await CardPileCmd.Add(await CardSelectCmd.FromCombatPile(choiceContext, PileType.Discard.GetPile(base.Owner), base.Owner, new CardSelectorPrefs(new LocString("card_selection", "TO_HAND"), 0, distohandnum)), PileType.Hand);
-		}
-		await CardPileCmd.Add(await CardSelectCmd.FromCombatPile(choiceContext, PileType.Hand.GetPile(base.Owner), base.Owner, new CardSelectorPrefs(new LocString("card_selection", "TO_DRAW"), 0, DynamicVars.Cards.IntValue)), PileType.Draw);
-		await CardPileCmd.Add(await CardSelectCmd.FromCombatPile(choiceContext, PileType.Draw.GetPile(base.Owner), base.Owner, new CardSelectorPrefs(new LocString("card_selection", "TO_DISCARD"), 0, DynamicVars.Cards.IntValue)), PileType.Discard);   
+        int distohandnum = Math.Min(base.DynamicVars.Cards.IntValue, CardPile.MaxCardsInHand - PileType.Hand.GetPile(base.Owner).Cards.Count);
+        if (distohandnum > 0)
+        {
+            await CardPileCmd.Add(await CardSelectCmd.FromCombatPile(choiceContext, PileType.Discard.GetPile(base.Owner), base.Owner, new CardSelectorPrefs(new LocString("card_selection", "TO_HAND"), 0, distohandnum)), PileType.Hand);
+        }
+        await CardPileCmd.Add(await CardSelectCmd.FromCombatPile(choiceContext, PileType.Hand.GetPile(base.Owner), base.Owner, new CardSelectorPrefs(new LocString("card_selection", "TO_DRAW"), 0, DynamicVars.Cards.IntValue)), PileType.Draw);
+        await CardPileCmd.Add(await CardSelectCmd.FromCombatPile(choiceContext, PileType.Draw.GetPile(base.Owner), base.Owner, new CardSelectorPrefs(new LocString("card_selection", "TO_DISCARD"), 0, DynamicVars.Cards.IntValue)), PileType.Discard);
     }
 
     protected override void OnUpgrade()

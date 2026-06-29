@@ -21,14 +21,17 @@ public class Reproduction_of_Records : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2)
-    ];
 
     public Reproduction_of_Records() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(2)
+    ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var discardPile = PileType.Discard.GetPile(base.Owner);

@@ -27,18 +27,17 @@ public class Nice_Present : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Additional_Payment];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3),
-        new DynamicVar("Additional_Payment",10)
-    ];
-    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
-
     public Nice_Present() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
         this.SecondaryResourceUses()
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(3),
+        new DynamicVar("Additional_Payment",10)
+    ];
+    protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var ledger = cardPlay.SecondaryResources();

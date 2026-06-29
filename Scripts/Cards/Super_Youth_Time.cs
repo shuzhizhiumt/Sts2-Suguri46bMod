@@ -21,18 +21,16 @@ public class Super_Youth_Time : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-
+    public Super_Youth_Time() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Super_Youth_TimePower>(1)
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[CardKeyword.Exhaust];
-    public Super_Youth_Time() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-
-    }
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<Super_Youth_TimePower>(choiceContext, base.Owner.Creature, base.DynamicVars["Super_Youth_TimePower"].BaseValue, base.Owner.Creature, this);
     }
 

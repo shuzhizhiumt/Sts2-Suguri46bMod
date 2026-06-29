@@ -27,29 +27,29 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override IEnumerable<CardKeyword> CanonicalKeywords=>[MyKeywords.Repeat];
+    public The_Greatest_Troublemaker_Ever() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    {
+    }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(8, ValueProp.Move),
         new CardsVar(1)
     ];
-    public The_Greatest_Troublemaker_Ever() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingRandomOpponents(base.CombatState)
             .Execute(choiceContext);
-        int repeatcount=RepeatCount.ThisCardRepeatCount(cardPlay.Card);
+        int repeatcount = RepeatCount.ThisCardRepeatCount(cardPlay.Card);
         switch (repeatcount)
         {
-            case >=2: await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            case >= 2: await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                     .FromCard(this)
                     .TargetingRandomOpponents(base.CombatState)
-                    .Execute(choiceContext);goto case 1;
-            case 1: await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.IntValue,cardPlay.Card.Owner);goto default;
-            default:break;
+                    .Execute(choiceContext); goto case 1;
+            case 1: await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, cardPlay.Card.Owner); goto default;
+            default: break;
         }
     }
 
