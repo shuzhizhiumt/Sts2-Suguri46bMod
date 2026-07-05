@@ -2,20 +2,23 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Cards.Token;
+using Suguri46b.Scripts.Resources;
 
 namespace Suguri46b.Scripts.Powers;
 
 [RegisterPower]
-public class Norma : ModPowerTemplate
+public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -28,6 +31,7 @@ public class Norma : ModPowerTemplate
     public bool Norma4;
     public bool Norma5;
     public bool Norma6;
+
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
@@ -54,7 +58,6 @@ public class Norma : ModPowerTemplate
             Norma4=true;
             Flash();
             await PowerCmd.Apply<StrengthPower>(choiceContext,base.Owner, 3, base.Owner,cardSource);
-            await PowerCmd.Apply<DexterityPower>(choiceContext,base.Owner, 1, base.Owner,cardSource);
         }
         if (!Norma5 && Amount>=5)
         {
@@ -68,7 +71,7 @@ public class Norma : ModPowerTemplate
             await ExecuteCombatVictory();
         }
     }
-    private async Task ExecuteCombatVictory()
+    private static async Task ExecuteCombatVictory()
     {
         var combatState = CombatManager.Instance.DebugOnlyGetState();
         List<Creature> allEnemies = [.. combatState!.Enemies];

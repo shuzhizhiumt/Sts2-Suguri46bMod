@@ -23,6 +23,12 @@ public class Final_BattlePower : ModPowerTemplate
         IconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png",
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
+    private readonly List<(CardModel card, int amount)> _affectedCards = [];
+
+    public void TrackReplay(CardModel card, int amount)
+    {
+        _affectedCards.Add((card, amount));
+    }
 
     public override bool ShouldPlay(CardModel card, AutoPlayType _)
     {
@@ -45,9 +51,15 @@ public class Final_BattlePower : ModPowerTemplate
 	}
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (participants.Contains(base.Owner))
+        if (!participants.Contains(base.Owner))
+            return;
+
+        foreach (var (card, amount) in _affectedCards)
         {
-            await PowerCmd.Remove(this);
+            if (card.IsInCombat && card.BaseReplayCount >= amount)
+                card.BaseReplayCount -= amount;
         }
+        _affectedCards.Clear();
+        await PowerCmd.Remove(this);
     }
 }

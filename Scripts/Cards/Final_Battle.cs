@@ -1,6 +1,8 @@
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -43,18 +45,21 @@ public class Final_Battle : ModCardTemplate
     {
         await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         List<CardModel> list = PileType.Hand.GetPile(base.Owner).Cards.ToList();
+        int replayAmount = base.DynamicVars["Replay"].IntValue;
         if (list.Count == 0)
         {
             return;
         }
+        await PowerCmd.Apply<Final_BattlePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
+        var power = base.Owner.Creature.GetPower<Final_BattlePower>();
         foreach (var item in list)
         {
-            if (!item.Keywords.Contains(CardKeyword.Unplayable))
+            if (!item.Keywords.Contains(CardKeyword.Unplayable) && item.Type == CardType.Attack)
             {
-                item.BaseReplayCount += base.DynamicVars["Replay"].IntValue;
+                item.BaseReplayCount += replayAmount;
+                power?.TrackReplay(item, replayAmount);
             }
         }
-        await PowerCmd.Apply<Final_BattlePower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -45,7 +45,7 @@ public class Cloud_of_Seagulls : ModCardTemplate
             {
                 int index = rng.NextInt(targets.Count);
                 await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                    .FromCard(this)
+                     .FromCard(this,cardPlay)
                     .Targeting(targets[index])
                     .Execute(choiceContext);
             }
@@ -54,7 +54,7 @@ public class Cloud_of_Seagulls : ModCardTemplate
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .WithHitCount(base.DynamicVars.Repeat.IntValue)
-                .FromCard(this)
+                 .FromCard(this,cardPlay)
                 .TargetingRandomOpponents(base.CombatState)
                 .Execute(choiceContext);
         }

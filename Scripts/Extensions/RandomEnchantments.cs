@@ -1,9 +1,10 @@
 using System.Reflection;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace Suguri46b.Scripts.Extensions;
-
+[RegisterSingleton]
 public static class RandomEnchantments
 {
     public static IList<EnchantmentModel> GetValidEnchantments(CardModel card)

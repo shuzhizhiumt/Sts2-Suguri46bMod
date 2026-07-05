@@ -33,10 +33,10 @@ public class Feel_the_Rush_with_an_Energy_DrinkPower : ModPowerTemplate
     ];
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
-        if (!card.EnergyCost.CostsX)
+        if (creator==Owner.Player && card.Type==CardType.Attack && !card.EnergyCost.CostsX)
         {
-            card.EnergyCost.UpgradeBy(-Amount);
+			card.EnergyCost.AddThisTurn(-1);
         }
-        return base.AfterCardGeneratedForCombat(card, creator);
+        return Task.CompletedTask;
     }
 }

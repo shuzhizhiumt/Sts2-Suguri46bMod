@@ -49,7 +49,7 @@ public class Coming_Back_Stronger : ModCardTemplate
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, base.DynamicVars.Vulnerable.BaseValue, base.Owner.Creature, this);
         }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+             .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
     }

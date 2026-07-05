@@ -38,7 +38,7 @@ public class Miracle_Red_Bean_Ice_Cream : ModCardTemplate
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromCard<Magical_Revenge>(),
+        HoverTipFactory.FromCard<Magical_Revenge>(IsUpgraded),
         HoverTipFactory.FromPower<StrengthPower>()
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Sweets];
@@ -51,7 +51,6 @@ public class Miracle_Red_Bean_Ice_Cream : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<Miracle_Red_Bean_Ice_CreamPower>(choiceContext, base.Owner.Creature,base.DynamicVars["Miracle_Red_Bean_Ice_CreamPower"].IntValue, base.Owner.Creature,this);
-        
     }
 
     protected override void OnUpgrade()

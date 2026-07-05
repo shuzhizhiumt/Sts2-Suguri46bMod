@@ -48,7 +48,7 @@ public class Deceptive_Disarming : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+             .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
         if (cardPlay.Target.Monster != null && cardPlay.Target.Monster.IntendsToAttack)

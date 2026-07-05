@@ -33,7 +33,7 @@ public class Safe_Journey : ModCardTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<Norma>()
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Norma_Check];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 3),
         new BlockVar(7, ValueProp.Move)
@@ -44,7 +44,6 @@ public class Safe_Journey : ModCardTemplate
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         int Level = Owner?.Creature.GetPower<Norma>()?.Amount ?? 0;
         await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId, Level * base.DynamicVars["GainOJStar"].IntValue);
-        await PlayerCmdExtensions.NormaUPCheck(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()

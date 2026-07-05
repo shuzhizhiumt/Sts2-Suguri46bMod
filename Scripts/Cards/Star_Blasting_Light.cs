@@ -45,7 +45,7 @@ public class Star_Blasting_Light : ModCardTemplate
         {
             await CardCmd.Exhaust(choiceContext, item);
         }
-        await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).WithHitCount(attacksandstatusCount).FromCard(this)
+        await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).WithHitCount(attacksandstatusCount) .FromCard(this,cardPlay)
             .TargetingRandomOpponents(base.CombatState)
             .Execute(choiceContext);
     }

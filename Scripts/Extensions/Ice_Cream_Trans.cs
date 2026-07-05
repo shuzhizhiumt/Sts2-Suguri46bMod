@@ -41,18 +41,24 @@ public class Ice_Cream_Trans : HookedSingletonModel
         var combatState = card.CombatState;
         if (combatState == null)
             return;
-
         // Miracle_Red_Bean_Ice_Cream（支付了 ojstars）→ Magical_Revenge
-        if (card.Title == combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner).Title
+        if ((card.Title == combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner).Title||card.Title == combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner).Title+"+")
             && cardPlay.SecondaryResources().Activated("ojstars_charge")
             && !(card.Enchantment != null && card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType()))
         {
-            pendingTransforms[card] = combatState.CreateCard<Magical_Revenge>(owner);
+            var target = combatState.CreateCard<Magical_Revenge>(owner);
+            if (card.IsUpgraded)
+                CardCmd.Upgrade(target);
+            pendingTransforms[card] = target;
         }
         // Magical_Revenge → Miracle_Red_Bean_Ice_Cream
-        else if (card.Title == combatState.CreateCard<Magical_Revenge>(owner).Title)
+        else if ((card.Title == combatState.CreateCard<Magical_Revenge>(owner).Title||card.Title == combatState.CreateCard<Magical_Revenge>(owner).Title+"+")
+            && !(card.Enchantment != null && card.Enchantment.GetType() == ModelDb.Enchantment<Mix>().GetType()))
         {
-            pendingTransforms[card] = combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner);
+            var target = combatState.CreateCard<Miracle_Red_Bean_Ice_Cream>(owner);
+            if (card.IsUpgraded)
+                CardCmd.Upgrade(target);
+            pendingTransforms[card] = target;
         }
     }
 

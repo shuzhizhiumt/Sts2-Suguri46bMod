@@ -51,7 +51,7 @@ public class Awakening_of_Talent : ModCardTemplate
             CardCmd.Enchant<Adroit>(selectedCard, 5);
         }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+             .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
     }

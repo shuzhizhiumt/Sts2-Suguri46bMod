@@ -40,8 +40,7 @@ public class Magical_Revenge : ModCardTemplate
 
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromCard<Miracle_Red_Bean_Ice_Cream>(),
-        HoverTipFactory.FromPower<StrengthPower>()
+        HoverTipFactory.FromCard<Miracle_Red_Bean_Ice_Cream>(IsUpgraded)
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
@@ -55,7 +54,7 @@ public class Magical_Revenge : ModCardTemplate
         int hits=Owner.Creature.GetPowerAmount<StrengthPower>();
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hits)
-            .FromCard(this)
+            .FromCard(this,cardPlay)
             .TargetingAllOpponents(base.CombatState)
             .Execute(choiceContext);
     }

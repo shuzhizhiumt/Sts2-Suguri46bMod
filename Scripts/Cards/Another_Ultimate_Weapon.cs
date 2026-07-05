@@ -41,7 +41,7 @@ public class Another_Ultimate_Weapon : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
-        new DynamicVar("Additional_Payment", 10)
+        new DynamicVar("Additional_Payment", 20)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

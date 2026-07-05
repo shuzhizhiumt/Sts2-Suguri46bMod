@@ -32,6 +32,7 @@ public static class ModResources
             {
                 var row = NSecondaryResourceCounter.Create(OJStarDefinition, new SecondaryResourceCounterStyle
                 {
+                    AnimateAmountGain=true,
                     FontSize = 32,
                     AmountLabelOffset=new Vector2(22, 22),
                     PositiveColor = Colors.Cyan,

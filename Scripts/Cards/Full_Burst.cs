@@ -44,10 +44,9 @@ public class Full_Burst : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+             .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
-        await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.BaseValue,Owner);
         int repeatcount=RepeatCount.ThisCardRepeatCount(cardPlay.Card);
         switch (repeatcount)
         {

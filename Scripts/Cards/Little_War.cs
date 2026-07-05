@@ -52,11 +52,11 @@ public class Little_War : ModCardTemplate
         }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(repeat)
-            .FromCard(this)
+             .FromCard(this,cardPlay)
             .TargetingAllOpponents(base.CombatState)
             .Execute(choiceContext);
     }
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource,CardPlay? cardPlay)
     {
         int? repeatcount=RepeatCount.ThisCardRepeatCount(cardSource);
         if (cardSource==this  && repeatcount>=1 && dealer==Owner.Creature)

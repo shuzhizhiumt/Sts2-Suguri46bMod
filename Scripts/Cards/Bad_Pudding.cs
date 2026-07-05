@@ -25,14 +25,13 @@ public class Bad_Pudding : ModCardTemplate
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
-    private CardModel cardModel2;
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Bad_Pudding() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    private CardModel? cardModel2;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.ForEnergy(this)

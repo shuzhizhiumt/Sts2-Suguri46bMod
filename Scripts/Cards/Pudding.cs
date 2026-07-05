@@ -46,11 +46,14 @@ public class Pudding : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         int gainenergy = Owner.GetMaxEnergy() - Owner.GetEnergy();
+        if (this.IsUpgraded)
+        {
+            gainenergy++;
+        }
         await PlayerCmd.GainEnergy(gainenergy, cardPlay.Card.Owner);
     }
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
     }
 }

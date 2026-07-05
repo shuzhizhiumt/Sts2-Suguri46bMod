@@ -23,9 +23,9 @@ public class AcceleratorPower : ModPowerTemplate
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer))
+        if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(Owner))
         {
             return 1;
         }

@@ -117,7 +117,7 @@
     "SUGURI46B_CARD_DESPERATE_MODIFICATION.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若此卡拥有[gold]附魔[/gold]，则伤害增加{ExtraDamage:diff()}。",
 
     "SUGURI46B_CARD_PUDDING.title":"布丁",
-    "SUGURI46B_CARD_PUDDING.description": "恢复{Energy:energyIcons()}至上限。",
+    "SUGURI46B_CARD_PUDDING.description": "恢复{Energy:energyIcons()}至{IfUpgraded:show:上限+1点|上限}。",
 
     "SUGURI46B_CARD_SWEET_PARADISE.title": "甜点天堂",
     "SUGURI46B_CARD_SWEET_PARADISE.description": "将{Cards:diff()}张[gold]{IfUpgraded:show:甜点纵溺+|甜点纵溺}[/gold]加入[gold]弃牌堆[/gold]。\n每打出一张带有[gold]甜点[/gold]的牌就获得{GainOJStar:diff()}星星。",
@@ -132,7 +132,7 @@
     "SUGURI46B_CARD_LITTLE_WAR.description": "对所有敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]重复(1)：[/gold]伤害增加{ExtraDamage:diff()}。\n[gold]重复(2)：[/gold]次数增加{ExtraRepeat:diff()}。",
 
     "SUGURI46B_CARD_HEAT_300.title": "热度300%",
-    "SUGURI46B_CARD_HEAT_300.description": "失去{DexterityPower:diff()}点[gold]敏捷[/gold]。每当你生成攻击牌时，其消耗在本回合减少{Energy:diff()}。",
+    "SUGURI46B_CARD_HEAT_300.description": "失去{DexterityPower:diff()}点[gold]敏捷[/gold]。\n获得{StrengthPower:diff()}点[gold]力量[/gold]。",
 
     "SUGURI46B_CARD_BLAZING.title": "爆燃！",
     "SUGURI46B_CARD_BLAZING.description": "回合开始时，若[gold]敏捷[/gold]为负数，则本回合获得[gold]敏捷[/gold]层数相反数的[gold]力量[/gold]。",
@@ -147,10 +147,10 @@
     "SUGURI46B_CARD_SUPER_YOUTH_TIME.description": "在这个回合，你打出的下1张非能力牌会被额外打出一次。",
     
     "SUGURI46B_CARD_MIRACLE_RED_BEAN_ICE_CREAM.title": "奇迹红豆冰淇淋",
-    "SUGURI46B_CARD_MIRACLE_RED_BEAN_ICE_CREAM.description": "在本回合内获得{Miracle_Red_Bean_Ice_CreamPower:diff()}点[gold]力量[/gold]。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n将此牌变化为[gold]魔法复仇[/gold]。",
+    "SUGURI46B_CARD_MIRACLE_RED_BEAN_ICE_CREAM.description": "在本回合内获得{Miracle_Red_Bean_Ice_CreamPower:diff()}点[gold]力量[/gold]。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n将此牌变化为[gold]{IfUpgraded:show:魔法复仇+|魔法复仇}[/gold]。",
 
     "SUGURI46B_CARD_MAGICAL_REVENGE.title": "魔法复仇",
-    "SUGURI46B_CARD_MAGICAL_REVENGE.description": "你每有1点[gold]力量[/gold]，造成{Damage:diff()}点伤害{CalculationExtra:diff()}次。\n此牌变化为[gold]奇迹红豆冰淇淋[/gold]。{InCombat:\n（攻击{CalculatedHits:diff()}次）|}",
+    "SUGURI46B_CARD_MAGICAL_REVENGE.description": "你每有1点[gold]力量[/gold]，造成{Damage:diff()}点伤害{CalculationExtra:diff()}次。\n此牌变化为[gold]{IfUpgraded:show:奇迹红豆冰淇淋+|奇迹红豆冰淇淋}[/gold]。{InCombat:\n（攻击{CalculatedHits:diff()}次）|}",
 
     "SUGURI46B_CARD_HOME_IMPROVEMENT.title": "家居翻修",
     "SUGURI46B_CARD_HOME_IMPROVEMENT.description": "将[gold]弃牌堆[/gold]中的{Cards:diff()}张牌放入[gold]手牌[/gold]。\n将[gold]手牌[/gold]中的{Cards:diff()}张牌放入[gold]抽牌堆[/gold]。\n将[gold]抽牌堆[/gold]中的{Cards:diff()}张牌放入[gold]弃牌堆[/gold]。",
@@ -165,15 +165,20 @@
     "SUGURI46B_CARD_STIFF_CRYSTAL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{GainOJStar:diff()}[gold]星星[/gold]。",
 
     "SUGURI46B_CARD_FULL_BURST.title": "全力爆发",
-    "SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n抽{Cards:diff()}张牌。\n[gold]重复(1)：[/gold]额外抽{Cards:diff()}张牌。\n[gold]重复(2)：[/gold]获得{Energy:energyIcons()}。",
+    "SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]抽{Cards:diff()}张牌。\n[gold]重复(2)：[/gold]获得{Energy:energyIcons()}。",
 
     "SUGURI46B_CARD_FINAL_BATTLE.title": "最终决战",
-    "SUGURI46B_CARD_FINAL_BATTLE.description": "[gold]手牌[/gold]中的所有攻击牌获得{Replay:diff()}层[gold]重放[/gold]。\n你在本回合内不能再抽任何牌，且只能打出攻击牌。",
+    "SUGURI46B_CARD_FINAL_BATTLE.description": "[gold]手牌[/gold]中的所有攻击牌本回合获得{Replay:diff()}层[gold]重放[/gold]。\n你在本回合内不能再抽任何牌，且只能打出攻击牌。",
 
     "SUGURI46B_CARD_COMING_BACK_STRONGER.title": "越挫越勇",
-    "SUGURI46B_CARD_COMING_BACK_STRONGER.description": "造成{Damage:diff()}点伤害。若此次攻击未使敌人失去生命，伤害增加{UpDamage:diff()}。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n先给予{VulnerablePower:diff()}层[gold]易伤[/gold]。",
+    "SUGURI46B_CARD_COMING_BACK_STRONGER.description": "造成{Damage:diff()}点伤害。若此次攻击未使敌人失去生命，将其在本场战斗的伤害增加{UpDamage:diff()}。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n先给予{VulnerablePower:diff()}层[gold]易伤[/gold]。",
 
     "SUGURI46B_CARD_FEEL_THE_RUSH_WITH_AN_ENERGY_DRINK.title":"来罐饮料提提神",
-    "SUGURI46B_CARD_FEEL_THE_RUSH_WITH_AN_ENERGY_DRINK.description": "战斗中生成的卡牌耗能减少{Energy:energyIcons()}。"
+    "SUGURI46B_CARD_FEEL_THE_RUSH_WITH_AN_ENERGY_DRINK.description": "战斗中生成攻击牌时，其消耗在本回合减少{Energy:energyIcons()}。",
 
+    "SUGURI46B_CARD_DARK_SIDE_OF_BUSINESS.title": "阴谋的资金筹集",
+    "SUGURI46B_CARD_DARK_SIDE_OF_BUSINESS.description": "造成{Damage:diff()}点伤害。\n获得未被格挡伤害*{GainOJStar:diff()}的[gold]星星[/gold]。",
+
+    "SUGURI46B_CARD_BIG_BANG_BELL.title": "大爆炸铃",
+    "SUGURI46B_CARD_BIG_BANG_BELL.description": "造成{Damage:diff()}点伤害。\n每当这张牌被保留时，将其在本场战斗的伤害增加{ExtraDamage:diff()}点。"
 }

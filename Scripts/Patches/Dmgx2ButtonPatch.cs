@@ -12,6 +12,7 @@ using Suguri46b.Scripts.Enchantments;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using Suguri46b.Scripts.Powers;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 
 namespace Suguri46b.Scripts.Patches;
 

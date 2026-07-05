@@ -19,7 +19,7 @@ public class Heat_300 : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Power;
-    private const CardRarity rarity = CardRarity.Rare;
+    private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
@@ -30,22 +30,22 @@ public class Heat_300 : ModCardTemplate
     {
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.ForEnergy(this)
+        HoverTipFactory.FromPower<DexterityPower>(),
+        HoverTipFactory.FromPower<StrengthPower>()
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
-        new PowerVar<DexterityPower>(2),
-        new PowerVar<Heat_300Power>(1)
-    ];
+        new PowerVar<DexterityPower>(1),
+        new PowerVar<StrengthPower>(2)
+        ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<DexterityPower>(choiceContext,Owner.Creature,-base.DynamicVars["DexterityPower"].IntValue,Owner.Creature,this);
-        await PowerCmd.Apply<Heat_300Power>(choiceContext,Owner.Creature,base.DynamicVars["Heat_300Power"].IntValue,Owner.Creature,this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext,Owner.Creature,base.DynamicVars["StrengthPower"].IntValue,Owner.Creature,this);
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars["DexterityPower"].UpgradeValueBy(-1);
+        base.DynamicVars["StrengthPower"].UpgradeValueBy(1);
     }
 }
