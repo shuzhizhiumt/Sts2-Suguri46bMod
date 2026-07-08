@@ -23,7 +23,7 @@ public class RepeatCount : HookedSingletonModel
     public RepeatCount() : base(HookType.Combat)
     {
     }
-    static IDictionary<string,int> AllCardsRepeatCount=new Dictionary<string,int>();
+    static IDictionary<string,int> AllCardsRepeatCount = new Dictionary<string,int>();
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -31,11 +31,12 @@ public class RepeatCount : HookedSingletonModel
         {
             return;
         }
-        if (!AllCardsRepeatCount.ContainsKey(cardPlay.Card.Title))
+        var key = cardPlay.Card.Id.Entry;
+        if (!AllCardsRepeatCount.ContainsKey(key))
         {
-            AllCardsRepeatCount.Add(cardPlay.Card.Title,0);
+            AllCardsRepeatCount.Add(key, 0);
         }
-        AllCardsRepeatCount[cardPlay.Card.Title]++;
+        AllCardsRepeatCount[key]++;
     }
     public override Task BeforeCombatStart()
     {
@@ -44,10 +45,12 @@ public class RepeatCount : HookedSingletonModel
     }
     public static int ThisCardRepeatCount(CardModel card)
     {
-        if (card==null)
+        if (card == null||!card.HasModKeyword(MyKeywords.Repeat))
         {
             return 0;
         }
-        return AllCardsRepeatCount.ContainsKey(card.Title)?AllCardsRepeatCount[card.Title]:0;
+        
+        var key = card.Id.Entry;
+        return AllCardsRepeatCount.ContainsKey(key) ? AllCardsRepeatCount[key] : 0;
     }
 }

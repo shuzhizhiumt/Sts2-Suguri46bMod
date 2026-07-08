@@ -1,6 +1,7 @@
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -33,29 +34,31 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(8, ValueProp.Move),
-        new CardsVar(1)
+        new CardsVar(1),
+        new RepeatVar(1),
+        new DynamicVar("ExtraRepeat",1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card))
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        int repeatcount = RepeatCount.ThisCardRepeatCount(cardPlay.Card);
+        int attacksandstatusCount = ((int)((CalculatedVar)base.DynamicVars["RepeatCount"]).Calculate(cardPlay.Target)/2+DynamicVars.Repeat.IntValue)*base.DynamicVars["ExtraRepeat"].IntValue;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-             .FromCard(this,cardPlay)
+            .WithHitCount(attacksandstatusCount)
+            .FromCard(this,cardPlay)
             .TargetingRandomOpponents(base.CombatState)
             .Execute(choiceContext);
-        int repeatcount = RepeatCount.ThisCardRepeatCount(cardPlay.Card);
-        switch (repeatcount)
+        if (repeatcount>=3)
         {
-            case >= 2: await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                     .FromCard(this,cardPlay)
-                    .TargetingRandomOpponents(base.CombatState)
-                    .Execute(choiceContext); goto case 1;
-            case 1: await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, cardPlay.Card.Owner); goto default;
-            default: break;
+            await CardPileCmd.Draw(choiceContext,repeatcount/3*DynamicVars.Cards.IntValue, cardPlay.Card.Owner);
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(2);
         DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

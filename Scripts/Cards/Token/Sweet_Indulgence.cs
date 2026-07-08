@@ -48,17 +48,25 @@ public class Sweet_Indulgence : ModCardTemplate
                 base.Owner.UnlockState,
                 base.Owner.RunState.CardMultiplayerConstraint)
             .Where(c => c.HasModKeyword(MyKeywords.Sweets));
-        CardModel card = CardFactory.GetDistinctForCombat(
+        CardModel? card = CardFactory.GetDistinctForCombat(
             base.Owner,
             SweetsCards,
             1,
             base.Owner.RunState.Rng.CombatCardGeneration
         ).FirstOrDefault();
+        if (card==null)
+        {
+            return;
+        }
         if (base.IsUpgraded)
         {
             CardCmd.Upgrade(card);
         }
-        CardModel selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: null, source: this)).FirstOrDefault();
+        CardModel? selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: null, source: this)).FirstOrDefault();
+        if (selectedCard==null)
+        {
+            return;
+        }
         await CardCmd.Transform(selectedCard, card);
     }
 

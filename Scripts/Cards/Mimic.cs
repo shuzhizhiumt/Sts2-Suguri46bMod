@@ -38,7 +38,7 @@ public class Mimic : ModCardTemplate, IMaxHandSizeModifier
         {
             return;
         }
-        CardModel cardModel = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: base.Owner, filter: null, source: this)).FirstOrDefault();
+        CardModel? cardModel = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: base.Owner, filter: null, source: this)).FirstOrDefault();
         if (cardModel != null)
         {
     		IEnumerable<CardModel> choices = PileType.Hand.GetPile(base.Owner).Cards.Where(c=>c!=cardModel).ToList().StableShuffle(base.Owner.RunState.Rng.CombatCardSelection).Take(base.DynamicVars.Cards.IntValue);
@@ -46,7 +46,7 @@ public class Mimic : ModCardTemplate, IMaxHandSizeModifier
             {
                 return;
             }
-            CardModel selectcard = await CardSelectCmd.FromChooseACardScreen(choiceContext, (IReadOnlyList<CardModel>)choices, Owner, canSkip: false);
+            CardModel? selectcard = await CardSelectCmd.FromChooseACardScreen(choiceContext, (IReadOnlyList<CardModel>)choices, Owner, canSkip: false);
             if (selectcard != null)
             {
     			CardModel selectcardCopy = selectcard.CreateClone();

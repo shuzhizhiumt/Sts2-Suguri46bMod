@@ -32,7 +32,11 @@ public class Gift_Exchange : ModCardTemplate
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: (CardModel c) =>c.Type == CardType.Attack || c.Type == CardType.Skill ||c.Type == CardType.Power, source: this)).FirstOrDefault();
+        CardModel? selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: (CardModel c) =>c.Type == CardType.Attack || c.Type == CardType.Skill ||c.Type == CardType.Power, source: this)).FirstOrDefault();
+        if (selectedCard==null)
+        {
+            return;
+        }
         List<CardPoolModel> otherPools = [.. base.Owner.UnlockState.CharacterCardPools];
         if (otherPools.Count > 1)
         {
@@ -53,8 +57,11 @@ public class Gift_Exchange : ModCardTemplate
         }
         List<CardModel> choices =  CardFactory.GetDistinctForCombat(base.Owner, candidateCards, 3, base.Owner.RunState.Rng.CombatCardGeneration).ToList();
 
-        CardModel chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, choices, Owner, canSkip: false);
-
+        CardModel? chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, choices, Owner, canSkip: false);
+        if (chosenCard==null)
+        {
+            return;
+        }
         await CardCmd.Transform(selectedCard, chosenCard);
     }
 

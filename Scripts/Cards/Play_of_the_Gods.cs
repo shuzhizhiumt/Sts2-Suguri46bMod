@@ -34,7 +34,7 @@ public class Play_of_the_Gods : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel cardModel = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment != null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
+        CardModel? cardModel = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment != null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
             .FirstOrDefault();
         if (cardModel == null && this.IsUpgraded)
         {

@@ -16,7 +16,10 @@ static class PlayerCmdExtensions
         int currentOJStar = SecondaryResourceCmd.Get(player, ModResources.OJStarId);
         switch (Level)
         {
-            case 0: await PowerCmd.Apply<Norma>(choiceContext, player.Creature, 1, player.Creature,cardModel);break;
+            case 0: if (currentOJStar>0)
+                    {
+                        await PowerCmd.Apply<Norma>(choiceContext, player.Creature, 1, player.Creature,cardModel);
+                    };break;
             case 1: if (currentOJStar>=10)
                     {
                         await PowerCmd.Apply<Norma>(choiceContext, player.Creature, 1, player.Creature,cardModel);

@@ -105,10 +105,10 @@
     "SUGURI46B_CARD_BAD_PUDDING.description": "获得{Energy:energyIcons()}。{IfUpgraded:show:选择{Cards:diff()}张牌丢弃|随机丢弃{Cards:diff()}张牌}。",
 
     "SUGURI46B_CARD_THE_GREATEST_TROUBLEMAKER_EVER.title":"烦人透顶的家伙",
-    "SUGURI46B_CARD_THE_GREATEST_TROUBLEMAKER_EVER.description": "对随机敌人造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]抽{Cards:diff()}张牌。\n[gold]重复(2)：[/gold]对随机敌人造成{Damage:diff()}点伤害。",
+    "SUGURI46B_CARD_THE_GREATEST_TROUBLEMAKER_EVER.description": "对随机敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]重复(2)：[/gold]次数增加{ExtraRepeat:diff()}。\n[gold]重复(3)：[/gold]抽{Cards:diff()}张牌。{InCombat:\n（已打出{RepeatCount}次）|}",
 
     "SUGURI46B_CARD_NANAKO_BIT.title": "奈奈子的浮游炮",
-    "SUGURI46B_CARD_NANAKO_BIT.description": "每回合开始时，失去{Additional_Payment:diff()}[gold]星星[/gold]，获得{StrengthPower:diff()}点力量。",
+    "SUGURI46B_CARD_NANAKO_BIT.description": "每回合开始时，失去{Additional_Payment:diff()}[gold]星星[/gold]，然后获得{StrengthPower:diff()}点力量。",
 
     "SUGURI46B_CARD_REVIVAL_OF_STARS.title": "星之再生",
     "SUGURI46B_CARD_REVIVAL_OF_STARS.description": "每当你生成牌时，获得{Energy:energyIcons()}，抽{Cards:diff()}张牌。",
@@ -128,8 +128,8 @@
     "SUGURI46B_CARD_LIFEGUARD_ON_THE_WHITE_BEACH.title": "白色海滩的再生者",
     "SUGURI46B_CARD_LIFEGUARD_ON_THE_WHITE_BEACH.description": "所有玩家回复{Heal:diff()}点生命。",
 
-    "SUGURI46B_CARD_LITTLE_WAR.title": "小小的战争",
-    "SUGURI46B_CARD_LITTLE_WAR.description": "对所有敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]重复(1)：[/gold]伤害增加{ExtraDamage:diff()}。\n[gold]重复(2)：[/gold]次数增加{ExtraRepeat:diff()}。",
+    "SUGURI46B_CARD_EXTENDED_PHOTON_RIFLE.title": "扩散光子步枪",
+    "SUGURI46B_CARD_EXTENDED_PHOTON_RIFLE.description": "对所有敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]重复(1)：[/gold]伤害增加{ExtraDamage:diff()}。\n[gold]重复(3)：[/gold]次数增加{ExtraRepeat:diff()}。{InCombat:\n（已打出{RepeatCount}次）|}",
 
     "SUGURI46B_CARD_HEAT_300.title": "热度300%",
     "SUGURI46B_CARD_HEAT_300.description": "失去{DexterityPower:diff()}点[gold]敏捷[/gold]。\n获得{StrengthPower:diff()}点[gold]力量[/gold]。",
@@ -165,7 +165,7 @@
     "SUGURI46B_CARD_STIFF_CRYSTAL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{GainOJStar:diff()}[gold]星星[/gold]。",
 
     "SUGURI46B_CARD_FULL_BURST.title": "全力爆发",
-    "SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]抽{Cards:diff()}张牌。\n[gold]重复(2)：[/gold]获得{Energy:energyIcons()}。",
+    "SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]获得{GainOJStar:diff()}[gold]星星[/gold]。{InCombat:\n（已打出{RepeatCount}次）}",
 
     "SUGURI46B_CARD_FINAL_BATTLE.title": "最终决战",
     "SUGURI46B_CARD_FINAL_BATTLE.description": "[gold]手牌[/gold]中的所有攻击牌本回合获得{Replay:diff()}层[gold]重放[/gold]。\n你在本回合内不能再抽任何牌，且只能打出攻击牌。",
@@ -180,5 +180,17 @@
     "SUGURI46B_CARD_DARK_SIDE_OF_BUSINESS.description": "造成{Damage:diff()}点伤害。\n获得未被格挡伤害*{GainOJStar:diff()}的[gold]星星[/gold]。",
 
     "SUGURI46B_CARD_BIG_BANG_BELL.title": "大爆炸铃",
-    "SUGURI46B_CARD_BIG_BANG_BELL.description": "造成{Damage:diff()}点伤害。\n每当这张牌被保留时，将其在本场战斗的伤害增加{ExtraDamage:diff()}点。"
+    "SUGURI46B_CARD_BIG_BANG_BELL.description": "造成{Damage:diff()}点伤害。\n每当这张牌被保留时，将其在本场战斗的伤害增加{ExtraDamage:diff()}点。",
+
+    "SUGURI46B_CARD_STAR_COLLECTOR.title": "星星收集者",
+    "SUGURI46B_CARD_STAR_COLLECTOR.description": "你每打出一张牌，获得{Star_CollectorPower:diff()}[gold]星星[/gold]。",
+
+    "SUGURI46B_CARD_INDISCRIMINATE_FIRE_SUPPORT.title": "无差别火力支援",
+    "SUGURI46B_CARD_INDISCRIMINATE_FIRE_SUPPORT.description": "造成{Damage:diff()}点伤害。\n可以将{Cards:diff()}张[gold]手牌[/gold]变化为此牌的复制品。",
+
+    "SUGURI46B_CARD_RAGING_MADNESS.title": "愤怒狂暴",
+    "SUGURI46B_CARD_RAGING_MADNESS.description": "你打出攻击牌后，支付{LoseOJStar:diff()}[gold]星星[/gold]，然后将它的一张复制品加入[gold]弃牌堆[/gold]。",
+
+    "SUGURI46B_CARD_LITTLE_WAR.title": "小小的战争",
+    "SUGURI46B_CARD_LITTLE_WAR.description": "给予{Little_WarPower:diff()}层[gold]小小的战争[/gold]。"
 }

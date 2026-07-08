@@ -48,7 +48,7 @@ public class Sweet_Paradise : ModCardTemplate
         {
             CardCmd.Upgrade(cardModel);
         }
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Discard, base.Owner), 2.2f);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Discard, base.Owner), 1f);
         await PowerCmd.Apply<Sweet_ParadisePower>(choiceContext, base.Owner.Creature, base.DynamicVars["Sweet_ParadisePower"].BaseValue, base.Owner.Creature, this);
     }
 

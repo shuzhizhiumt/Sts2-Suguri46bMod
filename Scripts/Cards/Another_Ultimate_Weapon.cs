@@ -46,7 +46,7 @@ public class Another_Ultimate_Weapon : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int count= (int)Math.Floor((double) SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) / base.DynamicVars["Additional_Payment"].IntValue)+base.DynamicVars.Cards.IntValue;
+        int count= SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) / base.DynamicVars["Additional_Payment"].IntValue + base.DynamicVars.Cards.IntValue;
         CardPile DiscardPile = PileType.Discard.GetPile(base.Owner);
         IEnumerable<CardModel> enumerable = DiscardPile.Cards.Where((CardModel c) => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
             .Take(count);

@@ -38,12 +38,4 @@ public class Orange_Juice : ModRelicTemplate
             await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,currentTurn);
         }
     }
-    public override async Task AfterRoomEntered(AbstractRoom room)
-    {
-        if(room is CombatRoom)
-        {
-            Flash();
-            await PowerCmd.Apply<Norma>(new ThrowingPlayerChoiceContext(), base.Owner.Creature,1, base.Owner.Creature, null);
-        }    
-    }
 }
