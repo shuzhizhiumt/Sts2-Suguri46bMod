@@ -41,6 +41,7 @@ public class Big_Bang_Bell : ModCardTemplate
              .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
+        DynamicVars.Damage.BaseValue=1;
     }
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {   

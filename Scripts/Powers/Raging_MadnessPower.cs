@@ -34,7 +34,7 @@ public class Raging_MadnessPower : ModPowerTemplate
         {
             await SecondaryResourceCmd.Lose(Owner.Player, ModResources.OJStarId,DynamicVars["LoseOJStar"].IntValue);
             CardModel card = cardPlay.Card.CreateClone();
-		    CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, base.Owner.Player), 1f);
+		    CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, base.Owner.Player,CardPilePosition.Top), 1f);
         }
     }
 }

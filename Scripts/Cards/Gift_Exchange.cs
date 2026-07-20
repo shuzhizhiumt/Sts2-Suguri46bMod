@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -17,8 +20,9 @@ public class Gift_Exchange : ModCardTemplate
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Uncommon;
-    private const TargetType targetType = TargetType.Self;
+    private const TargetType targetType = TargetType.AllAllies;
     private const bool shouldShowInCardLibrary = true;
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
@@ -27,45 +31,62 @@ public class Gift_Exchange : ModCardTemplate
     {
     }
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(3)
-    ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel? selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), context: choiceContext, player: Owner, filter: (CardModel c) =>c.Type == CardType.Attack || c.Type == CardType.Skill ||c.Type == CardType.Power, source: this)).FirstOrDefault();
-        if (selectedCard==null)
-        {
+        var combatState = base.CombatState;
+        if (combatState == null)
             return;
-        }
-        List<CardPoolModel> otherPools = [.. base.Owner.UnlockState.CharacterCardPools];
-        if (otherPools.Count > 1)
-        {
-            otherPools.Remove(base.Owner.Character.CardPool);
-        }
-        IEnumerable<CardModel> candidateCards;
-        if (base.IsUpgraded)
-        {
-            candidateCards = from c in otherPools.SelectMany(c => c.GetUnlockedCards(base.Owner.UnlockState, base.Owner.RunState.CardMultiplayerConstraint))
-                where c.Type == selectedCard.Type && (selectedCard.Rarity == CardRarity.Basic || selectedCard.Rarity == CardRarity.Common?c.Rarity == CardRarity.Uncommon:selectedCard.Rarity ==CardRarity.Uncommon || selectedCard.Rarity ==CardRarity.Rare?c.Rarity == CardRarity.Rare:c.Rarity==CardRarity.Ancient)
-                select c;
-        }
-        else
-        {
-            candidateCards = from c in otherPools.SelectMany(c => c.GetUnlockedCards(base.Owner.UnlockState, base.Owner.RunState.CardMultiplayerConstraint))
-                where c.Type == selectedCard.Type && (selectedCard.Rarity == CardRarity.Basic?c.Rarity == CardRarity.Common:c.Rarity == selectedCard.Rarity)
-                select c;
-        }
-        List<CardModel> choices =  CardFactory.GetDistinctForCombat(base.Owner, candidateCards, 3, base.Owner.RunState.Rng.CombatCardGeneration).ToList();
 
-        CardModel? chosenCard = await CardSelectCmd.FromChooseACardScreen(choiceContext, choices, Owner, canSkip: false);
-        if (chosenCard==null)
-        {
+        var players = combatState.PlayerCreatures
+            .Where(c => c.IsAlive && c.IsPlayer)
+            .Select(c => c.Player)
+            .Where(p => p != null)
+            .Cast<Player>()
+            .ToList();
+
+        if (players.Count <= 1)
             return;
+
+        var prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1);
+        var selections = new List<(Player owner, CardModel card)>();
+
+        // 每位玩家依次从手牌中选择一张牌
+        foreach (var player in players)
+        {
+            var card = (await CardSelectCmd.FromHand(
+                prefs: prefs,
+                context: choiceContext,
+                player: player,
+                filter: null,
+                source: this)).FirstOrDefault();
+
+            if (card != null)
+                selections.Add((player, card));
         }
-        await CardCmd.Transform(selectedCard, chosenCard);
+
+        if (selections.Count == 0)
+            return;
+
+        // 每张选中的牌随机给予另一位玩家
+        var rng = base.Owner.RunState.Rng.CombatTargets;
+        foreach (var (owner, card) in selections)
+        {
+            var teammates = combatState.GetTeammatesOf(owner.Creature)
+                .Where(c => c.IsAlive && c.IsPlayer && c.Player != owner)
+                .ToList();
+
+            if (teammates.Count > 0)
+            {
+                var targetCreature = rng.NextItem(teammates);
+                if (targetCreature?.Player != null)
+                    await CardPileCmd.GiveToAnotherPlayer(card, targetCreature.Player, PileType.Hand, CardPilePosition.Random);
+            }
+        }
     }
 
     protected override void OnUpgrade()
     {
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

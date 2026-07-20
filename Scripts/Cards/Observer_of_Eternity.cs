@@ -40,9 +40,7 @@ public class Observer_of_Eternity : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
-        new DynamicVar("Additional_Payment",6),
-        SecondaryResourceVars.For("OJStar", ModResources.OJStarId, 1)
-
+        new DynamicVar("Additional_Payment",6)
     ];
 
     private bool uncommon;

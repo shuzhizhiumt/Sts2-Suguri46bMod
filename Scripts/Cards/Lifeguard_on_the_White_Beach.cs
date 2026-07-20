@@ -20,12 +20,11 @@ public class Lifeguard_on_the_White_Beach : ModCardTemplate
     private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.AllAllies;
     private const bool shouldShowInCardLibrary = true;
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
-
     public Lifeguard_on_the_White_Beach() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }

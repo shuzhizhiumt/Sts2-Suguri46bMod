@@ -35,23 +35,15 @@ public class Desperate_Modification : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
         new RepeatVar(6),
-        new ExtraDamageVar(1)
+        new DynamicVar("ExtraRepeat",1)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(base.DynamicVars.Repeat.IntValue)
-             .FromCard(this,cardPlay)
+            .WithHitCount(cardPlay.Card.Enchantment!=null?base.DynamicVars.Repeat.IntValue+base.DynamicVars["ExtraRepeat"].IntValue:base.DynamicVars.Repeat.IntValue)
+            .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
-    }
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource,CardPlay? cardPlay)
-    {
-        if (cardSource==this && this.Enchantment!=null && dealer==Owner.Creature)
-        {
-            return base.DynamicVars.ExtraDamage.IntValue;
-        }
-        return 0;
     }
 
     protected override void OnUpgrade()

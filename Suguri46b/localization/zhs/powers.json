@@ -65,5 +65,9 @@
 
     "SUGURI46B_POWER_LITTLE_WAR_POWER.title":"小小的战争",
     "SUGURI46B_POWER_LITTLE_WAR_POWER.description":"下[blue]1[/blue]张攻击牌受到的伤害减半，但将在该名敌人身上额外生效一次。",
-    "SUGURI46B_POWER_LITTLE_WAR_POWER.smartDescription":"下[blue]{Amount}[/blue]张攻击牌受到的伤害减半，但将在该名敌人身上额外生效一次。"
+    "SUGURI46B_POWER_LITTLE_WAR_POWER.smartDescription":"下[blue]{Amount}[/blue]张攻击牌受到的伤害减半，但将在该名敌人身上额外生效一次。",
+
+    "SUGURI46B_POWER_EXTRAORDINARY_SPECS_POWER.title":"荒唐的性能",
+    "SUGURI46B_POWER_EXTRAORDINARY_SPECS_POWER.description":"自己所有获得\n[gold]额外支付：[/gold]10[gold]星星[/gold]\n耗能减少1。(原本耗能为0或X的牌不受影响)",
+    "SUGURI46B_POWER_EXTRAORDINARY_SPECS_POWER.smartDescription":"自己所有牌获得\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n耗能减少{Energy:energyIcons}。(原本耗能为0或X的牌不受影响)"
 }
