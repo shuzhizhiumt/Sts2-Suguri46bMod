@@ -29,9 +29,6 @@
     "SUGURI46B_CARD_UNLUCKY_CHARM.title":"不幸护符",
     "SUGURI46B_CARD_UNLUCKY_CHARM.description":"在你的回合结束时，如果这张牌在你的手牌中，失去相当于[gold]目标[/gold]层数*5的[gold]星星[/gold]。",
 
-    "SUGURI46B_CARD_DOUBLE.title":"翻倍",
-    "SUGURI46B_CARD_DOUBLE.description":"添加翻倍按钮，可以给手上任意数量的攻击牌[gold]附魔[/gold]：[purple]翻倍[/purple]。",
-
     "SUGURI46B_CARD_CLOUD_OF_SEAGULLS.title":"大群的海鸥",
     "SUGURI46B_CARD_CLOUD_OF_SEAGULLS.description":"随机对{IfUpgraded:show:敌人|友方(包括自己)或敌人}造成{Damage:diff()}点伤害{Repeat:diff()}次。",
 
@@ -162,7 +159,7 @@
     "SUGURI46B_CARD_STIFF_CRYSTAL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{GainOJStar:diff()}[gold]星星[/gold]。",
 
     "SUGURI46B_CARD_FULL_BURST.title": "全力爆发",
-    "SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]获得{GainOJStar:diff()}[gold]星星[/gold]。{InCombat:\n（已打出{RepeatCount}次）}",
+    "SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]额外获得{GainOJStar:diff()}[gold]星星[/gold]。{InCombat:\n（已打出{RepeatCount}次）}",
 
     "SUGURI46B_CARD_FINAL_BATTLE.title": "最终决战",
     "SUGURI46B_CARD_FINAL_BATTLE.description": "[gold]手牌[/gold]中的所有攻击牌本回合获得{Replay:diff()}层[gold]重放[/gold]。\n你在本回合内不能再抽任何牌，且只能打出攻击牌。",

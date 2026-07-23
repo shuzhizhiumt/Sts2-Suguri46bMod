@@ -50,7 +50,7 @@
 //     ];
 //     private async Task AddTagsInvisibleBomb()
 //     {
-//         var selectedCards = await CardSelectCmd.FromHand(
+//         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
 //             prefs: new CardSelectorPrefs(new LocString("card_selection", "ADD_INVISIBLE_BOMB"), 3, DynamicVars.Cards.IntValue),
 //             context: new BlockingPlayerChoiceContext(),
 //             player: Owner,

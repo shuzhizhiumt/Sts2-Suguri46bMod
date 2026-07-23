@@ -36,7 +36,7 @@ public class Sealed_Memories : ModCardTemplate
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var selectedCards = await CardSelectCmd.FromHand(
+        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
             prefs: new CardSelectorPrefs(new LocString("card_selection", "REMOVE_ENCHANTMENTS"), 0, int.MaxValue),
             context: choiceContext,
             player: Owner,

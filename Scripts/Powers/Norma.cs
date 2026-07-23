@@ -49,15 +49,12 @@ public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
         {
             Norma3=true;
             Flash();
-            CardModel cardModel = base.CombatState.CreateCard<Sweet_Indulgence>(base.Owner.Player);
-            cardModel.AddModKeyword(CardKeyword.Retain);
-            await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, base.Owner.Player);
+            await PowerCmd.Apply<DoublePower>(choiceContext, base.Owner, 1, base.Owner, cardSource);
         }
         if (!Norma4 && Amount>=4)
         {
             Norma4=true;
             Flash();
-            await PowerCmd.Apply<StrengthPower>(choiceContext,base.Owner, 3, base.Owner,cardSource);
         }
         if (!Norma5 && Amount>=5)
         {
@@ -91,10 +88,18 @@ public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
     }
     public override decimal ModifyMaxEnergy(Player player, decimal amount)
     {
-        if (Norma5)
+        if (Norma4 && player==Owner.Player)
         {
             return amount + 1;
         }
         return amount;
+    }
+    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
+    {
+        if (Norma5 && card.Owner.Creature.Player==Owner.Player && card.Type==CardType.Attack)
+        {
+            return playCount+1;
+        }
+        return playCount;
     }
 }

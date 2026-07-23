@@ -6,6 +6,7 @@ using STS2RitsuLib.Audio;
 using STS2RitsuLib.Interop;
 using STS2RitsuLib.Patching.Core;
 using Suguri46b.Scripts.Cards;
+using Suguri46b.Scripts.GameActions;
 using Suguri46b.Scripts.Patches;
 using Suguri46b.Scripts.Relics;
 using Suguri46b.Scripts.Resources;
@@ -26,6 +27,7 @@ public class Entry
         patcher.RegisterPatch<CostsEnergyOrStarsPatch>();
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
+        Dmgx2EnchantManagedAction.Register();
         ModResources.Register();
         var assembly = Assembly.GetExecutingAssembly();
         FmodStudioDeferredBankRegistration.RegisterBank("res://Suguri46b/audios/desktop/Suguri46b.bank");

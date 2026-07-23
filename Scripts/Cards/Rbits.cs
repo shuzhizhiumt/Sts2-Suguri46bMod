@@ -18,7 +18,7 @@ public class Rbits : ModCardTemplate
 {
     private const int energyCost = 2;
     private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Common;
+    private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
@@ -36,7 +36,7 @@ public class Rbits : ModCardTemplate
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(16, ValueProp.Unpowered)
+        new BlockVar(12, ValueProp.Unpowered)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

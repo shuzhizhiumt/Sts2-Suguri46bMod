@@ -8,8 +8,8 @@
     "SUGURI46B_POWER_ACCELERATOR_POWER.smartDescription": "你本回合内打出的攻击牌伤害翻倍，获得的格挡值翻倍。",
 
     "SUGURI46B_POWER_NORMA.title": "目标",
-    "SUGURI46B_POWER_NORMA.description": "根据层数获得加成，达到6层时胜利。",
-    "SUGURI46B_POWER_NORMA.smartDescription": "根据层数获得加成，达到6层时胜利。",
+    "SUGURI46B_POWER_NORMA.description": "根据层数获得效果。\n2层：获得1点[gold]力量[/gold]。\n3层：添加[gold]翻倍[/gold]按钮。\n4层：回合开始时获得1点能量。\n5层：攻击牌额外打出一次。\n达到6层时胜利。",
+    "SUGURI46B_POWER_NORMA.smartDescription": "根据层数获得效果。\n2层：获得1点[gold]力量[/gold]。\n3层：添加[gold]翻倍[/gold]按钮。\n4层：回合开始时获得1点能量。\n5层：攻击牌额外打出一次。\n达到6层时胜利。",
 
     "SUGURI46B_POWER_DOUBLE_POWER.title":"翻倍",
     "SUGURI46B_POWER_DOUBLE_POWER.description":"点击翻倍按钮可以给手上任意数量的攻击牌[gold]附魔[/gold]：[gold]翻倍[/gold]。",
@@ -28,8 +28,8 @@
     "SUGURI46B_POWER_HOLY_NIGHT_POWER.smartDescription":"每回合开始时，获得[blue]{Amount}[/blue][gold]星星[/gold]",
 
     "SUGURI46B_POWER_NANAKO_BIT_POWER.title":"奈奈子的浮游炮",
-    "SUGURI46B_POWER_NANAKO_BIT_POWER.description":"每回合开始时，失去7[gold]星星[/gold]，然后获得[blue]1[/blue]点力量。",
-    "SUGURI46B_POWER_NANAKO_BIT_POWER.smartDescription":"每回合开始时，失去{Additional_Payment:diff()}[gold]星星[/gold]，然后获得[blue]{Amount}[/blue]点力量。",
+    "SUGURI46B_POWER_NANAKO_BIT_POWER.description":"每回合开始时，失去7[gold]星星[/gold]，然后获得[blue]1[/blue]点[gold]力量[/gold]。",
+    "SUGURI46B_POWER_NANAKO_BIT_POWER.smartDescription":"每回合开始时，失去{Additional_Payment:diff()}[gold]星星[/gold]，然后获得[blue]{Amount}[/blue]点[gold]力量[/gold]。",
 
     "SUGURI46B_POWER_REVIVAL_OF_STARS_POWER.title":"星之再生",
     "SUGURI46B_POWER_REVIVAL_OF_STARS_POWER.description":"每当你生成牌时，获得[blue]1[/blue]点[gold]能量[/gold]，抽[blue]1[/blue]张牌。",

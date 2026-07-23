@@ -40,7 +40,7 @@ public class Awakening_of_Talent : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var selectedCards = await CardSelectCmd.FromHand(
+        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
             prefs: new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 0, DynamicVars.Cards.IntValue),
             context: choiceContext,
             player: Owner,

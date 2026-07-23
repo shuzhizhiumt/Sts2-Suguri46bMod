@@ -33,7 +33,7 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
     }
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(8, ValueProp.Move),
+        new DamageVar(10, ValueProp.Move),
         new CardsVar(1),
         new RepeatVar(1),
         new DynamicVar("ExtraRepeat",1),

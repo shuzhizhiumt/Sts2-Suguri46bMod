@@ -37,18 +37,21 @@ public class Indiscriminate_Fire_Support : ModCardTemplate
              .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
-        CardModel? selectedCards = (await CardSelectCmd.FromHand(
+        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
             prefs: new CardSelectorPrefs(new LocString("card_selection", "TRANS"), 0, DynamicVars.Cards.IntValue),
             context: choiceContext,
             player: Owner,
             filter: null,
-            source: this)).FirstOrDefault();
+            source: this);
         if (selectedCards==null)
         {
             return;
         }
     	CardModel selectcardCopy = this.CreateClone();
-        await CardCmd.Transform(selectedCards,selectcardCopy);
+        foreach (var item in selectedCards)
+        {
+            await CardCmd.Transform(item,selectcardCopy);
+        }
     }
 
     protected override void OnUpgrade()

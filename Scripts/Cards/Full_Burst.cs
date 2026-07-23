@@ -39,7 +39,7 @@ public class Full_Burst : ModCardTemplate
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(7,ValueProp.Move),
+        new DamageVar(9,ValueProp.Move),
         new DynamicVar("GainOJStar",1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
@@ -57,7 +57,7 @@ public class Full_Burst : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Damage.UpgradeValueBy(3);
+        base.DynamicVars.Damage.UpgradeValueBy(2);
         base.DynamicVars["GainOJStar"].UpgradeValueBy(1);
     }
 }
