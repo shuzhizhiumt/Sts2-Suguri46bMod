@@ -20,7 +20,7 @@ namespace Suguri46b.Scripts.Cards;
 [RegisterCharacterStarterCard(typeof(Suguri46bCharacter), 1)]
 public class Observer_of_Eternity : ModCardTemplate
 {
-    private const int energyCost = 0;
+    private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.Self;

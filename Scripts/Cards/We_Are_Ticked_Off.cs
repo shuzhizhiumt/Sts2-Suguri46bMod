@@ -17,45 +17,48 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class The_Greatest_Troublemaker_Ever : ModCardTemplate
+public class We_Are_Ticked_Off : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Attack;
     private const CardRarity rarity = CardRarity.Common;
-    private const TargetType targetType = TargetType.AnyEnemy;
+    private const TargetType targetType = TargetType.RandomEnemy;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public The_Greatest_Troublemaker_Ever() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public We_Are_Ticked_Off() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(10, ValueProp.Move),
+        new DamageVar(7, ValueProp.Move),
         new CardsVar(1),
-        new RepeatVar(1),
-        new DynamicVar("ExtraRepeat",1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card))
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int repeatcount = RepeatCount.ThisCardRepeatCount(cardPlay.Card);
-        int attacksandstatusCount = ((int)((CalculatedVar)base.DynamicVars["RepeatCount"]).Calculate(cardPlay.Target)/2+DynamicVars.Repeat.IntValue)*base.DynamicVars["ExtraRepeat"].IntValue;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(attacksandstatusCount)
             .FromCard(this,cardPlay)
-            .Targeting(cardPlay.Target)
+            .TargetingRandomOpponents(base.CombatState)
             .Execute(choiceContext);
-        await CardPileCmd.Draw(choiceContext,repeatcount/3*DynamicVars.Cards.IntValue, cardPlay.Card.Owner);
-    }
+        CardModel clonedCard = cardPlay.Card.CreateClone();
+        for (int i = 0; i < RepeatCount.ThisCardRepeatCount(cardPlay.Card)/2*DynamicVars.Cards.IntValue; i++)
+        {
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
+                    clonedCard,
+                    PileType.Discard,
+                    base.Owner,
+                    CardPilePosition.Top
+                ));     
+        }
 
+    }
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
-        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

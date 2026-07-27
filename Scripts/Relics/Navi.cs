@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -19,10 +20,9 @@ public class Navi : ModRelicTemplate
 	private bool ActivatedThisCombat = false;
 	public override RelicRarity Rarity => RelicRarity.Starter;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.ForEnergy(this)
     ];
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
-		new EnergyVar(1)
+		new CardsVar(1)
 	];
 
 	public override RelicAssetProfile AssetProfile => new(
@@ -36,7 +36,6 @@ public class Navi : ModRelicTemplate
 
 		if (room is CombatRoom)
 		{
-
 			ActivatedThisCombat = false;
 		}
 		return Task.CompletedTask;
@@ -51,7 +50,14 @@ public class Navi : ModRelicTemplate
 		)
 		{
 			Flash();
-			await PlayerCmd.GainEnergy(1, base.Owner);
+            CardModel clonedCard = cardPlay.Card.CreateClone();
+            clonedCard.AddKeyword(CardKeyword.Retain);
+            clonedCard.AddKeyword(CardKeyword.Exhaust);
+            await CardPileCmd.AddGeneratedCardToCombat(
+                clonedCard,
+                PileType.Hand,
+                base.Owner
+            );
 			ActivatedThisCombat = true;
 		}
 	}

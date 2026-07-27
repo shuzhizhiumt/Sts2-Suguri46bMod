@@ -3,10 +3,10 @@
   "name": "须玖莉(460亿年)",
   "author": "数知智",
   "description": "永恒的观测者",
-  "version": "0.1.0",
+  "version": "0.1.10",
   "min_game_version": "0.109.0",
   "has_pck": true,         
   "has_dll": true,        
-  "dependencies": [{ "id": "STS2-RitsuLib", "min_version": "0.4.62" }],     
+  "dependencies": [{ "id": "STS2-RitsuLib", "min_version": "0.4.64" }],     
   "affects_gameplay": true
 }

@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -31,12 +32,14 @@ public class Revival_of_StarsPower : ModPowerTemplate
         HoverTipFactory.ForEnergy(this)
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
-        new CardsVar(Amount)
+        new EnergyVar(Amount),
+        new CardsVar(Amount),
+        new DynamicVar("Count",3)
     ];
     public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
-        if (card !=null && creator==Owner.Player)
+		int num = CombatManager.Instance.History.Entries.OfType<CardGeneratedEntry>().Count(e=>e.HappenedThisTurn(base.CombatState) && e.Creator == creator);
+        if (card !=null && creator==Owner.Player && num<=DynamicVars["Count"].IntValue)
         {
             await PlayerCmd.GainEnergy(Amount,Owner.Player);
             await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(),Amount,Owner.Player);

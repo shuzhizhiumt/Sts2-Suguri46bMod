@@ -3,7 +3,7 @@
 /android/
 # 忽略所有的 png 图片
 *.png
-
+*.webp
 # (可选) 忽略 Godot 导入文件，如果不忽略会导致多余文件
 *.import
 

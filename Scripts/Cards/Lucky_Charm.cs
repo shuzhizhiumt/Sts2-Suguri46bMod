@@ -66,6 +66,7 @@ public class Lucky_Charm : ModCardTemplate,IMaxHandSizeModifier
     }
     protected override void OnUpgrade()
     {
+        base.DynamicVars["GainOJStar"].UpgradeValueBy(1);
         base.DynamicVars["ReduceMaxHandSize"].UpgradeValueBy(-1);
     }
 }

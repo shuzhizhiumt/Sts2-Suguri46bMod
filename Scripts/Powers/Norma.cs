@@ -49,12 +49,12 @@ public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
         {
             Norma3=true;
             Flash();
-            await PowerCmd.Apply<DoublePower>(choiceContext, base.Owner, 1, base.Owner, cardSource);
         }
         if (!Norma4 && Amount>=4)
         {
             Norma4=true;
             Flash();
+            await PowerCmd.Apply<DoublePower>(choiceContext, base.Owner, 1, base.Owner, cardSource);
         }
         if (!Norma5 && Amount>=5)
         {
@@ -65,30 +65,31 @@ public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
         {
             Norma6=true;
             Flash();
-            await ExecuteCombatVictory();
+            await RemoveAllBuff();
         }
     }
-    private static async Task ExecuteCombatVictory()
+    private static async Task RemoveAllBuff()
     {
         var combatState = CombatManager.Instance.DebugOnlyGetState();
-        List<Creature> allEnemies = [.. combatState!.Enemies];
-
+        var allEnemies = combatState!.Enemies.ToList();
         if (allEnemies.Count == 0)
         {
             await CombatManager.Instance.CheckWinCondition();
             return;
         }
-
         foreach (var enemy in allEnemies)
         {
-            enemy.RemoveAllPowersInternalExcept();
-            await CreatureCmd.Kill(enemy);
+            // 清除所有增益（Buff），保留减益（Debuff）
+            var buffs = enemy.Powers.Where(p => p.Type == PowerType.Buff).ToList();
+            foreach (var buff in buffs)
+            {
+                await PowerCmd.Remove(buff);
+            }
         }
-        await CombatManager.Instance.CheckWinCondition();
     }
     public override decimal ModifyMaxEnergy(Player player, decimal amount)
     {
-        if (Norma4 && player==Owner.Player)
+        if (Norma3 && player==Owner.Player)
         {
             return amount + 1;
         }
