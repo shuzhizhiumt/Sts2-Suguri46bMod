@@ -55,5 +55,14 @@
 	"SUGURI46B_POWER_EXTRAORDINARY_SPECS_POWER.smartDescription": "自己所有牌获得\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n耗能减少{Energy:energyIcons()}。(原本耗能为0或X的牌不受影响)",
 	"SUGURI46B_POWER_WARP_CONTROL_POWER.title": "传送操控",
 	"SUGURI46B_POWER_WARP_CONTROL_POWER.description": "在战斗结束时，你在选择下一层的房间时可以无视当前的路线。",
-	"SUGURI46B_POWER_WARP_CONTROL_POWER.smartDescription": "在战斗结束时，你在选择下一层的房间时可以无视当前的路线。"
+	"SUGURI46B_POWER_WARP_CONTROL_POWER.smartDescription": "在战斗结束时，你在选择下一层的房间时可以无视当前的路线。",
+ 	"SUGURI46B_POWER_MAX_HAND_SIZE.title": "手牌上限",
+  	"SUGURI46B_POWER_MAX_HAND_SIZE.description": "修改玩家手牌上限。",
+  	"SUGURI46B_POWER_MAX_HAND_SIZE.smartDescription": "手牌上限{Amount:cond:>0?增加|减少}[blue]{Amount:abs()}[/blue]张。",
+	"SUGURI46B_POWER_STIFF_CRYSTAL_POWER.title": "坚固的结晶",
+	"SUGURI46B_POWER_STIFF_CRYSTAL_POWER.description": "[blue]1[/blue]回合内你获得格挡掉的攻击伤害数量的[gold]星星[/gold]。",
+	"SUGURI46B_POWER_STIFF_CRYSTAL_POWER.smartDescription": "[blue]{Amount}[/blue]内回合你获得格挡掉的攻击伤害数量的[gold]星星[/gold]。",
+	"SUGURI46B_POWER_CRYSTAL_BARRIER_POWER.title": "水晶障壁",
+	"SUGURI46B_POWER_CRYSTAL_BARRIER_POWER.description": "在下[blue]1[/blue]个回合开始时获得[blue]10[/blue]点[gold]格挡[/gold]。",
+	"SUGURI46B_POWER_CRYSTAL_BARRIER_POWER.smartDescription": "在下[blue]{Amount}[/blue]个回合开始时获得[blue]{Block:diff()}[/blue]点[gold]格挡[/gold]。"
 }

@@ -104,7 +104,7 @@
 	"SUGURI46B_CARD_PIGGY_BANK.title": "存钱罐",
 	"SUGURI46B_CARD_PIGGY_BANK.description": "给予当前回合数*{GainOJStar:diff()}的[gold]星星[/gold]。",
 	"SUGURI46B_CARD_STIFF_CRYSTAL.title": "坚固的结晶",
-	"SUGURI46B_CARD_STIFF_CRYSTAL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{GainOJStar:diff()}[gold]星星[/gold]。",
+	"SUGURI46B_CARD_STIFF_CRYSTAL.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n本回合你获得格挡掉的攻击伤害数量的[gold]星星[/gold]。",
 	"SUGURI46B_CARD_FULL_BURST.title": "全力爆发",
 	"SUGURI46B_CARD_FULL_BURST.description": "造成{Damage:diff()}点伤害。\n[gold]重复(1)：[/gold]额外获得{GainOJStar:diff()}[gold]星星[/gold]。{InCombat:\n（已打出{RepeatCount}次）}",
 	"SUGURI46B_CARD_FINAL_BATTLE.title": "最终决战",
@@ -126,7 +126,7 @@
 	"SUGURI46B_CARD_LITTLE_WAR.title": "小小的战争",
 	"SUGURI46B_CARD_LITTLE_WAR.description": "给予{Little_WarPower:diff()}层[gold]小小的战争[/gold]。",
 	"SUGURI46B_CARD_EXTRAORDINARY_SPECS.title": "荒唐的性能",
-	"SUGURI46B_CARD_EXTRAORDINARY_SPECS.description": "自己所有非0耗能牌获得\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n耗能减少{Energy:energyIcons}。(原本耗能为0或X的牌不受影响)",
+	"SUGURI46B_CARD_EXTRAORDINARY_SPECS.description": "自己所有非0耗能牌获得：\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n耗能减少{Energy:energyIcons}。(原本耗能为0或X的牌不受影响)",
 	"SUGURI46B_CARD_PRICE_OF_POWER.title": "力量的代价",
 	"SUGURI46B_CARD_PRICE_OF_POWER.description": "选择一张[gold]手牌[/gold],从{Cards:diff()}张随机角色的相同类型及相同稀有度的牌中选择一张[gold]变化[/gold]。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n选择的卡稀有度提升一级（最高提升为稀有）",
 	"SUGURI46B_CARD_GIFT_EXCHANGE.title": "礼物交换",
@@ -140,5 +140,13 @@
 	"SUGURI46B_CARD_AFFLUENCE.title": "富豪",
 	"SUGURI46B_CARD_AFFLUENCE.description": "造成{ExtraDamage:diff()}点伤害{Level:diff()}次。\n造成的伤害会乘以当前[gold]目标[/gold]层数。\n此牌每次造成未被格挡伤害，获得{Gold:diff()}的[gold]金币[/gold]。\n在[gold]手牌[/gold]中[gold]右键[/gold]此牌：\n花费此牌当前等级*10点[gold]星星[/gold]和{Energy:energyIcons()}将此牌[green]升级[/green]。\n（最高为富豪（4））",
 	"SUGURI46B_CARD_WARP_CONTROL.title": "传送操控",
-	"SUGURI46B_CARD_WARP_CONTROL.description": "在战斗结束时，你在选择下一层的房间时可以无视当前的路线。"
+	"SUGURI46B_CARD_WARP_CONTROL.description": "在战斗结束时，你在选择下一层的房间时可以无视当前的路线。",
+	"SUGURI46B_CARD_SANTAS_JOB.title": "圣诞小姐的工作",
+	"SUGURI46B_CARD_SANTAS_JOB.description": "选择一张[gold]手牌[/gold]消耗，获得其耗能*{Block:diff()}点[gold]格挡[/gold]与其耗能*{OJStar:diff()}点[gold]星星[/gold]。",
+	"SUGURI46B_CARD_FREIGHT.title": "货物",
+	"SUGURI46B_CARD_FREIGHT.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n保留{Remaining:diff()}回合后，获得{OJStar:diff()}点[gold]星星[/gold]，然后[gold]消耗[/gold]。",
+	"SUGURI46B_CARD_ZEALOUS_SALESMAN.title": "炽热的商人之魂",
+	"SUGURI46B_CARD_ZEALOUS_SALESMAN.description": "[gold]手牌上限[/gold]增加{MaxHandSize:diff()}。\n将{Cards:diff()}张[gold]{IfUpgraded:show:货物+|货物}[/gold]加入你的[gold]手牌[/gold]。",
+	"SUGURI46B_CARD_CRYSTAL_BARRIER.title": "水晶障壁",
+ 	"SUGURI46B_CARD_CRYSTAL_BARRIER.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]额外支付：[/gold]{Additional_Payment:diff()}[gold]星星[/gold]\n在下个回合开始时，获得{Block:diff()}点[gold]格挡[/gold]。"
 }

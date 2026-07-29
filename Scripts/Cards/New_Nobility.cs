@@ -55,7 +55,7 @@ public class New_Nobility : ModCardTemplate
         }
 
         CardModel cardModel = base.CombatState.CreateCard<Affluence>(base.Owner);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, base.Owner), 1f);
+        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Hand, base.Owner);
     }
 
     protected override void OnUpgrade()

@@ -1,10 +1,12 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -16,7 +18,7 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Lucky_Charm : ModCardTemplate,IMaxHandSizeModifier
+public class Lucky_Charm : ModCardTemplate
 {
     private const int energyCost = 0;
     private const CardType type = CardType.Skill;
@@ -40,7 +42,7 @@ public class Lucky_Charm : ModCardTemplate,IMaxHandSizeModifier
         new DynamicVar("GainOJStar", 3),
         new DynamicVar("ReduceMaxHandSize", 2)
     ];
-
+    private bool IsDrawn=false;
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         int Level = Owner?.Creature.GetPower<Norma>()?.Amount ?? 0;
@@ -58,11 +60,13 @@ public class Lucky_Charm : ModCardTemplate,IMaxHandSizeModifier
             await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,Level*base.DynamicVars["GainOJStar"].IntValue);
         }
     }
-    public int ModifyMaxHandSize(Player player, int currentMaxHandSize)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        if (player != Owner)
-            return currentMaxHandSize;
-        return currentMaxHandSize - base.DynamicVars["ReduceMaxHandSize"].IntValue;
+        if (card==this && !IsDrawn)
+        {
+            await PowerCmd.Apply<MaxHandSize>(choiceContext, base.Owner.Creature, -base.DynamicVars["ReduceMaxHandSize"].IntValue, base.Owner.Creature, this);
+            IsDrawn=true;
+        }
     }
     protected override void OnUpgrade()
     {
