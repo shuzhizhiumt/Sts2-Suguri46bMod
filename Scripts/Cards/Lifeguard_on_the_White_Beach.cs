@@ -6,8 +6,10 @@ using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.Powers;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
@@ -16,8 +18,8 @@ namespace Suguri46b.Scripts.Cards;
 public class Lifeguard_on_the_White_Beach : ModCardTemplate
 {
     private const int energyCost = 2;
-    private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardType type = CardType.Power;
+    private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.AllAllies;
     private const bool shouldShowInCardLibrary = true;
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
@@ -29,23 +31,24 @@ public class Lifeguard_on_the_White_Beach : ModCardTemplate
     {
     }
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HealVar(5)
+        new PowerVar<Lifeguard_on_the_White_BeachPower>(1)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        IEnumerable<Creature> enumerable = from c in base.CombatState.GetTeammatesOf(base.Owner.Creature)
+        IEnumerable<Creature> allies = from c in base.CombatState.GetTeammatesOf(base.Owner.Creature)
             where c != null && c.IsAlive && c.IsPlayer
             select c;
-        foreach (Creature item in enumerable)
+
+        foreach (Creature ally in allies)
         {
-            await CreatureCmd.Heal(item,base.DynamicVars.Heal.IntValue);
+            await PowerCmd.Apply<Lifeguard_on_the_White_BeachPower>(choiceContext, ally, DynamicVars["Lifeguard_on_the_White_BeachPower"].IntValue, base.Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Heal.UpgradeValueBy(2);
+        DynamicVars["Lifeguard_on_the_White_BeachPower"].UpgradeValueBy(1);
     }
 }

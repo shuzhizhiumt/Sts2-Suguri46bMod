@@ -4,8 +4,10 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -20,9 +22,9 @@ namespace Suguri46b.Scripts.Cards;
 public class We_Are_Ticked_Off : ModCardTemplate
 {
     private const int energyCost = 1;
-    private const CardType type = CardType.Attack;
+    private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
-    private const TargetType targetType = TargetType.RandomEnemy;
+    private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
@@ -31,25 +33,25 @@ public class We_Are_Ticked_Off : ModCardTemplate
     public We_Are_Ticked_Off() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromCard<Anger>(IsUpgraded)
+    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(7, ValueProp.Move),
-        new CardsVar(1),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card))
+        new CardsVar(3),
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this,cardPlay)
-            .TargetingRandomOpponents(base.CombatState)
-            .Execute(choiceContext);
-        CardModel clonedCard = cardPlay.Card.CreateClone();
-        for (int i = 0; i < RepeatCount.ThisCardRepeatCount(cardPlay.Card)/2*DynamicVars.Cards.IntValue; i++)
+
+        for (int i = 0; i < DynamicVars.Cards.IntValue; i++)
         {
+            CardModel cardModel = base.CombatState.CreateCard<Anger>(base.Owner);
+            if (IsUpgraded)
+            {
+                CardCmd.Upgrade(cardModel);
+            }
             CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
-                    clonedCard,
+                    cardModel,
                     PileType.Discard,
                     base.Owner,
                     CardPilePosition.Top
@@ -59,6 +61,6 @@ public class We_Are_Ticked_Off : ModCardTemplate
     }
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2);
+        
     }
 }

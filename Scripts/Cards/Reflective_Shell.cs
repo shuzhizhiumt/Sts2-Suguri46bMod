@@ -42,7 +42,7 @@ public class Reflective_Shell : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(8, ValueProp.Move),
         new PowerVar<ReflectPower>(1),
-        new DynamicVar("Additional_Payment", 5),
+        new DynamicVar("Additional_Payment", 15),
     ];
 
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;

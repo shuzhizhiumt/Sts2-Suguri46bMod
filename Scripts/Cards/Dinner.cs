@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -17,41 +18,40 @@ namespace Suguri46b.Scripts.Cards;
 [RegisterCard(typeof(Suguri46bCardPool))]
 public class Dinner : ModCardTemplate
 {
-    private const int energyCost = 0;
+    private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Uncommon;
-    private const TargetType targetType = TargetType.Self;
+    private const TargetType targetType = TargetType.AllAllies;
+
     private const bool shouldShowInCardLibrary = true;
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
     public Dinner() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
-        this.SecondaryResourceUses()
-        .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.ForEnergy(this)
     ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
-        new DynamicVar("ExtraEnergyVar",1),
-        new DynamicVar("Additional_Payment",10)
+        new HealVar(3)
     ];
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue,cardPlay.Card.Owner);
-        var ledger = cardPlay.SecondaryResources();
-        if (ledger.Activated("ojstars_charge"))
+        IEnumerable<Creature> enumerable = from c in base.CombatState.GetTeammatesOf(base.Owner.Creature)
+            where c != null && c.IsAlive && c.IsPlayer
+            select c;
+        foreach (Creature item in enumerable)
         {
-            await PlayerCmd.GainEnergy(DynamicVars["ExtraEnergyVar"].IntValue,cardPlay.Card.Owner);
+            await CreatureCmd.Heal(item,base.DynamicVars.Heal.IntValue);
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1);
+        DynamicVars.Heal.UpgradeValueBy(2);
     }
 }

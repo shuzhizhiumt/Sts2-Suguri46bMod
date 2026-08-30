@@ -3,5 +3,6 @@
     "TO_DRAW":"选择[blue]{Amount}[/blue]张牌加入[gold]抽牌堆[/gold]。",
     "TO_HAND":"选择[blue]{Amount}[/blue]张牌加入[gold]手牌[/gold]。",
     "TRANS":"选择[blue]{Amount}[/blue]张牌变化。",
-    "GIFT_EXCHANGE":"选择[blue]{Amount}[/blue]张牌交换。"
+    "GIFT_EXCHANGE":"选择[blue]{Amount}[/blue]张要送出的牌。",
+    "PRESENT_THIEF":"选择[blue]{Amount}[/blue]张要偷取的牌。"
 }

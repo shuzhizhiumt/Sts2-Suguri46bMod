@@ -34,6 +34,8 @@ public class Entry
         patcher.RegisterPatch<CostsEnergyOrStarsPatch>();
         patcher.RegisterPatch<WarpControlShouldAllowFreeTravelPatch>();
         patcher.RegisterPatch<WarpControlAfterRoomEnteredPatch>();
+        patcher.RegisterPatch<LowHealthIdleAnimationPatch>();
+        patcher.RegisterPatch<ExtremeAlterationEnchantPatch>();
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
         var warpControlRewardDef = ModRewardRegistry.For(ModId).RegisterOwned(

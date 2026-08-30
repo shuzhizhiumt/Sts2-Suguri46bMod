@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
@@ -41,7 +42,7 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
             .Single("dead", "res://Suguri46b/images/units/suguri46_00_04.png")
             .Single("cast", "res://Suguri46b/images/units/suguri46_00_05.png",0.5f)
             .Single("relaxed", "res://Suguri46b/images/units/suguri46_00_00.png")
-            .Build(), 
+            .Build(),
             Ui: new(
                 IconTexturePath: "res://Suguri46b/images/ui/top_panel/character_icon_suguri46b.png",
                 IconPath: "res://Suguri46b/scenes/suguri46b_icon.tscn",
@@ -78,6 +79,17 @@ public class Suguri46bCharacter : ModCharacterTemplate<Suguri46bCardPool, Suguri
     // 攻击和施法动画延迟，以对齐动画
     public override float AttackAnimDelay => 0.1f;
     public override float CastAnimDelay => 0.1f;
+
+    // 战斗动画状态机登记表，供回血补发 "Idle" 触发器的补丁查询
+    private static readonly ConditionalWeakTable<NCreatureVisuals, ModAnimStateMachine> CombatAnimMachines = [];
+
+    internal static bool TryGetCombatAnimMachine(NCreatureVisuals visuals, out ModAnimStateMachine? machine)
+    {
+        var found = CombatAnimMachines.TryGetValue(visuals, out var resolved);
+        machine = resolved;
+        return found;
+    }
+
     protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(
         Node visualsRoot,
         CharacterModel character)

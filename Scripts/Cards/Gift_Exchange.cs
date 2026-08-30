@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -34,35 +34,43 @@ public class Gift_Exchange : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // Get all teammate players (non-dead, with non-empty hand)
-        var teamPlayers = base.CombatState.GetTeammatesOf(base.Owner.Creature)
-            .Select(t => t.Player)
-            .Where(p => p != null && !p.Creature.IsDead && PileType.Hand.GetPile(p!).Cards.Count > 0)
-            .Select(p => p!)
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+
+        // 所有存活的玩家（包括自己）
+        List<Player> players = base.CombatState.Players
+            .Where(p => p != null && p.Creature != null && p.Creature.IsAlive)
             .ToList();
 
-        if (teamPlayers.Count <= 1)
-            return;
-
-        // Randomly pick one card from each teammate's hand (deterministic RNG, multiplayer-safe)
-        var selections = new Dictionary<Player, CardModel>();
-        foreach (var player in teamPlayers)
+        // 第一步：每位玩家选择手中一张牌（全部选完再统一送出）
+        List<(CardModel Card, Player From)> chosen = [];
+        foreach (Player player in players)
         {
-            var hand = PileType.Hand.GetPile(player).Cards;
-            int idx = base.Owner.RunState.Rng.CombatCardSelection.NextInt(hand.Count);
-            selections[player] = hand[idx];
+            CardModel? selected = (await CardSelectCmd.FromHand(
+                context: choiceContext,
+                player: player,
+                prefs: new CardSelectorPrefs(new LocString("card_selection", "GIFT_EXCHANGE"), 1),
+                filter: null,
+                source: this)).FirstOrDefault();
+            if (selected != null)
+            {
+                chosen.Add((selected, player));
+            }
         }
 
-        if (selections.Count <= 1)
-            return;
-
-        // Deterministic sort by NetId, then cyclic exchange: A→B, B→C, ..., Z→A
-        var players = selections.Keys.OrderBy(p => p.NetId).ToList();
-        for (int i = 0; i < players.Count; i++)
+        // 第二步：每张选中的牌交给随机的一名其他玩家
+        foreach ((CardModel card, Player from) in chosen)
         {
-            var giver = players[i];
-            var receiver = players[(i + 1) % players.Count];
-            await CardPileCmd.GiveToAnotherPlayer(selections[giver], receiver, PileType.Discard);
+            List<Player> others = players.Where(p => p != from).ToList();
+            if (others.Count == 0)
+            {
+                continue;
+            }
+            Player? receiver = base.Owner.RunState.Rng.CombatTargets.NextItem(others);
+            if (receiver == null)
+            {
+                continue;
+            }
+            await CardPileCmd.GiveToAnotherPlayer(card, receiver, PileType.Hand);
         }
     }
 

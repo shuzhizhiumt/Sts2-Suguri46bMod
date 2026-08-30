@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -12,10 +14,10 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Extreme_Alteration : ModCardTemplate
+public class Shield_Counter : ModCardTemplate
 {
-    private const int energyCost = 2;
-    private const CardType type = CardType.Power;
+    private const int energyCost = 1;
+    private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
@@ -23,20 +25,27 @@ public class Extreme_Alteration : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public Extreme_Alteration() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+
+    public Shield_Counter() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1),
-        new BlockVar(4, ValueProp.Unpowered)
-    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<Extreme_AlterationPower>()
+        HoverTipFactory.FromPower<Shield_CounterPower>()
     ];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<Shield_CounterPower>(1),
+        new BlockVar(7, ValueProp.Move)
+    ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<Extreme_AlterationPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this);
+        await PowerCmd.Apply<Shield_CounterPower>(choiceContext, base.Owner.Creature, DynamicVars["Shield_CounterPower"].IntValue, base.Owner.Creature, this);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()

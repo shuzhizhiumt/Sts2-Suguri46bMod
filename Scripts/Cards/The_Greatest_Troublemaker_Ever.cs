@@ -22,7 +22,7 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
     private const int energyCost = 1;
     private const CardType type = CardType.Attack;
     private const CardRarity rarity = CardRarity.Common;
-    private const TargetType targetType = TargetType.AnyEnemy;
+    private const TargetType targetType = TargetType.RandomEnemy;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
@@ -48,7 +48,7 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(attacksandstatusCount)
             .FromCard(this,cardPlay)
-            .Targeting(cardPlay.Target)
+            .TargetingRandomOpponents(base.CombatState)
             .Execute(choiceContext);
         await CardPileCmd.Draw(choiceContext,repeatcount/3*DynamicVars.Cards.IntValue, cardPlay.Card.Owner);
     }

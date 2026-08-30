@@ -1,7 +1,8 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Suguri46b.Scripts.Powers;
 
@@ -16,5 +17,6 @@ public class Extreme_AlterationPower : ModPowerTemplate
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
+        new BlockVar(4, ValueProp.Unpowered),
     ];
 }
