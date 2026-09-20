@@ -35,6 +35,7 @@ public class Awakening_of_Talent : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5, ValueProp.Move),
+        new BlockVar(5,ValueProp.Move),
         new CardsVar(1)
     ];
 
@@ -54,11 +55,13 @@ public class Awakening_of_Talent : ModCardTemplate
              .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars.Block.UpgradeValueBy(2);
         DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

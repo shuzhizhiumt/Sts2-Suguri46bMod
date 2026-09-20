@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -10,32 +13,33 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Accelerator : ModCardTemplate
+public class Mousse_the_Thief : ModCardTemplate
 {
-    private const int energyCost = 1;
-    private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Ancient;
+    private const int energyCost = 2;
+    private const CardType type = CardType.Power;
+    private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public override bool CanBeGeneratedInCombat => false;
-
-    public Accelerator() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Mousse_the_Thief() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<Mousse_the_ThiefPower>()
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<AcceleratorPower>(1)
+        new PowerVar<Mousse_the_ThiefPower>(1)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
-        SfxCmd.Play("event:/suguri46b/sfx/Accelerator");
-        await PowerCmd.Apply<AcceleratorPower>(choiceContext, base.Owner.Creature, base.DynamicVars["AcceleratorPower"].BaseValue, base.Owner.Creature, this);
+        await PowerCmd.Apply<Mousse_the_ThiefPower>(choiceContext, base.Owner.Creature, DynamicVars["Mousse_the_ThiefPower"].IntValue, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

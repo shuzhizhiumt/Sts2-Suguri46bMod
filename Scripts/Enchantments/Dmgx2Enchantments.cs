@@ -25,11 +25,6 @@ public class Dmgx2Enchantment : ModEnchantmentTemplate
         return false;
     }
 
-    protected override void OnEnchant()
-    {
-        base.Card.EnergyCost.UpgradeBy(+base.Card.EnergyCost.GetWithModifiers(CostModifiers.None));
-    }
-
     public override decimal EnchantDamageMultiplicative(decimal originalDamage, ValueProp props)
     {
         if (!props.IsPoweredAttack())

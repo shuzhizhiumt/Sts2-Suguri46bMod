@@ -14,7 +14,7 @@ namespace Suguri46b.Scripts.Patches;
 public partial class Dmgx2ButtonPatch : IPatchMethod
 {
     public static string PatchId => "suguri46b_dmgx2_button";
-    public static string Description => "Add Dmgx2 enchant button (multiplayer-safe via ManagedNetAction, no card selection UI).";
+    public static string Description => "Add Dmgx2 enchant button (multiplayer-safe via ManagedNetAction; costs OJStar = energy*5+10, X-cost cards excluded).";
     public static ModPatchTarget[] GetTargets() => [new(typeof(NCombatUi), "_Ready")];
     public static bool IsCritical => false;
 
@@ -43,7 +43,7 @@ public partial class Dmgx2ButtonPatch : IPatchMethod
         if (combatState != null && _dmgx2control != null)
         {
             var localPlayer = LocalContext.GetMe(combatState);
-            _dmgx2control.Visible = localPlayer?.Creature.GetPower<DoublePower>()?.Amount > 0;
+            _dmgx2control.Visible = localPlayer?.Creature.GetPower<Mori_no_MajoPower>()?.Amount > 0;
         }
     }
 
@@ -55,12 +55,11 @@ public partial class Dmgx2ButtonPatch : IPatchMethod
         var player = LocalContext.GetMe(combatState);
         if (player == null) return;
 
-        // 检查手牌中是否有可附魔的攻击牌
+        // 检查手牌中是否有可附魔的攻击牌（无附魔、非 X 费）
         var hand = PileType.Hand.GetPile(player);
         if (hand == null) return;
 
-        var hasValidTarget = hand.Cards.Any(
-            c => c.Type == CardType.Attack && c.Enchantment == null);
+        var hasValidTarget = hand.Cards.Any(Dmgx2EnchantManagedAction.IsValidCandidate);
         if (!hasValidTarget) return;
 
         // 入队 ManagedNetAction，选牌和附魔由 ExecutePayload 统一处理

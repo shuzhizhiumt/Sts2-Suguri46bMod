@@ -54,7 +54,7 @@ public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
         {
             Norma4=true;
             Flash();
-            await PowerCmd.Apply<DoublePower>(choiceContext, base.Owner, 1, base.Owner, cardSource);
+            await PowerCmd.Apply<Mori_no_MajoPower>(choiceContext, base.Owner, 1, base.Owner, cardSource);
         }
         if (!Norma5 && Amount>=5)
         {

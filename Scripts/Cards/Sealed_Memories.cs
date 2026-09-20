@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -30,17 +31,21 @@ public class Sealed_Memories : ModCardTemplate
     public Sealed_Memories() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+    ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 5),
         new BlockVar(7, ValueProp.Move)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
         IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(new LocString("card_selection", "REMOVE_ENCHANTMENTS"), 0, int.MaxValue),
+            prefs: new CardSelectorPrefs(new LocString("card_selection", "REMOVE_RETAIN"), 0, int.MaxValue),
             context: choiceContext,
             player: Owner,
-            filter: card => card.Enchantment != null,
+            filter: card => card.GetKeywordsWithSources(KeywordSources.Local).Contains(CardKeyword.Retain),
             source: this);
 
         if (selectedCards == null)
@@ -51,9 +56,9 @@ public class Sealed_Memories : ModCardTemplate
         int removedCount = 0;
         foreach (var card in selectedCards)
         {
-            if (card.Enchantment != null)
+            if (card.GetKeywordsWithSources(KeywordSources.Local).Contains(CardKeyword.Retain))
             {
-                CardCmd.ClearEnchantment(card);
+                card.RemoveKeyword(CardKeyword.Retain);
                 removedCount++;
             }
         }

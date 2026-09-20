@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Relics;
@@ -22,7 +23,10 @@ public class Sumika : ModRelicTemplate, IMaxHandSizeModifier
 	private int AttackCardsPlayedThisCombat = 3;
 	public override RelicRarity Rarity => RelicRarity.Starter;
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-    ];
+		HoverTipFactory.FromKeyword(CardKeyword.Retain),
+		HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
+		HoverTipFactory.FromKeyword(MyKeywords.Forget)
+	];
 	protected override IEnumerable<DynamicVar> CanonicalVars => [
 		new CardsVar(1),
 		new DynamicVar("Turns", 3),
@@ -79,6 +83,7 @@ public class Sumika : ModRelicTemplate, IMaxHandSizeModifier
             CardModel clonedCard = cardPlay.Card.CreateClone();
             clonedCard.AddKeyword(CardKeyword.Retain);
             clonedCard.AddKeyword(CardKeyword.Exhaust);
+			clonedCard.AddKeyword(MyKeywords.Forget);
             await CardPileCmd.AddGeneratedCardToCombat(
                 clonedCard,
                 PileType.Hand,

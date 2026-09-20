@@ -35,7 +35,8 @@ public class Observer_of_Eternity : ModCardTemplate
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+        HoverTipFactory.FromKeyword(CardKeyword.Retain),
+        HoverTipFactory.FromKeyword(MyKeywords.Forget)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -76,6 +77,7 @@ public class Observer_of_Eternity : ModCardTemplate
                 CardCmd.Upgrade(card);
             }
             CardCmd.ApplyKeyword(card, CardKeyword.Retain);
+            CardCmd.ApplyKeyword(card, MyKeywords.Forget);
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, base.Owner);
         }
     }

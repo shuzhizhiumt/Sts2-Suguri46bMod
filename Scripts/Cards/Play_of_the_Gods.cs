@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -27,18 +28,21 @@ public class Play_of_the_Gods : ModCardTemplate
     public Play_of_the_Gods() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+    ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel? cardModel = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment != null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+        CardModel? cardModel = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Keywords.Contains(CardKeyword.Unplayable) && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
             .FirstOrDefault();
         if (cardModel == null && this.IsUpgraded)
         {
-            cardModel = PileType.Draw.GetPile(base.Owner).Cards.Where((CardModel c) => c.Enchantment != null && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
+            cardModel = PileType.Draw.GetPile(base.Owner).Cards.Where((CardModel c) => c.Keywords.Contains(CardKeyword.Unplayable) && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
                 .FirstOrDefault();
         }
         if (cardModel != null)

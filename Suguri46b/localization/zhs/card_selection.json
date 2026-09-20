@@ -1,8 +1,10 @@
 {
     "REMOVE_ENCHANTMENTS":"选择[blue]任意[/blue]张牌移除[gold]附魔[/gold]。",
+    "REMOVE_RETAIN":"选择[blue]任意[/blue]张牌移除[gold]保留[/gold]词条。",
     "TO_DRAW":"选择[blue]{Amount}[/blue]张牌加入[gold]抽牌堆[/gold]。",
     "TO_HAND":"选择[blue]{Amount}[/blue]张牌加入[gold]手牌[/gold]。",
     "TRANS":"选择[blue]{Amount}[/blue]张牌变化。",
     "GIFT_EXCHANGE":"选择[blue]{Amount}[/blue]张要送出的牌。",
-    "PRESENT_THIEF":"选择[blue]{Amount}[/blue]张要偷取的牌。"
+    "PRESENT_THIEF":"选择[blue]{Amount}[/blue]张要偷取的牌。",
+    "DMGX2_ENCHANT_COST":"选择任意数量要附魔的牌，每张消耗其耗能×5+10点[gold]星星[/gold]。"
 }
