@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
@@ -39,7 +40,13 @@ public class The_Greatest_Troublemaker_Ever : ModCardTemplate
         new DynamicVar("ExtraRepeat",1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card))
+        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card)),
+        // 卡面显示的实际命中次数：(已打出次数/2 + Repeat) × ExtraRepeat
+        ModCardVars.Computed("Hits", 1, card => (RepeatCount.ThisCardRepeatCount(card) / 2 + DynamicVars.Repeat.IntValue) * DynamicVars["ExtraRepeat"].IntValue),
+        // 卡面显示的实际抽牌数：已打出次数/3 × Cards
+        ModCardVars.Computed("DrawCount", 1, card => RepeatCount.ThisCardRepeatCount(card) / 3 * DynamicVars.Cards.IntValue),
+        // 重复(2) 已达成后的累计次数加成：(已打出次数/2) × ExtraRepeat
+        ModCardVars.Computed("ExtraHits", 1, card => RepeatCount.ThisCardRepeatCount(card) / 2 * DynamicVars["ExtraRepeat"].IntValue)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

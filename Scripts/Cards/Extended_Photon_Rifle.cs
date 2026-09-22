@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Combat.CardTargeting;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -42,7 +43,13 @@ public class Extended_Photon_Rifle : ModCardTemplate
         new DynamicVar("ExtraRepeat",1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card))
+        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card)),
+        // 卡面显示的实际命中次数：(已打出次数/3 + Repeat) × ExtraRepeat
+        ModCardVars.Computed("Hits", 2, card => (RepeatCount.ThisCardRepeatCount(card) / 3 + DynamicVars.Repeat.IntValue) * DynamicVars["ExtraRepeat"].IntValue),
+        // 重复(1) 已达成后的累计伤害加成：已打出次数 × ExtraDamage
+        ModCardVars.Computed("BonusDamage", 1, card => RepeatCount.ThisCardRepeatCount(card) * DynamicVars.ExtraDamage.IntValue),
+        // 重复(3) 已达成后的累计次数加成：(已打出次数/3) × ExtraRepeat
+        ModCardVars.Computed("ExtraHits", 1, card => RepeatCount.ThisCardRepeatCount(card) / 3 * DynamicVars["ExtraRepeat"].IntValue)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

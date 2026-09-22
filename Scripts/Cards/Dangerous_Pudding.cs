@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Powers;
 using Suguri46b.Scripts.Units;
 
@@ -30,6 +31,7 @@ public class Dangerous_Pudding : ModCardTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.ForEnergy(this)
     ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, MyKeywords.Sweets];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(2)
     ];

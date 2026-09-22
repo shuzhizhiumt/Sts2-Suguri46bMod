@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Patching.Models;
 using Suguri46b.Scripts.CardKeyWords;
+using Suguri46b.Scripts.Extensions;
 
 namespace Suguri46b.Scripts.Patches;
 
@@ -44,6 +45,8 @@ public class ForgetDiscardRedirectPatch : IPatchMethod
             return;
         }
         // 直接改道到消耗堆：不播弃牌动画、不触发弃牌效果
+        // 标记为"因弃置而遗忘"，使魔改的格挡只在弃置改道时结算
+        ForgetKeywordHandler.MarkForgotten(card);
         newPile = PileType.Exhaust.GetPile(card.Owner);
     }
 }

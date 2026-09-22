@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -43,7 +44,9 @@ public class Full_Burst : ModCardTemplate
         new DynamicVar("GainOJStar",1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card))
+        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card)),
+        // 卡面显示的实际星星收益：已打出次数 × GainOJStar
+        ModCardVars.Computed("StarGain", 1, card => RepeatCount.ThisCardRepeatCount(card) * DynamicVars["GainOJStar"].IntValue)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

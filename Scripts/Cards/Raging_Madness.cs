@@ -27,7 +27,7 @@ public class Raging_Madness : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Raging_MadnessPower>(1),
-        new DynamicVar("LoseOJStar",5)
+        new DynamicVar("LoseOJStar",10)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

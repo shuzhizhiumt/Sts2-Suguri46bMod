@@ -10,7 +10,9 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Resources;
 using Suguri46b.Scripts.Units;
 
@@ -32,7 +34,8 @@ public class Sealed_Memories : ModCardTemplate
     {
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+        HoverTipFactory.FromKeyword(CardKeyword.Retain),
+        HoverTipFactory.FromKeyword(MyKeywords.Forget)
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("GainOJStar", 5),
@@ -59,6 +62,7 @@ public class Sealed_Memories : ModCardTemplate
             if (card.GetKeywordsWithSources(KeywordSources.Local).Contains(CardKeyword.Retain))
             {
                 card.RemoveKeyword(CardKeyword.Retain);
+                card.AddKeyword(MyKeywords.Forget);
                 removedCount++;
             }
         }

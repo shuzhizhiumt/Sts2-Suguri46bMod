@@ -42,7 +42,12 @@ public class All_Guns_at_the_Ready : ModCardTemplate
         new DamageVar(1,ValueProp.Move),
         new RepeatVar(1),
         new DynamicVar("IncreaseDamage",1),
-        ModCardVars.Computed("ExtraRepeat",1,card=>CombatManager.Instance.History.CardPlaysFinished.Count((CardPlayFinishedEntry e)=>e.CardPlay.Card.Type == CardType.Attack && e.CardPlay.Player == base.Owner)*DynamicVars.Repeat.IntValue)
+        ModCardVars.Computed("ExtraRepeat",1,card=>CombatManager.Instance.History.CardPlaysFinished.Count((CardPlayFinishedEntry e)=>e.CardPlay.Card.Type == CardType.Attack && e.CardPlay.Player == base.Owner)*DynamicVars.Repeat.IntValue),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card)),
+        // 重复(2) 已达成后的累计伤害加成：(已打出次数/2) × IncreaseDamage
+        ModCardVars.Computed("RepeatDamage", 1, card => RepeatCount.ThisCardRepeatCount(card) / 2 * DynamicVars["IncreaseDamage"].IntValue)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -54,7 +59,8 @@ public class All_Guns_at_the_Ready : ModCardTemplate
     }
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (cardPlay.Card!=this || target==null)
+        // 用 cardSource 判定（预览时 cardPlay 为 null，不能用 cardPlay.Card）
+        if (cardSource != this)
         {
             return 0;
         }

@@ -1,10 +1,12 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
@@ -25,7 +27,10 @@ public class Reproduction_of_Records : ModCardTemplate
     public Reproduction_of_Records() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Retain),
+        HoverTipFactory.FromKeyword(MyKeywords.Forget)
+    ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -41,6 +46,8 @@ public class Reproduction_of_Records : ModCardTemplate
         {
             CardModel clonedCard = card.CreateClone();
             clonedCard.AddKeyword(CardKeyword.Exhaust);
+            clonedCard.AddKeyword(CardKeyword.Retain);
+            clonedCard.AddKeyword(MyKeywords.Forget);
             clonedCard.SetToFreeThisCombat();
             await CardPileCmd.AddGeneratedCardToCombat(
                 clonedCard,

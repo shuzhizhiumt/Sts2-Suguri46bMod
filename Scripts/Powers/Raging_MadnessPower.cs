@@ -26,7 +26,7 @@ public class Raging_MadnessPower : ModPowerTemplate
         BigIconPath: $"res://Suguri46b/images/powers/{GetType().Name}.png"
     );
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("LoseOJStar",5)
+        new DynamicVar("LoseOJStar",10)
     ];
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
