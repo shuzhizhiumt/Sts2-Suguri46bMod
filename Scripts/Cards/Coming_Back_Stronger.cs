@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -7,14 +8,21 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
+using Suguri46b.Scripts.Extensions;
 using Suguri46b.Scripts.Resources;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
+/// <summary>
+///     越挫越勇：造成伤害，可[额外支付]星星以先施加[易伤]。
+///     带[重复]关键词：重复(2) 起伤害增加（累计）。
+/// </summary>
 [RegisterCard(typeof(Suguri46bCardPool))]
 public class Coming_Back_Stronger : ModCardTemplate
 {
@@ -35,11 +43,18 @@ public class Coming_Back_Stronger : ModCardTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>()
     ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Repeat];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(9, ValueProp.Move),
-        new DynamicVar("UpDamage",9),
+        new DynamicVar("ExtraDamage",5),
         new DynamicVar("Additional_Payment",3),
         new PowerVar<VulnerablePower>(1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("RepeatCount").WithMultiplier((CardModel card, Creature? _) => RepeatCount.ThisCardRepeatCount(card)),
+        // 重复(2) 已达成后的累计伤害加成：(已打出次数/2) × ExtraDamage
+        ModCardVars.Computed("BonusDamage", 5, card => RepeatCount.ThisCardRepeatCount(card) / 2 * DynamicVars["ExtraDamage"].IntValue)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -53,13 +68,16 @@ public class Coming_Back_Stronger : ModCardTemplate
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
     }
-    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
-	{
-		if (cardSource==this && !(result.UnblockedDamage > 0))
-		{
-			DynamicVars.Damage.UpgradeValueBy(DynamicVars["UpDamage"].IntValue);
-		}
-	}
+
+    // 重复(2)：伤害增加（累计，与其他重复卡牌一致）
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
+    {
+        if (cardSource != this)
+        {
+            return 0;
+        }
+        return RepeatCount.ThisCardRepeatCount(this) / 2 * DynamicVars["ExtraDamage"].IntValue;
+    }
 
     protected override void OnUpgrade()
     {

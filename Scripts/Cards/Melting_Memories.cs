@@ -5,60 +5,64 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Powers;
 using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
 /// <summary>
-///     自暴自弃的改造：本回合随机获得 1 点或 6 点力量（各 50%）。
+///     融化的记忆：为当前所有手牌添加[遗忘]，
+///     并获得「每回合结束时按手牌中遗忘牌数量造成伤害/获得格挡」的能力。
 /// </summary>
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Desperate_Modification : ModCardTemplate
+public class Melting_Memories : ModCardTemplate
 {
-    private const int energyCost = 1;
-    private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const int energyCost = 3;
+    private const CardType type = CardType.Power;
+    private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public Desperate_Modification() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+
+    public Melting_Memories() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>()
+        HoverTipFactory.FromPower<Melting_MemoriesPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("LowStrength", 1),
-        new DynamicVar("HighStrength", 6)
+        new PowerVar<Melting_MemoriesPower>(1)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 随机 1 或 6（各 50%）：使用 run 的 Niche 随机流，保证多人各端一致
-        int amount = base.Owner.RunState.Rng.Niche.NextBool()
-            ? DynamicVars["HighStrength"].IntValue
-            : DynamicVars["LowStrength"].IntValue;
+        await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<Desperate_ModificationPower>(
+        // 为当前所有手牌添加[遗忘]
+        foreach (CardModel card in PileType.Hand.GetPile(base.Owner).Cards.ToList())
+        {
+            card.AddKeyword(MyKeywords.Forget);
+        }
+
+        await PowerCmd.Apply<Melting_MemoriesPower>(
             choiceContext,
             base.Owner.Creature,
-            amount,
+            DynamicVars["Melting_MemoriesPower"].IntValue,
             base.Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["LowStrength"].UpgradeValueBy(1);
-        DynamicVars["HighStrength"].UpgradeValueBy(1);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

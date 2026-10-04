@@ -29,8 +29,7 @@ public class Dark_Side_of_Business : ModCardTemplate
     {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(8, ValueProp.Move),
-        new DynamicVar("GainOJStar",1)
+        new DamageVar(11, ValueProp.Move)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -43,12 +42,11 @@ public class Dark_Side_of_Business : ModCardTemplate
 	{
 		if (cardSource==this && result.UnblockedDamage > 0)
 		{
-            await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,result.UnblockedDamage*base.DynamicVars["GainOJStar"].IntValue);
+            await SecondaryResourceCmd.Gain(Owner, ModResources.OJStarId,result.UnblockedDamage);
 		}
 	}
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars["GainOJStar"].UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(4);
     }
 }

@@ -23,13 +23,25 @@ public class TransSelf : HookedSingletonModel
     {
     }
 
-    // 每张待变换的卡 → 目标卡，一对一映射，支持同时多张
-    private readonly Dictionary<CardModel, CardModel> pendingTransforms = [];
+    // 待变化的卡 → (目标卡, 是否续附混成化)，支持同时多张（static：卡牌与单例共用同一队列）
+    private static readonly Dictionary<CardModel, (CardModel Replacement, bool EnchantWithMix)> PendingTransforms = [];
 
     public override Task BeforeCombatStart()
     {
-        pendingTransforms.Clear();
+        PendingTransforms.Clear();
         return base.BeforeCombatStart();
+    }
+
+    /// <summary>
+    ///     登记一次"延迟变化"：指定的牌在出牌结算结束（牌堆变更）后变化为 replacement。
+    ///     供其它卡牌复用（例如部件扩张把自己变化为卡组中某张牌的复制品）。
+    /// </summary>
+    /// <param name="card">被变化的牌。</param>
+    /// <param name="replacement">变化结果（会作为替换牌直接使用，务必传入新建的实例/克隆）。</param>
+    /// <param name="enchantWithMix">变化结果是否再附上[混成化]（混成化链专用）。</param>
+    public static void QueueTransform(CardModel card, CardModel replacement, bool enchantWithMix = false)
+    {
+        PendingTransforms[card] = (replacement, enchantWithMix);
     }
 
     // ---------- 路径 1：打出时（延迟到牌堆变更后执行） ----------
@@ -44,17 +56,17 @@ public class TransSelf : HookedSingletonModel
         var newcard = PickRandomReplacement(card);
         if (newcard != null)
         {
-            pendingTransforms[card] = newcard;
+            QueueTransform(card, newcard, enchantWithMix: true);
         }
         return Task.CompletedTask;
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if (pendingTransforms.Remove(card, out var target))
+        if (PendingTransforms.Remove(card, out var pending))
         {
-            var result = await CardCmd.Transform(card, target);
-            if (result.HasValue)
+            var result = await CardCmd.Transform(card, pending.Replacement);
+            if (result.HasValue && pending.EnchantWithMix)
                 CardCmd.Enchant<Mix>(result.Value.cardAdded, 1);
         }
     }

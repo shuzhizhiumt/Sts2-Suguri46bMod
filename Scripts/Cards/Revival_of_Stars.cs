@@ -48,6 +48,6 @@ public class Revival_of_Stars : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
+        base.DynamicVars["Count"].UpgradeValueBy(2);
     }
 }

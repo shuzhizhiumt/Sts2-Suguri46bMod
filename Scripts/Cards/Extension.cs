@@ -1,14 +1,13 @@
-using System;
-using Godot;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -19,6 +18,10 @@ using Suguri46b.Scripts.Units;
 
 namespace Suguri46b.Scripts.Cards;
 
+/// <summary>
+///     部件扩张：将自己变化为[卡组]中随机 1 张[攻击牌]的复制品。
+///     [额外支付] 10 星星：改为从[卡组]中选择 1 张牌变化。
+/// </summary>
 [RegisterCard(typeof(Suguri46bCardPool))]
 public class Extension : ModCardTemplate
 {
@@ -37,50 +40,47 @@ public class Extension : ModCardTemplate
         .SpendIfAvailable("ojstars_charge", ModResources.OJStarId, base.DynamicVars["Additional_Payment"].IntValue);
     }
     public override IEnumerable<CardKeyword> CanonicalKeywords => [MyKeywords.Additional_Payment];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2),
-        new DynamicVar("Additional_Payment",10),
-        new EnergyVar(1)
-    ];
     protected override bool ShouldGlowGoldInternal => SecondaryResourceCmd.Get(Owner, ModResources.OJStarId) >= base.DynamicVars["Additional_Payment"].BaseValue;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("Additional_Payment",10)
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        IEnumerable<CardModel> selectedCards = await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 0, DynamicVars.Cards.IntValue),
-            context: choiceContext,
-            player: Owner,
-            filter: card => card.Enchantment == null && RandomEnchantments.CanBeEnchanted(card) && (card.Type==CardType.Attack||card.Type==CardType.Skill||card.Type==CardType.Power),
-            source: this);
+        CardPile deck = PileType.Deck.GetPile(base.Owner);
+        CardModel? target;
+        if (cardPlay.SecondaryResources().Activated("ojstars_charge"))
+        {
+            // 额外支付 10 星星：从卡组中选择 1 张牌作为变化结果
+            List<CardModel> candidates = deck.Cards.ToList();
+            if (candidates.Count == 0)
+            {
+                return;
+            }
+            IEnumerable<CardModel> picked = await CardSelectCmd.FromSimpleGrid(
+                choiceContext,
+                candidates,
+                base.Owner,
+                new CardSelectorPrefs(new LocString("card_selection", "EXTENSION_TRANS"), 1));
+            target = picked.FirstOrDefault();
+        }
+        else
+        {
+            // 随机 1 张攻击牌
+            target = base.Owner.RunState.Rng.CombatCardGeneration.NextItem(
+                deck.Cards.Where(c => c.Type == CardType.Attack).ToList());
+        }
 
-        if (selectedCards == null)
+        if (target == null || base.CombatState == null)
         {
             return;
         }
-        var rng = Owner.RunState.Rng.CombatCardGeneration;
-        foreach (var selectedCard in selectedCards)
-        {
-            var validEnchantments =RandomEnchantments.GetValidEnchantments(selectedCard);
-            if (validEnchantments.Count == 0)
-            {
-                continue;
-            }
 
-            var chosenEnchantment = validEnchantments[rng.NextInt(validEnchantments.Count)];
-            CardCmd.Enchant(chosenEnchantment, selectedCard, 1);
-        }
+        // 变化为该牌的复制品：延迟到出牌结算结束（牌堆变更）后执行，避免打断出牌流程
+        TransSelf.QueueTransform(this, base.CombatState.CloneCard(target));
     }
-    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
-    {
-        if (ShouldGlowGoldInternal && card==this)
-        {
-            return base.TryModifyEnergyCostInCombat(card, originalCost-1, out modifiedCost);
-        }
-        return base.TryModifyEnergyCostInCombat(card, originalCost, out modifiedCost);
-    }
-
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

@@ -14,7 +14,7 @@ namespace Suguri46b.Scripts.Cards;
 [RegisterCard(typeof(Suguri46bCardPool))]
 public class Reproduction_of_Records : ModCardTemplate
 {
-    private const int energyCost = 3;
+    private const int energyCost = 2;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.Self;
@@ -59,6 +59,6 @@ public class Reproduction_of_Records : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
+        base.DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

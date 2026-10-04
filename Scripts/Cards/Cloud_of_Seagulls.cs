@@ -27,8 +27,8 @@ public class Cloud_of_Seagulls : ModCardTemplate
     {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(4, ValueProp.Move),
-        new RepeatVar(4)
+        new DamageVar(8, ValueProp.Move),
+        new RepeatVar(2)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
