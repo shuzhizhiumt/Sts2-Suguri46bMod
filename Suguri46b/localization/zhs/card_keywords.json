@@ -11,6 +11,6 @@
     "SUGURI46B_KEYWORD_SWEETS.description": "甜点卡",
     "SUGURI46B_KEYWORD_SWEETS.title": "甜点",
 
-    "SUGURI46B_KEYWORD_FORGET.description": "此牌将要进入[gold]弃牌堆[/gold]时，改为进入[gold]消耗堆[/gold]。",
+    "SUGURI46B_KEYWORD_FORGET.description": "将要进入[gold]弃牌堆[/gold]时，改为进入[gold]消耗牌堆[/gold]。",
     "SUGURI46B_KEYWORD_FORGET.title": "遗忘"
 }

@@ -8,5 +8,6 @@
     "PRESENT_THIEF":"选择[blue]{Amount}[/blue]张要偷取的牌。",
     "DMGX2_ENCHANT_COST":"选择任意数量要附魔的牌，每张消耗其耗能×5+10点[gold]星星[/gold]。",
     "NANAKO_BIT_ENCHANT":"选择要添加随机[gold]附魔[/gold]的手牌。",
-    "EXTENSION_TRANS":"选择[gold]卡组[/gold]中要变化成的牌。"
+    "EXTENSION_TRANS":"选择[gold]卡组[/gold]中要变化成的牌。",
+    "NORMA3_RETAIN":"选择至多[blue]2[/blue]张[gold]手牌[/gold]，使其本回合[gold]保留[/gold]。"
 }

@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using Suguri46b.Scripts.Powers;
@@ -15,45 +13,43 @@ using Suguri46b.Scripts.Units;
 namespace Suguri46b.Scripts.Cards;
 
 /// <summary>
-///     燃烧：在你的回合开始时，获得 1 点力量并失去 1 点敏捷；
-///     若你的敏捷为负数，则本回合额外获得其相反数的力量（不论层数只触发一次）。
-///     升级改为额外获得 1 层能力（每回合的力量/敏捷变化翻倍）。
+///     月夜之舞：每当你的[闪避]成功挡下一次攻击，向攻击者造成你原本会受到的伤害。
 /// </summary>
 [RegisterCard(typeof(Suguri46bCardPool))]
-public class Blazing : ModCardTemplate
+public class Dance_in_the_Moonlit_Night : ModCardTemplate
 {
     private const int energyCost = 2;
     private const CardType type = CardType.Power;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://Suguri46b/images/cards/{GetType().Name}.webp"
     );
-    public Blazing() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
+    public Dance_in_the_Moonlit_Night() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
-
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<BlazingPower>(),
-        HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<DexterityPower>()
+        HoverTipFactory.FromPower<Dance_in_the_Moonlit_NightPower>(),
+        HoverTipFactory.FromPower<EvasionPower>()
     ];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<BlazingPower>(1)
+        new PowerVar<Dance_in_the_Moonlit_NightPower>(1)
     ];
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<BlazingPower>(choiceContext, base.Owner.Creature, DynamicVars["BlazingPower"].IntValue, base.Owner.Creature, this);
+        await PowerCmd.Apply<Dance_in_the_Moonlit_NightPower>(
+            choiceContext,
+            base.Owner.Creature,
+            DynamicVars["Dance_in_the_Moonlit_NightPower"].IntValue,
+            base.Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        // 升级：额外获得 1 层能力（不再减费）
-        DynamicVars["BlazingPower"].UpgradeValueBy(1);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

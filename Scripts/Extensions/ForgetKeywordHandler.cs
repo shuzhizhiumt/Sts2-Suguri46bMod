@@ -102,6 +102,12 @@ public class ForgetKeywordHandler : HookedSingletonModel
             if (oldPileType != PileType.Exhaust && Forgotten.Remove(card))
             {
                 await Extreme_AlterationPower.OnCardForgotten(card);
+                // 诺玛 6 层：非打出的牌被遗忘时，自动打出一次
+                // （打出的牌是从 Play 牌堆进入消耗堆的，其效果已经结算过，不再重复触发）
+                if (oldPileType != PileType.Play)
+                {
+                    await Norma.TriggerForgottenCardEffect(new BlockingPlayerChoiceContext(), card);
+                }
             }
             return;
         }

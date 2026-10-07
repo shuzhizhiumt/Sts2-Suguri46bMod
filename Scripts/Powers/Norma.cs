@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -6,12 +7,14 @@ using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Combat.SecondaryResources;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
+using Suguri46b.Scripts.CardKeyWords;
 using Suguri46b.Scripts.Cards.Token;
 using Suguri46b.Scripts.Resources;
 
@@ -65,42 +68,86 @@ public class Norma : ModPowerTemplate,ISecondaryResourceHookListener
         {
             Norma6=true;
             Flash();
-            await RemoveAllBuff();
         }
     }
-    private static async Task RemoveAllBuff()
+
+    // ---------- 3 层：每回合开始时，可选择至多 2 张手牌使其本回合[保留] ----------
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        var combatState = CombatManager.Instance.DebugOnlyGetState();
-        var allEnemies = combatState!.Enemies.ToList();
-        if (allEnemies.Count == 0)
+        if (!Norma3 || Owner.Player == null || player != Owner.Player)
         {
-            await CombatManager.Instance.CheckWinCondition();
             return;
         }
-        foreach (var enemy in allEnemies)
+        CardPile hand = PileType.Hand.GetPile(player);
+        // 已经会保留的牌（天生带保留 / 已被赋予本回合保留）不必再选
+        List<CardModel> candidates = hand.Cards.Where(c => !c.ShouldRetainThisTurn).ToList();
+        if (candidates.Count == 0)
         {
-            // 清除所有增益（Buff），保留减益（Debuff）
-            var buffs = enemy.Powers.Where(p => p.Type == PowerType.Buff).ToList();
-            foreach (var buff in buffs)
-            {
-                await PowerCmd.Remove(buff);
-            }
+            return;
+        }
+
+        Flash();
+        // source 传 null：能力不是"正在执行的模型"，否则选牌托盘清理会挂到永不触发的事件上
+        IEnumerable<CardModel> selected = await CardSelectCmd.FromHand(
+            choiceContext,
+            player,
+            new CardSelectorPrefs(
+                new LocString("card_selection", "NORMA3_RETAIN"),
+                0,
+                Math.Min(2, candidates.Count)),
+            card => !card.ShouldRetainThisTurn,
+            null!);
+
+        foreach (CardModel card in selected.ToList())
+        {
+            CardCmd.ApplySingleTurnRetain(card);
         }
     }
-    public override decimal ModifyMaxEnergy(Player player, decimal amount)
+
+    // ---------- 6 层：一张牌被遗忘时，触发一次它的打出效果 ----------
+
+    // 防递归：正在触发中的（原）卡牌
+    private static readonly HashSet<CardModel> TriggeringForgotten = [];
+
+    /// <summary>
+    ///     诺玛 6 层：非打出的牌（从手牌被弃置/被效果弃置）被遗忘时，自动打出一次。
+    ///     调用方（ForgetKeywordHandler）已排除"打出的牌"（oldPileType == Play），因为其效果已经结算过。
+    ///     做法是"复制一份→剥离遗忘、改为消耗→自动打出"：
+    ///     剥离遗忘可避免"遗忘→触发→再遗忘"的连锁，改为消耗则该复制品打完即离场，不会污染牌堆。
+    /// </summary>
+    public static async Task TriggerForgottenCardEffect(PlayerChoiceContext choiceContext, CardModel? card)
     {
-        if (Norma3 && player==Owner.Player)
+        if (card == null || card.CombatState == null || card.Owner == null)
         {
-            return amount + 1;
+            return;
         }
-        return amount;
-    }
-    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
-    {
-        if (Norma5 && card.Owner.Creature.Player==Owner.Player && card.Type==CardType.Attack)
+        var creature = card.Owner.Creature;
+        if (creature == null)
         {
-            return playCount+1;
+            return;
         }
-        return playCount;
+        Norma? norma = creature.GetPower<Norma>();
+        if (norma == null || !norma.Norma6)
+        {
+            return;
+        }
+        if (!TriggeringForgotten.Add(card))
+        {
+            return;
+        }
+        try
+        {
+            norma.Flash();
+            CardModel clone = card.CreateClone();
+            clone.RemoveKeyword(MyKeywords.Forget);
+            clone.AddKeyword(CardKeyword.Exhaust);
+            await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Hand, card.Owner);
+            await CardCmd.AutoPlay(choiceContext, clone, null);
+        }
+        finally
+        {
+            TriggeringForgotten.Remove(card);
+        }
     }
 }

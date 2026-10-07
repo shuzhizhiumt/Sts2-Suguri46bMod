@@ -36,6 +36,8 @@ public class Entry
         patcher.RegisterPatch<WarpControlAfterRoomEnteredPatch>();
         patcher.RegisterPatch<LowHealthIdleAnimationPatch>();
         patcher.RegisterPatch<ForgetDiscardRedirectPatch>();
+        patcher.RegisterPatch<DefendGrazeDescriptionPatch>();
+        patcher.RegisterPatch<EvasionIntentDisplayPatch>();
         if (!patcher.PatchAll())
             throw new InvalidOperationException("Critical patches failed.");
         var warpControlRewardDef = ModRewardRegistry.For(ModId).RegisterOwned(
